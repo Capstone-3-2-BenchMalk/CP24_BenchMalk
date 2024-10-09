@@ -1,1 +1,1 @@
-# CP24_BenchMalk
+# CP24_BenchMalk_Frontend
