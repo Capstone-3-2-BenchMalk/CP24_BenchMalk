@@ -1,0 +1,93 @@
+.Login {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #EEEFF3;
+}
+
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.login-box {
+    background-color: #ffffff;
+    width: 570px;
+    height: 590px;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* 내부 요소 가운데 정렬 */
+    justify-content: space-between;
+    padding: 10px;
+}
+
+.form-group{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1; /* 남은 공간에서 수직 가운데 정렬 */
+    justify-content: center;
+}
+
+h2 {
+    color: #5F6BEE;
+    font-size: 70px;
+    font-weight: 500;
+    margin-bottom: 30px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+input {
+    width: 388px;
+    height: 55px;
+    margin-bottom: 20px;
+    font-size: 25px;
+    font-weight: 100;
+    border: 1px solid #98A0F2;
+    border-radius: 70px;
+    outline: none;
+    text-align: center;
+    color: #5F6BEE;
+}
+
+input::placeholder {
+    color: #8B8E98; /* 색상 설정 */
+    font-size: 21px; /* 글씨 크기 */
+    font-weight: 100; /* 글씨 굵기 */
+    opacity: 1; /* 투명도 (기본값이 0.5이므로 1로 설정하면 더 선명하게 보임) */
+  }
+
+button {
+    width: 388px;
+    height: 55px;
+    font-size: 25px;
+    font-weight: 400;
+    color: white;
+    background-color: #98A0F2;
+    border: none;
+    border-radius: 70px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #5F6BEE;
+}
+
+.logo {
+    width: 159px; 
+    height: auto;  
+    margin-bottom: 20px;
+    display: block;
+}
