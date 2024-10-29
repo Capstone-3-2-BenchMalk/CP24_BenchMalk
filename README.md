@@ -1,1 +1,5 @@
-# CP24_BenchMalk_Frontend
+# CP24_BenchMalk
+2024-2 캡스톤디자인
+
+벤치말크
+롤모델을 이용한 스피치 벤치마킹 서비스
