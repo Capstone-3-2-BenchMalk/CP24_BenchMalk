@@ -8,7 +8,7 @@ function Login() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // 로그인 로직 추가 (API 호출 등)
+    // 로그인 로직 추가 (API 호출 등) 
     console.log("ID:", id, "Password:", password);
   };
 
