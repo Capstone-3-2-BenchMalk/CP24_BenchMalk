@@ -4,7 +4,7 @@ import logo from "../assets/benchmalk.png";
 
 function Home() {
   return (
-    <div className="App">
+    <div className="Home">
       <img
         src={logo}
         alt="Logo"

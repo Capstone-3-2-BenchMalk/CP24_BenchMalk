@@ -28,6 +28,20 @@
   padding: 10px;
 }
 
+.signup-box {
+  background-color: #ffffff;
+  width: 570px;
+  height: 650px;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* 내부 요소 가운데 정렬 */
+  justify-content: space-between;
+  padding: 10px;
+}
+
 .form-group {
   display: flex;
   flex-direction: column;
@@ -64,7 +78,7 @@ input {
 input::placeholder {
   color: #8b8e98; /* 색상 설정 */
   font-size: 21px; /* 글씨 크기 */
-  font-weight: 100; /* 글씨 굵기 */
+  font-weight: lighter; /* 글씨 굵기 */
   opacity: 1; /* 투명도 (기본값이 0.5이므로 1로 설정하면 더 선명하게 보임) */
 }
 
