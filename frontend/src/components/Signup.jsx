@@ -70,6 +70,7 @@ function Signup() {
           <form onSubmit={handleSubmit}>
             <input
               type="text"
+              className="login-input"
               placeholder="Enter ID"
               value={id}
               onChange={(e) => setId(e.target.value)}
@@ -77,6 +78,7 @@ function Signup() {
             />
             <input
               type="text"
+              className="login-input"
               placeholder="Enter Name"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
@@ -84,6 +86,7 @@ function Signup() {
             />
             <input
               type="password"
+              className="login-input"
               placeholder="Enter Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -91,12 +94,17 @@ function Signup() {
             />
             <input
               type="password"
+              className="login-input"
               placeholder="Confirm Password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               required
             />
-            <button type="submit" disabled={loading}>
+            <button
+              type="submit"
+              className="login-submit-button"
+              disabled={loading}
+            >
               {loading ? "Signing Up..." : "Sign Up"}
             </button>
           </form>

@@ -62,7 +62,7 @@ form {
   flex-direction: column;
 }
 
-input {
+.login-input {
   width: 388px;
   height: 55px;
   margin-bottom: 20px;
@@ -75,14 +75,14 @@ input {
   color: #5f6bee;
 }
 
-input::placeholder {
+.login-input::placeholder {
   color: #8b8e98; /* 색상 설정 */
   font-size: 21px; /* 글씨 크기 */
   font-weight: lighter; /* 글씨 굵기 */
   opacity: 1; /* 투명도 (기본값이 0.5이므로 1로 설정하면 더 선명하게 보임) */
 }
 
-button {
+.login-submit-button {
   width: 388px;
   height: 55px;
   font-size: 25px;
@@ -95,7 +95,7 @@ button {
   transition: background-color 0.3s ease;
 }
 
-button:hover {
+.login-submit-button:hover {
   background-color: #5f6bee;
 }
 
@@ -106,6 +106,6 @@ button:hover {
   display: block;
 }
 
-input:focus::placeholder {
+.login-input:focus::placeholder {
   color: transparent; /* 포커스 시 placeholder 텍스트를 투명하게 */
 }
