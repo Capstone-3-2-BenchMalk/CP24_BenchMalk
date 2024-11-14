@@ -8,7 +8,6 @@
   left: 0;
   display: flex;
   flex-direction: column;
-  /* border-right: 1px solid #000000; */
   box-shadow: 2px 0px 15px rgba(0, 0, 0, 0.1);
   align-items: center;
 }
@@ -17,7 +16,6 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  /* padding: 20px; */
   align-items: left;
   margin-top: 30px;
   width: 243px;
@@ -27,9 +25,10 @@
 .menu-item {
   display: flex;
   align-items: center;
-  padding-inline-start: 30px;
+  padding-inline-start: 20px;
   padding-top: 10px;
   padding-bottom: 10px;
+  padding-right: 20px;
   cursor: pointer;
   text-decoration: none;
   color: #222222;
@@ -38,58 +37,33 @@
   height: 40px;
 }
 
-.menu-item span {
-  margin-left: 10px;
-  font-size: 16px;
-}
-
 .menu-item:hover {
   background-color: #d33a3a;
   text-decoration: none;
 }
 
-.menu-icon {
-  width: 20px;
-  height: 20px;
-}
-
 /* 활성화된 메뉴의 배경색과 텍스트 스타일 */
-.menu-item.active,
-.sub-menu-item.active {
+.menu-item.active {
   background-color: #eeeff3;
   color: #222222;
-  /* border-radius: 5px; */
 }
 
-.sub-menu {
-  padding-left: 20px;
-}
-
-.sub-menu-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 8px 0;
-  cursor: pointer;
-  font-size: 14px;
-  text-decoration: none;
-  color: #333;
-}
-
-.project-section {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  cursor: pointer;
-}
-
-.toggle-icon {
-  font-weight: bold;
-  font-size: 18px;
-}
-
-hr {
-  margin: 10px 0;
+.divider {
+  margin: 10px 5px;
   border: none;
-  border-top: 1px solid #e0e0e0;
+  border-top: 1px solid #d9d9d9;
+}
+
+.menu-icon {
+  margin-right: 10px;
+}
+
+.icon-box {
+  display: flex;
+  align-items: center;
+  margin-left: 40px;
+  gap: 10px;
+}
+.sub-icon {
+  width: 16px;
 }
