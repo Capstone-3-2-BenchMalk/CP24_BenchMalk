@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import logo from "../assets/benchmalk.png";
 import "../styles/Sidebar.css";
+import homeIcon from "../assets/icon-home.png";
 
 function Sidebar() {
   const location = useLocation();
@@ -24,7 +25,7 @@ function Sidebar() {
         <br />
         <hr class="divider" />
         <Link to="/dashboard" className={`menu-item ${isActive("/dashboard")}`}>
-          홈
+          <img src={homeIcon} alt="Home Icon" className="menu-icon" />홈
         </Link>
       </div>
     </div>

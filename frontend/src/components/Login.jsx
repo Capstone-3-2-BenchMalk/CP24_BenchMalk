@@ -50,6 +50,7 @@ function Login() {
         <form onSubmit={handleSubmit}>
           <input
             type="text"
+            className="login-input"
             placeholder="Enter ID"
             value={id}
             onChange={(e) => setId(e.target.value)}
@@ -57,12 +58,17 @@ function Login() {
           />
           <input
             type="password"
+            className="login-input"
             placeholder="Enter Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-          <button type="submit" disabled={loading}>
+          <button
+            type="submit"
+            className="login-submit-button"
+            disabled={loading}
+          >
             {loading ? "Loading..." : "Login"}
           </button>
         </form>
