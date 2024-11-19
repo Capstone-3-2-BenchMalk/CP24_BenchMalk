@@ -1,0 +1,148 @@
+.cd-flex {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+.cd-container {
+  background-color: #ffffff;
+  border-radius: 11px;
+  padding: 23px;
+}
+.cd-title-input {
+  width: 309px;
+  height: 46px;
+  padding: 16px;
+  box-sizing: border-box;
+  color: #000;
+  font-family: Pretendard;
+  font-size: 22px;
+  font-style: normal;
+  font-weight: 700;
+  letter-spacing: 1px;
+  border: 1px solid #bbc0fc;
+  border-radius: 11px;
+  box-shadow: none; /* inset이나 추가적인 그림자 제거 */
+  outline: none;
+}
+
+.cd-title-input::placeholder {
+  color: gray;
+}
+
+.cd-contents {
+  display: flex;
+  flex-direction: column;
+  gap: 35px;
+  margin: 28px 0 33px;
+}
+
+.cd-contents-items {
+  display: inline-flex;
+  flex-direction: row;
+}
+
+.cd-project-title {
+  width: 92px;
+  color: #000;
+  font-family: Pretendard;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 500;
+  letter-spacing: 1px;
+}
+
+.cd-project-title-contents {
+  color: #000;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 15px;
+  letter-spacing: 1px;
+}
+
+.cd-draftDropBox {
+  padding: 17px 18px; /* 내부 여백 추가 */
+  width: 856px;
+  height: 168px;
+  background-color: #d8dbfd;
+  border-radius: 11px;
+}
+
+.cd-draftDropBox-title {
+  color: #000;
+  font-family: Pretendard;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 15px;
+  letter-spacing: 1px;
+}
+
+.cd-draftDropBox-subtitle {
+  color: #000;
+  font-family: Pretendard;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 15px;
+  letter-spacing: 1px;
+  padding: 14px 0 44px;
+}
+
+.cd-draftDropBox-button-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 15px;
+}
+
+.cd-draftDropBox-button {
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  width: 136px;
+  height: 46px;
+  border-radius: 11px;
+  background: #fff;
+  border-width: 0px;
+  padding: 0 10px;
+  color: #000;
+  font-family: Pretendard;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 18px;
+  letter-spacing: 1px;
+}
+
+.cd-button-container {
+  display: flex;
+  justify-content: right;
+}
+
+.cd-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 164px;
+  height: 47px;
+  border-radius: 11px;
+  background: #bbc0fc;
+  border-width: 0px;
+  color: #4350e6;
+  font-family: Pretendard;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+  letter-spacing: 1px;
+}
+
+.cd-button:active,
+.cd-draftDropBox-button:active {
+  transform: scale(0.95); /* 살짝 작아짐 */
+  background: #d8d9dd;
+}
