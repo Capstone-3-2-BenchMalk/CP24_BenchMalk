@@ -7,8 +7,8 @@ function DraftDropBox() {
   function RecordButton() {
     return (
       <button
-        className="cd-draftDropBox-record-button"
-        style={{ width: "118px" }}
+        className="cd-draftDropBox-button"
+        style={{ width: "118px", gap: "8px" }}
       >
         {/* 이미지 아이콘 */}
         <img src={recordIcon} alt="Record Icon" />
@@ -20,10 +20,7 @@ function DraftDropBox() {
 
   function UploadButton() {
     return (
-      <button
-        className="cd-draftDropBox-record-button"
-        style={{ width: "136px" }}
-      >
+      <button className="cd-draftDropBox-button" style={{ width: "136px" }}>
         {/* 이미지 아이콘 */}
         <img src={uploadIcon} alt="Upload Icon" style={{}} />
         {/* 텍스트 */}
