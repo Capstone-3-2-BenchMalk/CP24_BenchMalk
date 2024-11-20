@@ -32,6 +32,7 @@ function Login() {
       } else {
         // 로그인 실패 시 에러 처리
         setError(data.message || "Login failed");
+        navigate("/dashboard");
       }
     } catch (error) {
       setError("Network error");
@@ -46,7 +47,7 @@ function Login() {
   return (
     <div className="login-box">
       <div className="form-group">
-        <h2>Login</h2>
+        <h2 className="login-title">Login</h2>
         <form onSubmit={handleSubmit}>
           <input
             type="text"
