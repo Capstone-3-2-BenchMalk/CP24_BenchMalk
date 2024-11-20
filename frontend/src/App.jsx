@@ -12,7 +12,8 @@ import Login from "./components/Login";
 import Home from "./components/Home";
 import Signup from "./components/Signup";
 import Sidebar from "./components/Sidebar";
-import Dashboard from "./components/Dashboard";
+import Dashboard from "./components/dashboard/Dashboard";
+import CreateDraft from "./components/CreateDraft/CreateDraft";
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function AppContent() {
           <Route path="/login" element={<Login />} />{" "}
           <Route path="/signup" element={<Signup />} />{" "}
           <Route path="/dashboard" element={<Dashboard />} />{" "}
+          <Route path="/createdraft" element={<CreateDraft />} />{" "}
         </Routes>
       </div>
     </div>
