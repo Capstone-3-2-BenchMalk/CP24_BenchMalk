@@ -66,7 +66,7 @@ function Signup() {
     <div className="login-container">
       <div className="signup-box">
         <div className="form-group">
-          <h2>Sign Up</h2>
+          <h2 className="login-title">Sign Up</h2>
           <form onSubmit={handleSubmit}>
             <input
               type="text"
