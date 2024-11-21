@@ -11,7 +11,7 @@ function Home() {
         className="logo"
         style={{ width: "600px", height: "auto" }}
       />
-      <Link to="/Login">
+      <Link to="/login">
         <button className="login-button">Login</button>
       </Link>
       <Link to="/signup">

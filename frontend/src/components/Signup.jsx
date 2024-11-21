@@ -4,7 +4,7 @@ import "../styles/Login.css";
 import logo from "../assets/benchmalk.png";
 
 function Signup() {
-  const [id, setId] = useState("");
+  const [userId, setUserId] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -28,7 +28,11 @@ function Signup() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ username, password }), // 서버에 보낼 데이터
+        body: JSON.stringify({
+          userid: userId,
+          username: username,
+          password: password,
+        }), // 서버에 보낼 데이터
       });
 
       if (!response.ok) {
@@ -52,7 +56,7 @@ function Signup() {
 
     console.log(
       "ID:",
-      id,
+      userId,
       "Username:",
       username,
       "Password:",
@@ -72,8 +76,8 @@ function Signup() {
               type="text"
               className="login-input"
               placeholder="Enter ID"
-              value={id}
-              onChange={(e) => setId(e.target.value)}
+              value={userId}
+              onChange={(e) => setUserId(e.target.value)}
               required
             />
             <input

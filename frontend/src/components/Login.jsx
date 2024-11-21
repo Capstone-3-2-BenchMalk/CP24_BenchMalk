@@ -4,7 +4,7 @@ import "../styles/Login.css";
 import logo from "../assets/benchmalk.png";
 
 function Login() {
-  const [id, setId] = useState("");
+  const [userId, setUseruserId] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null); // 에러 상태 추가
   const [loading, setLoading] = useState(false); // 로딩 상태 추가
@@ -20,7 +20,7 @@ function Login() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ id, password }), // id와 password를 JSON 형태로 전송
+        body: JSON.stringify({ userid: userId, password: password }), // userId와 password를 JSON 형태로 전송
       });
 
       const data = await response.json();
@@ -32,50 +32,52 @@ function Login() {
       } else {
         // 로그인 실패 시 에러 처리
         setError(data.message || "Login failed");
-        navigate("/dashboard");
+        // navigate("/dashboard");
       }
     } catch (error) {
       setError("Network error");
       console.error("Error:", error);
-      navigate("/dashboard");
+      // navigate("/dashboard");
     } finally {
       setLoading(false); // 로딩 상태 종료
     }
-    console.log("ID:", id, "Password:", password);
+    console.log("Id:", userId, "Password:", password);
   };
 
   return (
-    <div className="login-box">
-      <div className="form-group">
-        <h2 className="login-title">Login</h2>
-        <form onSubmit={handleSubmit}>
-          <input
-            type="text"
-            className="login-input"
-            placeholder="Enter ID"
-            value={id}
-            onChange={(e) => setId(e.target.value)}
-            required
-          />
-          <input
-            type="password"
-            className="login-input"
-            placeholder="Enter Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-          <button
-            type="submit"
-            className="login-submit-button"
-            disabled={loading}
-          >
-            {loading ? "Loading..." : "Login"}
-          </button>
-        </form>
-        {error && <p className="error">{error}</p>} {/* 에러 메시지 표시 */}
+    <div className="login-container">
+      <div className="login-box">
+        <div className="form-group">
+          <h2 className="login-title">Login</h2>
+          <form onSubmit={handleSubmit}>
+            <input
+              type="text"
+              className="login-input"
+              placeholder="Enter Id"
+              value={userId}
+              onChange={(e) => setUseruserId(e.target.value)}
+              required
+            />
+            <input
+              type="password"
+              className="login-input"
+              placeholder="Enter Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+            <button
+              type="submit"
+              className="login-submit-button"
+              disabled={loading}
+            >
+              {loading ? "Loading..." : "Login"}
+            </button>
+          </form>
+          {error && <p className="error">{error}</p>} {/* 에러 메시지 표시 */}
+        </div>
+        <img src={logo} alt="Logo" className="logo" />
       </div>
-      <img src={logo} alt="Logo" className="logo" />
     </div>
   );
 }
