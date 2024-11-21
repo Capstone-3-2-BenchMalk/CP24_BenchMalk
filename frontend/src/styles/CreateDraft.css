@@ -142,7 +142,43 @@
 }
 
 .cd-button:active,
-.cd-draftDropBox-button:active {
+.cd-draftDropBox-button:active,
+.cd-filePreview-cancelbutton:active {
   transform: scale(0.95); /* 살짝 작아짐 */
   background: #d8d9dd;
+}
+
+.cd-filePreview-title {
+  color: #000;
+  font-family: Pretendard;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: 1px;
+  text-decoration-line: underline;
+  text-decoration-style: solid;
+  text-decoration-skip-ink: none;
+  text-decoration-thickness: auto;
+  text-underline-offset: auto;
+  text-underline-position: from-font;
+}
+
+.cd-filePreview {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cd-filePreview-cancelbutton {
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.cd-filePreview-cancelbutton img {
+  display: block;
+  width: 36px;
+  height: 36px;
 }
