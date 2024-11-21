@@ -1,33 +1,12 @@
 import React, { useState } from "react";
 import "../../styles/CreateDraft.css";
-import uploadIcon from "../../assets/upload-icon.svg";
-import recordIcon from "../../assets/record-icon.svg";
+import FileUploadButton from "./FileUploadButton.jsx";
+import RecordButton from "./RecordButton.jsx";
+import FilePreview from "./FilePreview.jsx";
 
 function DraftDropBox() {
-  function RecordButton() {
-    return (
-      <button
-        className="cd-draftDropBox-button"
-        style={{ width: "118px", gap: "8px" }}
-      >
-        {/* 이미지 아이콘 */}
-        <img src={recordIcon} alt="Record Icon" />
-        {/* 텍스트 */}
-        <span>녹음</span>
-      </button>
-    );
-  }
+  const [file, setFile] = useState(null);
 
-  function UploadButton() {
-    return (
-      <button className="cd-draftDropBox-button" style={{ width: "136px" }}>
-        {/* 이미지 아이콘 */}
-        <img src={uploadIcon} alt="Upload Icon" style={{}} />
-        {/* 텍스트 */}
-        <span>파일 첨부</span>
-      </button>
-    );
-  }
   return (
     <div className="cd-draftDropBox">
       <div className="cd-draftDropBox-title">
@@ -38,8 +17,14 @@ function DraftDropBox() {
         avi, mp4, mov, wmv, flv, mkv)
       </div>
       <div className="cd-draftDropBox-button-container">
-        <RecordButton />
-        <UploadButton />
+        {!file ? (
+          <>
+            <RecordButton />
+            <FileUploadButton onFileSelect={setFile} />
+          </>
+        ) : (
+          <FilePreview file={file} onCancel={() => setFile(null)} />
+        )}
       </div>
     </div>
   );
