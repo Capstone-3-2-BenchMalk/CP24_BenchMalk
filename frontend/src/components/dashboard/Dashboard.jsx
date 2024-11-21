@@ -4,7 +4,6 @@ import recordIcon from "../../assets/icon/record-icon.png";
 import "../../styles/Dashboard.css";
 import folderIcon from "../../assets/icon/folder-icon.png";
 import trashIcon from "../../assets/icon/trash-icon.png";
-import { style } from "@mui/system";
 
 function PracticeTable() {
   const columns = [
