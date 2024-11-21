@@ -1,7 +1,7 @@
 import React from "react";
 import "../../styles/TableForm.css";
 
-const TableForm = ({ columns, data, icon }) => {
+const TableForm = ({ columns, data }) => {
   return (
     <div className="table-container">
       <table className="reusable-table">
