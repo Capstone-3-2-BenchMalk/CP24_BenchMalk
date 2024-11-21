@@ -30,7 +30,10 @@ function Sidebar() {
         style={{ width: "180px", height: "auto" }}
       />
       <div className="menu-section menu-top">
-        <div className="menu-item">
+        <Link
+          to="/createdraft"
+          className={`menu-item ${isActive("/createdraft")}`}
+        >
           <img
             src={recordIcon}
             alt="Record Icon"
@@ -38,7 +41,7 @@ function Sidebar() {
             className="menu-icon"
           />
           녹음하기
-        </div>
+        </Link>
         <div className="menu-item">
           <img
             src={uploadIcon}
