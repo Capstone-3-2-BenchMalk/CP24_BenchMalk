@@ -14,6 +14,7 @@ import Signup from "./components/Signup";
 import Sidebar from "./components/Sidebar";
 import Dashboard from "./components/dashboard/Dashboard";
 import CreateDraft from "./components/CreateDraft/CreateDraft";
+import ProjectPage from "./components/ProjectPage/ProjectPage";
 
 function App() {
   return (
@@ -40,6 +41,7 @@ function AppContent() {
           <Route path="/signup" element={<Signup />} />{" "}
           <Route path="/dashboard" element={<Dashboard />} />{" "}
           <Route path="/createdraft" element={<CreateDraft />} />{" "}
+          <Route path="/project" element={<ProjectPage />} />{" "}
         </Routes>
       </div>
     </div>

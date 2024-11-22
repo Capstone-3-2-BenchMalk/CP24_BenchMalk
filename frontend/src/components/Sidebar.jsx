@@ -85,7 +85,9 @@ function Sidebar() {
             <img src={closeIcon} alt="Close Icon" className="sub-icon" />
           </div>
         </div>
-        <div className="sub-menu-item">
+
+        <Link to="/project" className={`sub-menu-item ${isActive("/project")}`}>
+          {/* <div className="sub-menu-item"> */}
           <img
             src={folderIcon}
             alt="Folder Icon"
@@ -98,7 +100,9 @@ function Sidebar() {
             className="sub-icon"
             style={{ marginLeft: "auto" }}
           />
-        </div>
+          {/* </div> */}
+        </Link>
+
         <div className="sub-menu-item">
           <img
             src={folderIcon}
