@@ -182,3 +182,10 @@
   width: 36px;
   height: 36px;
 }
+
+.cd-button:disabled {
+  background: #e0e0e0;
+  color: black;
+  cursor: not-allowed;
+  opacity: 0.6;
+}

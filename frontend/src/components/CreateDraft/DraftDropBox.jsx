@@ -4,8 +4,19 @@ import FileUploadButton from "./FileUploadButton.jsx";
 import RecordButton from "./RecordButton.jsx";
 import FilePreview from "./FilePreview.jsx";
 
-function DraftDropBox() {
-  const [file, setFile] = useState(null);
+function DraftDropBox({ file, setFile }) {
+  const handleFileChange = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    // 파일 크기 제한 검사
+    if (file.size > 524288000) {
+      alert("욕심꾸러기~~ 500MB까지만~~");
+      return;
+    }
+
+    setFile(file);
+  };
 
   return (
     <div className="cd-draftDropBox">
