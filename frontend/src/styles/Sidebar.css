@@ -1,4 +1,5 @@
-.sidebar {
+.sidebar,
+.sidebar:active {
   width: 243px;
   height: 100vh;
   background-color: #ffffff;
@@ -39,8 +40,7 @@
   display: flex;
   align-items: center;
   padding-inline-start: 20px;
-  padding-top: 10px;
-  padding-bottom: 10px;
+  padding-block: 10px;
   padding-right: 20px;
   cursor: pointer;
   text-decoration: none;
@@ -49,17 +49,35 @@
   font-weight: 500;
   height: 40px;
   font-size: 15px;
+  /* margin-block: 1px; */
 }
 
-.menu-item:hover {
-  background-color: #d33a3a;
+.sub-menu-item {
+  display: flex;
+  align-items: center;
+  padding-inline-start: 50px;
+  padding-block: 9px;
+  padding-right: 20px;
+  cursor: pointer;
+  text-decoration: none;
+  color: #222222;
+  background-color: #ffffff;
+  font-weight: 500;
+  /* height: 40px; */
+  font-size: 15px;
+}
+
+.menu-item:hover,
+.sub-menu-item:hover {
+  background-color: #eeeff3;
   text-decoration: none;
 }
 
 /* 활성화된 메뉴의 배경색과 텍스트 스타일 */
-.menu-item.active {
+.menu-item.active,
+.sub-menu-item.active {
   background-color: #eeeff3;
-  color: #222222;
+  /* color: #222222; */
 }
 
 .divider {
