@@ -78,7 +78,7 @@ function CreateDraft() {
           </div>
           <div className="cd-contents-items">
             <span className="cd-project-title">연습 방식</span>
-            <DraftDropBox file={file} setFile={setFile} />
+            <DraftDropBox isRecordable={true} file={file} setFile={setFile} />
           </div>
         </div>
 
