@@ -4,7 +4,7 @@ import FileUploadButton from "./FileUploadButton.jsx";
 import RecordButton from "./RecordButton.jsx";
 import FilePreview from "./FilePreview.jsx";
 
-function DraftDropBox({ file, setFile }) {
+function DraftDropBox({ isRecordable, file, setFile }) {
   const handleFileChange = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -30,7 +30,7 @@ function DraftDropBox({ file, setFile }) {
       <div className="cd-draftDropBox-button-container">
         {!file ? (
           <>
-            <RecordButton />
+            {isRecordable ? <RecordButton /> : <></>}
             <FileUploadButton onFileSelect={setFile} />
           </>
         ) : (

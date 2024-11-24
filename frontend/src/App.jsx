@@ -15,6 +15,7 @@ import Sidebar from "./components/Sidebar";
 import Dashboard from "./components/dashboard/Dashboard";
 import CreateDraft from "./components/CreateDraft/CreateDraft";
 import ProjectPage from "./components/ProjectPage/ProjectPage";
+import CreateProject from "./components/CreateProject/CreateProject";
 
 function App() {
   return (
@@ -42,6 +43,7 @@ function AppContent() {
           <Route path="/dashboard" element={<Dashboard />} />{" "}
           <Route path="/createdraft" element={<CreateDraft />} />{" "}
           <Route path="/project" element={<ProjectPage />} />{" "}
+          <Route path="/createproject" element={<CreateProject />} />{" "}
         </Routes>
       </div>
     </div>
