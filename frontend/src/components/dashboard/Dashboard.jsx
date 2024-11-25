@@ -4,6 +4,7 @@ import recordIcon from "../../assets/icon/record-icon.png";
 import "../../styles/Dashboard.css";
 import folderIcon from "../../assets/icon/folder-icon.png";
 import trashIcon from "../../assets/icon/trash-icon.png";
+import { styled } from "@mui/material";
 
 function PracticeTable({ data }) {
   const columns = [
@@ -13,11 +14,11 @@ function PracticeTable({ data }) {
       render: (value) => (
         <img src={value} alt="icon" style={{ width: "13px" }} />
       ),
-      style: { paddingRight: "0px" },
+      style: { width: "4%", paddingRight: "0px" },
     },
     { header: "연습명", accessor: "practiceName", style: { width: "20%" } },
     { header: "프로젝트명", accessor: "projectName", style: { width: "20%" } },
-    { header: "롤모델", accessor: "roleModel", style: { width: "20%" } },
+    { header: "롤모델", accessor: "roleModel", style: { width: "16%" } },
     {
       header: "진행상태",
       accessor: "status",
@@ -27,8 +28,8 @@ function PracticeTable({ data }) {
         </span>
       ),
     },
-    { header: "연습 시각", accessor: "startTime" },
-    { header: "길이", accessor: "duration" },
+    { header: "연습 시각", accessor: "startTime", style: { width: "15%" } },
+    { header: "길이", accessor: "duration", style: { width: "10%" } },
   ];
 
   return <TableForm columns={columns} data={data} />;
@@ -51,8 +52,6 @@ function ProjectTable({ data }) {
     },
     {
       header: "",
-      // accessor: "projectName",
-      // style: { width: "25%" },
     },
     {
       header: "롤모델",
@@ -98,10 +97,10 @@ function Dashboard() {
           icon: recordIcon,
           practiceName: item.name,
           projectName: item.project.name,
-          roleModel: item.project.roleModelid || "N/A",
+          roleModel: item.project.model?.name || "미지정",
           status: item.status || "N/A",
           startTime: formatTime(item.created_date),
-          duration: item.duration,
+          duration: formatDuration(item.duration),
         }));
 
         setPractices(mappedData); // 상태 업데이트
@@ -125,7 +124,7 @@ function Dashboard() {
         const mappedData = data.map((item) => ({
           icon1: folderIcon,
           projectName: item.name,
-          roleModel: item.roleModelid || "N/A",
+          roleModel: item.model?.name || "미지정",
           speechTime: `${item.min_time} ~ ${item.max_time} 분`,
           icon2: trashIcon,
         }));
@@ -181,11 +180,12 @@ function formatTime(isoDate) {
     2,
     "0"
   )}.${String(date.getDate()).padStart(2, "0")} ${hours}:${minutes}`;
-  // const year = date.getUTCFullYear();
-  // const month = String(date.getUTCMonth() + 1).padStart(2, "0");
-  // const day = String(date.getUTCDate()).padStart(2, "0");
-  // const hours = String(date.getUTCHours()).padStart(2, "0");
-  // const minutes = String(date.getUTCMinutes()).padStart(2, "0");
+}
 
-  // return `${year}.${month}.${day} ${hours}:${minutes}`;
+function formatDuration(seconds) {
+  const minutes = Math.floor(seconds / 60);
+  const remainingSeconds = seconds % 60;
+  return `${String(minutes).padStart(2, "0")}:${String(
+    remainingSeconds
+  ).padStart(2, "0")}`;
 }
