@@ -1,20 +1,45 @@
 .dashboard-container {
   width: 100%;
   height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.practice-section,
+.project-section {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  flex: 1;
+}
+
+.section-title {
+  margin-bottom: 12px;
+}
+
+.table-section {
+  display: flex;
+  width: 100%;
+  flex: 1;
+  min-height: 0;
+  border-radius: 11px;
+  overflow: hidden;
+  background-color: #d8dbfd;
+  box-shadow: 0px 0px 17px rgba(0, 0, 0, 0.07);
+  flex-direction: column;
 }
 
 .table-container {
   width: 100%;
-  height: 85%;
-  margin: 12px 0;
+  flex: 1;
+  min-height: 0;
   border-radius: 11px;
-  overflow: hidden;
+  overflow-y: auto;
   background-color: white;
   box-shadow: 0px 0px 17px rgba(0, 0, 0, 0.07);
 }
 
 .reusable-table {
-  /* width: 1206px; */
   width: 100%;
   border-collapse: collapse;
   font-size: 14px;
@@ -22,7 +47,6 @@
 }
 
 .reusable-table th {
-  background-color: #d8dbfd;
   padding: 12px;
   text-align: center;
   color: #5f6bee;
