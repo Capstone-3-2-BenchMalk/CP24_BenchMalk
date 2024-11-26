@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import recordIcon from "../../assets/icon/record-icon.svg";
+import recordIcon from "../../assets/icons/record-icon.svg";
 
 function RecordButton() {
   return (

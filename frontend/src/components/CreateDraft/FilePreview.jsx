@@ -1,4 +1,4 @@
-import cancelIcon from "../../assets/icon/cancel-icon.svg";
+import cancelIcon from "../../assets/icons/cancel-icon.svg";
 
 function FilePreview({ file, onCancel }) {
   return (
