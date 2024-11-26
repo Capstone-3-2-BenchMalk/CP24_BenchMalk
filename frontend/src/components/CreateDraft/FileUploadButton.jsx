@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import uploadIcon from "../../assets/icon/upload-icon.svg";
+import uploadIcon from "../../assets/icons/upload-icon.svg";
 
 function FileUploadButton({ onFileSelect }) {
   const selectFile = useRef("");

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import TableForm from "./TableForm";
-import recordIcon from "../../assets/icon/record-icon.png";
+import recordIcon from "../../assets/icons/record-icon.png";
 import "../../styles/Dashboard.css";
-import folderIcon from "../../assets/icon/folder-icon.png";
-import trashIcon from "../../assets/icon/trash-icon.png";
-import { styled } from "@mui/material";
+import folderIcon from "../../assets/icons/folder-icon.png";
+import trashIcon from "../../assets/icons/trash-icon.png";
+import { formatCreatedTime, formatDuration } from "../../utils/fomatters";
 
 function PracticeTable({ data }) {
   const columns = [
@@ -28,7 +28,7 @@ function PracticeTable({ data }) {
         </span>
       ),
     },
-    { header: "연습 시각", accessor: "startTime", style: { width: "15%" } },
+    { header: "연습 시각", accessor: "createdTime", style: { width: "15%" } },
     { header: "길이", accessor: "duration", style: { width: "10%" } },
   ];
 
@@ -99,7 +99,7 @@ function Dashboard() {
           projectName: item.project.name,
           roleModel: item.project.model?.name || "미지정",
           status: item.status || "N/A",
-          startTime: formatTime(item.created_date),
+          createdTime: formatCreatedTime(item.created_date),
           duration: formatDuration(item.duration),
         }));
 
@@ -169,23 +169,3 @@ function Dashboard() {
 }
 
 export default Dashboard;
-
-function formatTime(isoDate) {
-  const date = new Date(isoDate);
-
-  const hours = String(date.getHours()).padStart(2, "0"); // 24시간 형식
-  const minutes = String(date.getMinutes()).padStart(2, "0");
-
-  return `${date.getFullYear()}.${String(date.getMonth() + 1).padStart(
-    2,
-    "0"
-  )}.${String(date.getDate()).padStart(2, "0")} ${hours}:${minutes}`;
-}
-
-function formatDuration(seconds) {
-  const minutes = Math.floor(seconds / 60);
-  const remainingSeconds = seconds % 60;
-  return `${String(minutes).padStart(2, "0")}:${String(
-    remainingSeconds
-  ).padStart(2, "0")}`;
-}
