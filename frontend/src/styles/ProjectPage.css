@@ -12,6 +12,7 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
+  margin-bottom: 10px;
 }
 
 .pp-left {
@@ -19,32 +20,34 @@
   flex-direction: column;
 }
 
-.create-draft-btn {
+.add-draft-btn {
   width: 192px;
-  padding: 17px 24px;
+  padding: 16px 24px;
   border-radius: 11px;
   background-color: #bbc0fc;
   color: #4350e6;
   border: none;
-  font-family: Pretendard;
   font-weight: 500;
   font-size: 18px;
   cursor: pointer;
   transition: background-color 0.2s;
-  text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
   letter-spacing: 1px;
   box-shadow: 0px 0px 17px 0px rgba(0, 0, 0, 0.07);
 }
 
-.create-draft-btn:hover {
+.add-draft-btn:hover {
   background-color: #a5abfb;
+}
+.add-draft-btn-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 17px; /* 아이콘과 텍스트 사이 간격 */
 }
 
 .pp-title {
   color: #000;
-  font-family: Pretendard;
   font-size: 22px;
-  font-style: normal;
   font-weight: 700;
   letter-spacing: 1px;
 }
@@ -52,20 +55,96 @@
 .pp-time-container {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 8px;
   color: #000;
-  font-feature-settings: "liga" off, "clig" off;
-  font-family: Pretendard;
   font-size: 16px;
-  font-style: normal;
   font-weight: 400;
-  line-height: 16px; /* 100% */
   letter-spacing: 1px;
-  padding-top: 18px;
-  padding-bottom: 19px;
+  padding-block: 10px;
 }
 
 .plus-purple-icon {
-  width: 24px;
-  /* height: 24px; */
+  width: 20px;
+  height: 20px;
+  display: block;
+}
+
+.pp-practice-container {
+  display: flex;
+  flex-direction: column;
+  background-color: #d8dbfd;
+  width: 100%;
+  min-height: 0;
+  border-radius: 11px;
+  box-shadow: 0px 0px 17px 0px rgba(0, 0, 0, 0.07);
+}
+
+.pp-practice-title {
+  padding: 10px 20px;
+  color: #4350e6;
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 1px;
+}
+
+.pp-practice-list {
+  display: flex;
+  flex-direction: column;
+  height: 180px;
+  overflow-y: auto;
+  background-color: white;
+  border-radius: 11px;
+  box-shadow: 0px 0px 17px 0px rgba(0, 0, 0, 0.07);
+}
+
+.pp-practice-card {
+  display: flex;
+  align-items: center;
+  padding-block: 20px;
+  padding-inline: 60px;
+  background: white;
+  justify-content: space-between;
+  font-size: 15px;
+  border-bottom: 1px solid #bbc0fc;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.pp-practice-card:hover {
+  background-color: #eeeff3; /* 연한 보라색 계열 */
+}
+
+.pp-practice-card:last-child {
+  border-bottom: none;
+}
+
+.practice-card-icon {
+  display: flex;
+  align-items: center;
+}
+
+.practice-name {
+  padding-left: 5%;
+  font-weight: 600;
+  color: #000;
+  width: 50%;
+}
+
+.practice-date {
+  display: flex;
+  width: 20%;
+  justify-content: center;
+}
+
+.practice-time {
+  display: flex;
+  justify-content: center;
+  /* font-weight: 500; */
+  width: 10%;
+}
+
+.status {
+  display: flex;
+  justify-content: center;
+  width: 20%;
 }

@@ -122,13 +122,14 @@ function Dashboard() {
 
         // API 데이터 매핑
         const mappedData = data.map((item) => ({
+          id: item.id,
           icon1: folderIcon,
           projectName: item.name,
           roleModel: item.model?.name || "미지정",
           speechTime: `${item.min_time} ~ ${item.max_time} 분`,
           icon2: trashIcon,
         }));
-
+        console.log(mappedData);
         setProjects(mappedData); // 상태 업데이트
       } catch (err) {
         setError("Failed to fetch practices. Please try again later.");

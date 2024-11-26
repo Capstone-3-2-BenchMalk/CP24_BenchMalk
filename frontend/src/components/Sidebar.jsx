@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import logo from "../assets/benchmalk.png";
 import "../styles/Sidebar.css";
 import homeIcon from "../assets/icons/home-icon.png";
@@ -17,9 +17,33 @@ import moreIcon from "../assets/icons/more-icon.png";
 
 function Sidebar() {
   const location = useLocation();
-  const [isOpen, setOpen] = useState(false);
-
+  const navigate = useNavigate();
   const isActive = (path) => (location.pathname === path ? "active" : "");
+  const [projects, setProjects] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const response = await fetch("/api/v1/projects");
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        setProjects(data);
+      } catch (error) {
+        setError("Failed to fetch projects");
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchProjects();
+  }, []);
+
+  const handleProjectClick = (projectId) => {
+    navigate(`/project/${projectId}`);
+  };
 
   return (
     <div className="sidebar">
@@ -85,25 +109,36 @@ function Sidebar() {
             <img src={closeIcon} alt="Close Icon" className="sub-icon" />
           </div>
         </div>
+        <div className="project-list">
+          {loading ? (
+            <p>Loading...</p>
+          ) : error ? (
+            <p>{error}</p>
+          ) : (
+            projects.map((project) => (
+              <div
+                id={project.id}
+                className="project-item"
+                onClick={() => handleProjectClick(project.id)}
+              >
+                <img
+                  src={folderIcon}
+                  alt="Folder Icon"
+                  style={{ width: "15px" }}
+                  className="menu-icon"
+                />
+                <span>{project.name}</span>
+                <img
+                  src={moreIcon}
+                  className="sub-icon"
+                  style={{ marginLeft: "auto" }}
+                />
+              </div>
+            ))
+          )}
+        </div>
 
-        <Link to="/project" className={`sub-menu-item ${isActive("/project")}`}>
-          {/* <div className="sub-menu-item"> */}
-          <img
-            src={folderIcon}
-            alt="Folder Icon"
-            style={{ width: "15px" }}
-            className="menu-icon"
-          />
-          캡스톤 발표
-          <img
-            src={moreIcon}
-            className="sub-icon"
-            style={{ marginLeft: "auto" }}
-          />
-          {/* </div> */}
-        </Link>
-
-        <div className="sub-menu-item">
+        {/* <div className="sub-menu-item">
           <img
             src={folderIcon}
             alt="Folder Icon"
@@ -116,7 +151,7 @@ function Sidebar() {
             className="sub-icon"
             style={{ marginLeft: "auto" }}
           />
-        </div>
+        </div> */}
         <div className="menu-item">
           <img
             src={trashIcon}

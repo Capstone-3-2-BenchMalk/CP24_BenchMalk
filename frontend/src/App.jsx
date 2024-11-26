@@ -42,7 +42,7 @@ function AppContent() {
           <Route path="/signup" element={<Signup />} />{" "}
           <Route path="/dashboard" element={<Dashboard />} />{" "}
           <Route path="/createdraft" element={<CreateDraft />} />{" "}
-          <Route path="/project" element={<ProjectPage />} />{" "}
+          <Route path="/project/:projectId" element={<ProjectPage />} />{" "}
           <Route path="/createproject" element={<CreateProject />} />{" "}
         </Routes>
       </div>
