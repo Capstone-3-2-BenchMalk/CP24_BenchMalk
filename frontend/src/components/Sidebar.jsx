@@ -87,11 +87,7 @@ function Sidebar() {
       </div>
       <hr className="divider" />
       <div className="menu-section menu-cen">
-        <Link
-          to="/dashboard"
-          id="dashboard"
-          className={`menu-item ${isActive("/dashboard")}`}
-        >
+        <Link to="/dashboard" className={`menu-item ${isActive("/dashboard")}`}>
           <img
             src={homeIcon}
             alt="Home Icon"
