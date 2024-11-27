@@ -117,6 +117,7 @@ function Sidebar() {
           ) : (
             projects.map((project) => (
               <div
+                key={project.id}
                 id={project.id}
                 className="project-item"
                 onClick={() => handleProjectClick(project.id)}
@@ -137,21 +138,6 @@ function Sidebar() {
             ))
           )}
         </div>
-
-        {/* <div className="sub-menu-item">
-          <img
-            src={folderIcon}
-            alt="Folder Icon"
-            style={{ width: "15px" }}
-            className="menu-icon"
-          />
-          자기소개
-          <img
-            src={moreIcon}
-            className="sub-icon"
-            style={{ marginLeft: "auto" }}
-          />
-        </div> */}
         <div className="menu-item">
           <img
             src={trashIcon}
