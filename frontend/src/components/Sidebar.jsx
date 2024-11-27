@@ -87,7 +87,11 @@ function Sidebar() {
       </div>
       <hr className="divider" />
       <div className="menu-section menu-cen">
-        <Link to="/dashboard" className={`menu-item ${isActive("/dashboard")}`}>
+        <Link
+          to="/dashboard"
+          id="dashboard"
+          className={`menu-item ${isActive("/dashboard")}`}
+        >
           <img
             src={homeIcon}
             alt="Home Icon"
@@ -117,6 +121,7 @@ function Sidebar() {
           ) : (
             projects.map((project) => (
               <div
+                key={project.id}
                 id={project.id}
                 className="project-item"
                 onClick={() => handleProjectClick(project.id)}
@@ -137,21 +142,6 @@ function Sidebar() {
             ))
           )}
         </div>
-
-        {/* <div className="sub-menu-item">
-          <img
-            src={folderIcon}
-            alt="Folder Icon"
-            style={{ width: "15px" }}
-            className="menu-icon"
-          />
-          자기소개
-          <img
-            src={moreIcon}
-            className="sub-icon"
-            style={{ marginLeft: "auto" }}
-          />
-        </div> */}
         <div className="menu-item">
           <img
             src={trashIcon}
