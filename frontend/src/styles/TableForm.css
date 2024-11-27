@@ -30,7 +30,7 @@
 }
 
 .table-container {
-  width: 100%;
+  /* width: 100%; */
   flex: 1;
   min-height: 0;
   border-radius: 11px;
@@ -56,7 +56,7 @@
 
 .reusable-table td {
   padding-inline: 18px;
-  padding-block: 24px;
+  padding-block: 20px;
   border-bottom: 1px solid #bbc0fc;
   text-align: center;
   font-size: 15px;
