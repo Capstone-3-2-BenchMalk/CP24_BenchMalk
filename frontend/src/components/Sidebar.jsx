@@ -220,29 +220,35 @@ function Sidebar() {
           ) : error ? (
             <p>{error}</p>
           ) : (
-            projects.map((project) => (
-              <div
-                key={project.id}
-                id={project.id}
-                className={`project-item ${isActive(`/project/${project.id}`)}`}
-                onClick={() => handleProjectClick(project.id)}
-              >
-                <img
-                  src={folderIcon}
-                  alt="Folder Icon"
-                  style={{ width: "15px" }}
-                  className="menu-icon"
-                />
-                <span>{project.name}</span>
-                <img
-                  src={moreIcon}
-                  className="sub-icon"
-                  alt="sub-icon"
-                  style={{ marginLeft: "auto" }}
-                  // onClick={() => handleSubIconClick(project.id)}
-                />
-              </div>
-            ))
+            projects
+              .sort(
+                (a, b) => new Date(b.created_date) - new Date(a.created_date)
+              )
+              .map((project) => (
+                <div
+                  key={project.id}
+                  id={project.id}
+                  className={`project-item ${isActive(
+                    `/project/${project.id}`
+                  )}`}
+                  onClick={() => handleProjectClick(project.id)}
+                >
+                  <img
+                    src={folderIcon}
+                    alt="Folder Icon"
+                    style={{ width: "15px" }}
+                    className="menu-icon"
+                  />
+                  <span>{project.name}</span>
+                  <img
+                    src={moreIcon}
+                    className="sub-icon"
+                    alt="sub-icon"
+                    style={{ marginLeft: "auto" }}
+                    // onClick={() => handleSubIconClick(project.id)}
+                  />
+                </div>
+              ))
           )}
         </div>
         <div className="menu-item">
