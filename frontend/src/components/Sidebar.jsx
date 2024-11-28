@@ -23,6 +23,7 @@ function Sidebar() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isAdding, setIsAdding] = useState(false);
+  const [isPosting, setIsPosting] = useState(false);
   const [newProjectName, setNewProjectName] = useState("");
 
   useEffect(() => {
@@ -56,18 +57,43 @@ function Sidebar() {
   };
 
   const handleAddKeyDown = async (e) => {
+    console.log("Key Down:", e.key);
     if (e.key === "Escape") {
+      e.preventDefault();
       setIsAdding(false);
       setNewProjectName("");
     } else if (e.key === "Enter" && newProjectName.trim() !== "") {
-      try {
-        // TODO
-        // Post 보내고 결과 확인하고 해당 프로젝트로 이동
-        // 사이드 바에 해당 프로젝트 선택되어 있도록
-        setIsAdding(false);
-        setNewProjectName("");
-      } catch (err) {
-        console.error("Error adding project:", err);
+      e.preventDefault();
+      if (!isPosting) {
+        try {
+          setIsPosting(true);
+          const response = await fetch("/api/v1/projects", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              name: newProjectName,
+              min_time: 0,
+              max_time: 0,
+            }),
+          });
+          const data = await response.json();
+
+          if (response.ok) {
+            console.log("Post Project Successful", data);
+            setIsAdding(false);
+            setNewProjectName("");
+          } else {
+            throw new Error(
+              `Failed to add project: ${response.status} ${response.statusText}`
+            );
+          }
+        } catch (err) {
+          console.error("Error adding project:", err);
+        }
+      } else {
+        console.log("중복 호출 이겠지?");
       }
     }
   };
@@ -142,6 +168,7 @@ function Sidebar() {
               alt="Add Icon"
               className="sub-icon"
               onClick={handleAddClick}
+              role="button"
             />
             <img src={closeIcon} alt="Close Icon" className="sub-icon" />
           </div>
