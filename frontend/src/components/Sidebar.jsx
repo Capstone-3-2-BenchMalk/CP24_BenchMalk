@@ -119,7 +119,7 @@ function Sidebar() {
               <div
                 key={project.id}
                 id={project.id}
-                className="project-item"
+                className={`project-item ${isActive(`/project/${project.id}`)}`}
                 onClick={() => handleProjectClick(project.id)}
               >
                 <img
