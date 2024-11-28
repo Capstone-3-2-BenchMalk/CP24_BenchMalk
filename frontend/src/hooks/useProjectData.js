@@ -22,16 +22,21 @@ export function useProjectData(projectId) {
           projectName: projectData.name,
           targetTimeMin: projectData.min_time,
           targetTimeMax: projectData.max_time,
+          // createdDate: projectData.created_date,
         });
+        // .sort((a, b) => new Date(b.createdDate) - new Date(a.createdDate));
 
         setPractices(
-          practicesData.map((item) => ({
-            practiceId: item.id,
-            practiceName: item.name,
-            status: item.status || "N/A",
-            createdTime: formatCreatedTime(item.created_date),
-            duration: formatDuration(item.duration) || "N/A",
-          }))
+          practicesData
+            .map((item) => ({
+              practiceId: item.id,
+              practiceName: item.name,
+              status: item.status || "N/A",
+              createdTime: formatCreatedTime(item.created_date),
+              duration: formatDuration(item.duration) || "N/A",
+              createdDate: item.created_date,
+            }))
+            .sort((a, b) => new Date(b.createdDate) - new Date(a.createdDate))
         );
       } catch (error) {
         setError("데이터 불러오기 실패");

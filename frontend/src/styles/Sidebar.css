@@ -68,14 +68,14 @@
 }
 
 .menu-item:hover,
-.sub-menu-item:hover {
+.project-item:hover {
   background-color: #eeeff3;
   text-decoration: none;
 }
 
 /* 활성화된 메뉴의 배경색과 텍스트 스타일 */
 .menu-item.active,
-.sub-menu-item.active {
+.project-item.active {
   background-color: #eeeff3;
   /* color: #222222; */
 }
