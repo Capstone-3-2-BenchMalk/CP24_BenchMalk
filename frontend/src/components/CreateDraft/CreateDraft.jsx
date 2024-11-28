@@ -6,7 +6,7 @@ import DraftDropBox from "./DraftDropBox";
 function CreateDraft() {
   const [title, setTitle] = useState("");
   const [file, setFile] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [isloading, setLoading] = useState(false);
   const placeholder = (() => {
     const now = new Date();
     const month = String(now.getMonth() + 1).padStart(2, "0");
@@ -60,9 +60,9 @@ function CreateDraft() {
       <button
         className="cd-button"
         onClick={postPractice}
-        disabled={loading || !file}
+        disabled={isloading || !file}
       >
-        분석하기
+        {isloading ? "업로드 중..." : "분석하기"}
       </button>
     );
   }
@@ -95,7 +95,7 @@ function CreateDraft() {
         </div>
 
         <div className="cd-button-container">
-          <CreateDraftButton loading={loading} file={file} />
+          <CreateDraftButton loading={isloading} file={file} />
         </div>
       </div>
     </div>
