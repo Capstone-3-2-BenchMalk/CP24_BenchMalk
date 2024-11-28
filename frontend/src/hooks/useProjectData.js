@@ -26,14 +26,19 @@ export function useProjectData(projectId) {
           projectName: projectData.name,
           targetTimeMin: projectData.min_time,
           targetTimeMax: projectData.max_time,
-          // createdDate: projectData.created_date,
         });
-        // .sort((a, b) => new Date(b.createdDate) - new Date(a.createdDate));
-        setRoleModel({
-          audioUrl: `/api/v1/models/files/${projectData.model.id}`,
-          modelName: projectData.model.name,
-        });
-        // console.log("롤모델가보자");
+
+        if (projectData.model) {
+          setRoleModel({
+            audioUrl: `/api/v1/models/files/${projectData.model.id}`,
+            modelName: projectData.model.name,
+          });
+        } else {
+          setRoleModel({
+            audioUrl: "",
+            modelName: "",
+          });
+        }
 
         setPractices(
           practicesData
