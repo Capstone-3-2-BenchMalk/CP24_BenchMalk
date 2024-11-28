@@ -239,7 +239,7 @@ function Sidebar() {
                   className="sub-icon"
                   alt="sub-icon"
                   style={{ marginLeft: "auto" }}
-                  onClick={() => handleSubIconClick(project.id)}
+                  // onClick={() => handleSubIconClick(project.id)}
                 />
               </div>
             ))
