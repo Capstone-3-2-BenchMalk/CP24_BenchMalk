@@ -15,7 +15,11 @@ function ProjectPage() {
     useProjectData(projectId);
 
   const handleAddPractice = () => {
-    navigate("/createdraft");
+    navigate(
+      `/createdraft?projectId=${projectId}&roleModelName=${encodeURIComponent(
+        roleModel.modelName
+      )}&projectName=${encodeURIComponent(projectData.projectName)}`
+    );
   };
   const handleDeletePractice = (practiceId) => {
     // 연습 삭제 후 상태 업데이트
