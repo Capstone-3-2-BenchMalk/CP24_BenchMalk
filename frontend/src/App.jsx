@@ -38,12 +38,12 @@ function AppContent() {
       <div className={`content ${showSidebar ? "with-sidebar" : ""}`}>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />{" "}
-          <Route path="/signup" element={<Signup />} />{" "}
-          <Route path="/dashboard" element={<Dashboard />} />{" "}
-          <Route path="/createdraft" element={<CreateDraft />} />{" "}
-          <Route path="/project/:projectId" element={<ProjectPage />} />{" "}
-          <Route path="/createproject" element={<CreateProject />} />{" "}
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/createdraft" element={<CreateDraft />} />
+          <Route path="/project/:projectId" element={<ProjectPage />} />
+          <Route path="/createproject" element={<CreateProject />} />
         </Routes>
       </div>
     </div>
