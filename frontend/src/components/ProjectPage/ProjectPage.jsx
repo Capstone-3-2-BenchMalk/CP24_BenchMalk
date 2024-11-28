@@ -6,6 +6,7 @@ import { PracticeCard } from "./PracticeCard";
 import { useProjectData } from "../../hooks/useProjectData";
 import AudioPlayer from "./AudioPlayer";
 import sampleAudio from "../../assets/test.mp3";
+import SelectRoleModel from "./SelectRoleModel";
 
 function ProjectPage() {
   const navigate = useNavigate();
@@ -24,10 +25,6 @@ function ProjectPage() {
   };
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
-  // const modelData = {
-  //   audioUrl: sampleAudio,
-  //   modelName: "김민지 아나운서(8시 뉴스)",
-  // };
 
   return (
     <div className="pp-flex">
@@ -46,24 +43,33 @@ function ProjectPage() {
           </div>
         </button>
       </div>
-      <div className="pp-menu-container">
-        <div className="pp-menu-title">롤모델</div>
-        <AudioPlayer
-          audioUrl={roleModel.audioUrl}
-          modelName={roleModel.modelName || "김민지 아나운서(8시 뉴스)"}
-        />
-      </div>
+      {roleModel.audioUrl ? (
+        <div className="pp-menu-container">
+          <div className="pp-menu-title">롤모델</div>
+          <AudioPlayer
+            audioUrl={roleModel.audioUrl}
+            modelName={roleModel.modelName || "N/A"}
+          />
+        </div>
+      ) : (
+        <SelectRoleModel />
+      )}
+
       <div className="pp-menu-container">
         <div className="pp-menu-title">연습 목록</div>
-        <div className="pp-practice-list">
-          {practices.map((practice) => (
-            <PracticeCard
-              key={practice.practiceId}
-              data={practice}
-              onDelete={handleDeletePractice}
-            />
-          ))}
-        </div>
+        {practices.length === 0 ? (
+          <div className="empty-menu-message">연습을 추가하세요</div>
+        ) : (
+          <div className="pp-practice-list">
+            {practices.map((practice) => (
+              <PracticeCard
+                key={practice.practiceId}
+                data={practice}
+                onDelete={handleDeletePractice}
+              />
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
