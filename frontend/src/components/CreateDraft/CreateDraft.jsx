@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import "../../styles/CreateDraft.css";
 import DraftDropBox from "./DraftDropBox";
 
@@ -6,23 +7,34 @@ function CreateDraft() {
   const [title, setTitle] = useState("");
   const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(false);
-  const placeholder = "연습 기본 #num";
+  const placeholder = (() => {
+    const now = new Date();
+    const month = String(now.getMonth() + 1).padStart(2, "0");
+    const day = String(now.getDate()).padStart(2, "0");
+    const hours = String(now.getHours()).padStart(2, "0");
+    const minutes = String(now.getMinutes()).padStart(2, "0");
+    return `연습 ${month}/${day}-${hours}:${minutes}`;
+  })();
+  const [searchParams] = useSearchParams();
+  const projectId = searchParams.get("projectId");
+  const roleModelName = searchParams.get("roleModelName");
+  const projectName = searchParams.get("projectName");
+  const navigate = useNavigate();
 
   const postPractice = async (e) => {
     e.preventDefault();
     setLoading(true);
-    if (!title.trim()) {
-      setTitle(placeholder);
-    }
     const formData = new FormData();
     formData.append(
       "json",
       JSON.stringify({
-        projectid: "3",
-        name: "제발제발",
-        memo: "메모 없음1234",
+        projectid: projectId,
+        name: title.trim() || placeholder,
+        memo: "메모 일단 비워둠",
       })
     );
+    console.log(projectId);
+    console.log(title);
     formData.append("file", file);
 
     try {
@@ -33,7 +45,7 @@ function CreateDraft() {
       const data = await response.json();
       if (response.ok) {
         console.log(" Successful", data);
-        //TODO: 연습 상세 화면으로 넘어가기
+        navigate(`/project/${projectId}`);
       } else {
       }
     } catch (error) {
@@ -70,11 +82,11 @@ function CreateDraft() {
         <div className="cd-contents">
           <div className="cd-contents-items">
             <span className="cd-project-title">프로젝트</span>
-            <span className="cd-project-title-contents">프로젝트명</span>
+            <span className="cd-project-title-contents">{projectName}</span>
           </div>
           <div className="cd-contents-items">
             <span className="cd-project-title">롤모델</span>
-            <span>유현준</span>
+            <span>{roleModelName}</span>
           </div>
           <div className="cd-contents-items">
             <span className="cd-project-title">연습 방식</span>
