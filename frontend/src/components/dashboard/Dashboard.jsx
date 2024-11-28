@@ -14,11 +14,11 @@ function PracticeTable({ data }) {
       render: (value) => (
         <img src={value} alt="icon" style={{ width: "13px" }} />
       ),
-      style: { width: "4%", paddingRight: "0px" },
+      style: { width: "4%" },
     },
     { header: "연습명", accessor: "practiceName", style: { width: "20%" } },
-    { header: "프로젝트명", accessor: "projectName", style: { width: "20%" } },
-    { header: "롤모델", accessor: "roleModel", style: { width: "16%" } },
+    { header: "프로젝트명", accessor: "projectName", style: { width: "15%" } },
+    { header: "롤모델", accessor: "roleModel", style: { width: "15%" } },
     {
       header: "진행상태",
       accessor: "status",
@@ -27,9 +27,14 @@ function PracticeTable({ data }) {
           {value}
         </span>
       ),
+      style: { width: "20%" },
     },
-    { header: "연습 시각", accessor: "createdTime", style: { width: "15%" } },
-    { header: "길이", accessor: "duration", style: { width: "10%" } },
+    { header: "연습 시각", accessor: "createdTime", style: { width: "16%" } },
+    {
+      header: "길이",
+      accessor: "duration",
+      style: { width: "10%", marginRight: "10%" },
+    },
   ];
 
   return <TableForm columns={columns} data={data} />;
@@ -43,25 +48,22 @@ function ProjectTable({ data }) {
       render: (value) => (
         <img src={value} alt="icon" style={{ width: "17px" }} />
       ),
-      style: { width: "4%", paddingRight: "0px" },
+      style: { width: "5%" },
     },
     {
       header: "프로젝트명",
       accessor: "projectName",
-      style: { width: "20%" },
-    },
-    {
-      header: "",
+      style: { width: "35%" },
     },
     {
       header: "롤모델",
       accessor: "roleModel",
-      style: { width: "20%" },
+      style: { width: "30%" },
     },
     {
       header: "발표시간",
       accessor: "speechTime",
-      style: { width: "20%" },
+      style: { width: "25%" },
     },
     {
       header: "",
@@ -69,7 +71,7 @@ function ProjectTable({ data }) {
       render: (value) => (
         <img src={value} alt="icon" style={{ width: "15px" }} />
       ),
-      style: { width: "10%" },
+      style: { width: "5%" },
     },
   ];
 
@@ -93,15 +95,18 @@ function Dashboard() {
         const data = await response.json();
 
         // API 데이터 매핑
-        const mappedData = data.map((item) => ({
-          icon: recordIcon,
-          practiceName: item.name,
-          projectName: item.project.name,
-          roleModel: item.project.model?.name || "미지정",
-          status: item.status || "N/A",
-          createdTime: formatCreatedTime(item.created_date),
-          duration: formatDuration(item.duration),
-        }));
+        const mappedData = data
+          .map((item) => ({
+            icon: recordIcon,
+            practiceName: item.name,
+            projectName: item.project.name,
+            roleModel: item.project.model?.name || "미지정",
+            status: item.status || "N/A",
+            createdTime: formatCreatedTime(item.created_date),
+            duration: formatDuration(item.duration),
+            createdDate: item.created_date,
+          }))
+          .sort((a, b) => new Date(b.createdDate) - new Date(a.createdDate));
 
         setPractices(mappedData); // 상태 업데이트
       } catch (err) {
@@ -121,14 +126,18 @@ function Dashboard() {
         const data = await response.json();
 
         // API 데이터 매핑
-        const mappedData = data.map((item) => ({
-          id: item.id,
-          icon1: folderIcon,
-          projectName: item.name,
-          roleModel: item.model?.name || "미지정",
-          speechTime: `${item.min_time} ~ ${item.max_time} 분`,
-          icon2: trashIcon,
-        }));
+        const mappedData = data
+          .map((item) => ({
+            id: item.id,
+            icon1: folderIcon,
+            projectName: item.name,
+            roleModel: item.model?.name || "미지정",
+            speechTime: `${item.min_time} ~ ${item.max_time} 분`,
+            icon2: trashIcon,
+            createdDate: item.created_date,
+          }))
+          .sort((a, b) => new Date(b.createdDate) - new Date(a.createdDate));
+
         console.log(mappedData);
         setProjects(mappedData); // 상태 업데이트
       } catch (err) {
