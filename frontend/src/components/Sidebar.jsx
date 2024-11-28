@@ -48,6 +48,24 @@ function Sidebar() {
     navigate(`/project/${projectId}`);
   };
 
+  const handleSubIconClick = async (projectId) => {
+    try {
+      const response = await fetch(`/api/v1/projects/${projectId}`, {
+        method: "DELETE",
+      });
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      setProjects((prevProjects) =>
+        prevProjects.filter((project) => project.id !== projectId)
+      );
+      navigate(`/dashboard`);
+    } catch (error) {
+      console.error("Error deleting project:", error);
+      alert("프로젝트 삭제에 실패했습니다. 다시 시도해주세요.");
+    }
+  };
+
   const handleAddClick = () => {
     setIsAdding(true); // 입력창 표시
   };
@@ -219,7 +237,9 @@ function Sidebar() {
                 <img
                   src={moreIcon}
                   className="sub-icon"
+                  alt="sub-icon"
                   style={{ marginLeft: "auto" }}
+                  onClick={() => handleSubIconClick(project.id)}
                 />
               </div>
             ))
