@@ -22,6 +22,9 @@ function Sidebar() {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isAdding, setIsAdding] = useState(false);
+  const [isPosting, setIsPosting] = useState(false);
+  const [newProjectName, setNewProjectName] = useState("");
 
   useEffect(() => {
     const fetchProjects = async () => {
@@ -43,6 +46,82 @@ function Sidebar() {
 
   const handleProjectClick = (projectId) => {
     navigate(`/project/${projectId}`);
+  };
+
+  const handleSubIconClick = async (projectId) => {
+    try {
+      const response = await fetch(`/api/v1/projects/${projectId}`, {
+        method: "DELETE",
+      });
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      setProjects((prevProjects) =>
+        prevProjects.filter((project) => project.id !== projectId)
+      );
+      navigate(`/dashboard`);
+    } catch (error) {
+      console.error("Error deleting project:", error);
+      alert("프로젝트 삭제에 실패했습니다. 다시 시도해주세요.");
+    }
+  };
+
+  const handleAddClick = () => {
+    setIsAdding(true); // 입력창 표시
+  };
+
+  const handleAddInputChange = (e) => {
+    setNewProjectName(e.target.value);
+  };
+
+  const handleAddKeyDown = async (e) => {
+    console.log("Key Down:", e.key);
+    if (e.key === "Escape") {
+      e.preventDefault();
+      setIsAdding(false);
+      setNewProjectName("");
+    } else if (e.key === "Enter" && newProjectName.trim() !== "") {
+      e.preventDefault();
+      if (!isPosting) {
+        try {
+          setIsPosting(true);
+          const response = await fetch("/api/v1/projects", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              name: newProjectName,
+              min_time: 0,
+              max_time: 0,
+            }),
+          });
+          const data = await response.json();
+
+          if (response.ok) {
+            console.log("Post Project Successful", data);
+            setIsPosting(false);
+            setProjects((prevProjects) => [...prevProjects, data]);
+            navigate(`/project/${data.id}`);
+            setIsAdding(false);
+            setNewProjectName("");
+          } else {
+            throw new Error(
+              `Failed to add project: ${response.status} ${response.statusText}`
+            );
+          }
+        } catch (err) {
+          console.error("Error adding project:", err);
+        }
+      } else {
+        console.log("중복 호출 이겠지?");
+      }
+    }
+  };
+
+  const handleAddBlur = async () => {
+    setIsAdding(false);
+    setNewProjectName("");
   };
 
   return (
@@ -105,10 +184,36 @@ function Sidebar() {
           />
           전체 프로젝트
           <div className="icon-box">
-            <img src={addIcon} alt="Add Icon" className="sub-icon" />
+            <img
+              src={addIcon}
+              alt="Add Icon"
+              className="sub-icon"
+              onClick={handleAddClick}
+              role="button"
+            />
             <img src={closeIcon} alt="Close Icon" className="sub-icon" />
           </div>
         </div>
+        {isAdding && (
+          <div className="project-item">
+            <img
+              src={folderIcon}
+              alt="Folder Icon"
+              style={{ width: "15px" }}
+              className="menu-icon"
+            />
+            <input
+              type="text"
+              value={newProjectName}
+              onChange={handleAddInputChange}
+              onKeyDown={handleAddKeyDown}
+              onBlur={handleAddBlur}
+              placeholder="프로젝트 이름"
+              autoFocus
+              className="project-input"
+            />
+          </div>
+        )}
         <div className="project-list">
           {loading ? (
             <p>Loading...</p>
@@ -132,7 +237,9 @@ function Sidebar() {
                 <img
                   src={moreIcon}
                   className="sub-icon"
+                  alt="sub-icon"
                   style={{ marginLeft: "auto" }}
+                  onClick={() => handleSubIconClick(project.id)}
                 />
               </div>
             ))
