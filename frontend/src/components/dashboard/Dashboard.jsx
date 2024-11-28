@@ -5,7 +5,11 @@ import recordIcon from "../../assets/icons/record-icon.png";
 import "../../styles/Dashboard.css";
 import folderIcon from "../../assets/icons/folder-icon.png";
 import trashIcon from "../../assets/icons/trash-icon.png";
-import { formatCreatedTime, formatDuration } from "../../utils/fomatters";
+import {
+  formatCreatedTime,
+  formatDuration,
+  formatCreatedDate,
+} from "../../utils/fomatters";
 
 function PracticeTable({ data }) {
   const columns = [
@@ -63,12 +67,17 @@ function ProjectTable({ data, onDelete }) {
     {
       header: "롤모델",
       accessor: "roleModel",
-      style: { width: "30%" },
+      style: { width: "20%" },
     },
     {
       header: "발표시간",
       accessor: "speechTime",
-      style: { width: "25%" },
+      style: { width: "20%" },
+    },
+    {
+      header: "생성날짜",
+      accessor: "createdDate",
+      style: { width: "15%" },
     },
     {
       header: "",
@@ -130,9 +139,9 @@ function Dashboard() {
             status: item.status || "N/A",
             createdTime: formatCreatedTime(item.created_date),
             duration: formatDuration(item.duration),
-            createdDate: item.created_date,
+            sortDate: item.created_date,
           }))
-          .sort((a, b) => new Date(b.createdDate) - new Date(a.createdDate));
+          .sort((a, b) => new Date(b.sortDate) - new Date(a.sortDate));
 
         setPractices(mappedData); // 상태 업데이트
       } catch (err) {
@@ -159,10 +168,11 @@ function Dashboard() {
             projectName: item.name,
             roleModel: item.model?.name || "미지정",
             speechTime: `${item.min_time} ~ ${item.max_time} 분`,
+            createdDate: formatCreatedDate(item.created_date),
             icon2: trashIcon,
-            createdDate: item.created_date,
+            sortDate: item.created_date,
           }))
-          .sort((a, b) => new Date(b.createdDate) - new Date(a.createdDate));
+          .sort((a, b) => new Date(b.sortDate) - new Date(a.sortDate));
 
         console.log(mappedData);
         setProjects(mappedData); // 상태 업데이트

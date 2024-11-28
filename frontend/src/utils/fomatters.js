@@ -17,3 +17,11 @@ export const formatCreatedTime = (isoDate) => {
     "0"
   )}.${String(date.getDate()).padStart(2, "0")} ${hours}:${minutes}`;
 };
+
+export const formatCreatedDate = (isoDate) => {
+  const date = new Date(isoDate);
+  return `${date.getFullYear()}.${String(date.getMonth() + 1).padStart(
+    2,
+    "0"
+  )}.${String(date.getDate()).padStart(2, "0")}`;
+};
