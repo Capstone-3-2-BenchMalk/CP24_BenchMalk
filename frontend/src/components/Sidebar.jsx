@@ -101,7 +101,7 @@ function Sidebar() {
           if (response.ok) {
             console.log("Post Project Successful", data);
             setIsPosting(false);
-            setProjects((prevProjects) => [...prevProjects, data]);
+            setProjects((prevProjects) => [data, ...prevProjects]);
             navigate(`/project/${data.id}`);
             setIsAdding(false);
             setNewProjectName("");
