@@ -4,11 +4,13 @@ import "../../styles/ProjectPage.css";
 import plusPurple from "../../assets/icons/plus-purple-icon.png";
 import { PracticeCard } from "./PracticeCard";
 import { useProjectData } from "../../hooks/useProjectData";
+import AudioPlayer from "./AudioPlayer";
+import sampleAudio from "../../assets/test.mp3";
 
 function ProjectPage() {
   const navigate = useNavigate();
   const { projectId } = useParams();
-  const { projectData, practices, setPractices, loading, error } =
+  const { projectData, practices, roleModel, setPractices, loading, error } =
     useProjectData(projectId);
 
   const handleAddPractice = () => {
@@ -22,6 +24,10 @@ function ProjectPage() {
   };
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
+  // const modelData = {
+  //   audioUrl: sampleAudio,
+  //   modelName: "김민지 아나운서(8시 뉴스)",
+  // };
 
   return (
     <div className="pp-flex">
@@ -40,8 +46,15 @@ function ProjectPage() {
           </div>
         </button>
       </div>
-      <div className="pp-practice-container">
-        <div className="pp-practice-title">연습 목록</div>
+      <div className="pp-menu-container">
+        <div className="pp-menu-title">롤모델</div>
+        <AudioPlayer
+          audioUrl={roleModel.audioUrl}
+          modelName={roleModel.modelName || "김민지 아나운서(8시 뉴스)"}
+        />
+      </div>
+      <div className="pp-menu-container">
+        <div className="pp-menu-title">연습 목록</div>
         <div className="pp-practice-list">
           {practices.map((practice) => (
             <PracticeCard

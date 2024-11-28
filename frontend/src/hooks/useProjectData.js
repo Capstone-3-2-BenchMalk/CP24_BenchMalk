@@ -9,6 +9,10 @@ export function useProjectData(projectId) {
     targetTimeMax: 0,
   });
   const [practices, setPractices] = useState([]);
+  const [roleModel, setRoleModel] = useState({
+    audioUrl: "",
+    modelName: "",
+  });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -25,6 +29,11 @@ export function useProjectData(projectId) {
           // createdDate: projectData.created_date,
         });
         // .sort((a, b) => new Date(b.createdDate) - new Date(a.createdDate));
+        setRoleModel({
+          audioUrl: `/api/v1/models/files/${projectData.model.id}`,
+          modelName: projectData.model.name,
+        });
+        // console.log("롤모델가보자");
 
         setPractices(
           practicesData
@@ -50,5 +59,5 @@ export function useProjectData(projectId) {
       fetchData();
     }
   }, [projectId]);
-  return { projectData, practices, setPractices, loading, error };
+  return { projectData, practices, roleModel, setPractices, loading, error };
 }
