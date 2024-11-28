@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import TableForm from "./TableForm";
 import recordIcon from "../../assets/icons/record-icon.png";
 import "../../styles/Dashboard.css";
@@ -40,7 +41,11 @@ function PracticeTable({ data }) {
   return <TableForm columns={columns} data={data} />;
 }
 
-function ProjectTable({ data }) {
+function ProjectTable({ data, onDelete }) {
+  const navigate = useNavigate();
+  const handleRowClick = (projectId) => {
+    navigate(`/project/${projectId}`);
+  };
   const columns = [
     {
       header: "",
@@ -68,14 +73,35 @@ function ProjectTable({ data }) {
     {
       header: "",
       accessor: "icon2",
-      render: (value) => (
-        <img src={value} alt="icon" style={{ width: "15px" }} />
+      render: (value, row) => (
+        <img
+          src={value}
+          alt="delete"
+          style={{ width: "15px", cursor: "pointer" }}
+          onClick={(e) => handleDelete(e, row.projectId)}
+        />
       ),
       style: { width: "5%" },
     },
   ];
-
-  return <TableForm columns={columns} data={data} />;
+  const handleDelete = async (e, projectId) => {
+    e.stopPropagation();
+    try {
+      const response = await fetch(`/api/v1/projects/${projectId}`, {
+        method: "DELETE",
+      });
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      onDelete(projectId);
+    } catch (error) {
+      console.error("Error deleting project:", error);
+      alert("프로젝트 삭제에 실패했습니다. 다시 시도해주세요.");
+    }
+  };
+  return (
+    <TableForm columns={columns} data={data} onRowClick={handleRowClick} />
+  );
 }
 
 function Dashboard() {
@@ -128,7 +154,7 @@ function Dashboard() {
         // API 데이터 매핑
         const mappedData = data
           .map((item) => ({
-            id: item.id,
+            projectId: item.id,
             icon1: folderIcon,
             projectName: item.name,
             roleModel: item.model?.name || "미지정",
@@ -152,6 +178,10 @@ function Dashboard() {
     fetchProjects();
   }, []);
 
+  const handleDeleteProject = (projectId) => {
+    setProjects(projects.filter((project) => project.projectId !== projectId));
+  };
+
   return (
     <div className="dashboard-container">
       <section className="practice-section">
@@ -171,7 +201,7 @@ function Dashboard() {
         ) : error ? (
           <p className="error">{error}</p>
         ) : (
-          <ProjectTable data={projects} />
+          <ProjectTable data={projects} onDelete={handleDeleteProject} />
         )}
       </section>
     </div>
