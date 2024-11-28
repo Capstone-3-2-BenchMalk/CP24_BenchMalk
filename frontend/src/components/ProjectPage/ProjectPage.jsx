@@ -5,7 +5,6 @@ import plusPurple from "../../assets/icons/plus-purple-icon.png";
 import { PracticeCard } from "./PracticeCard";
 import { useProjectData } from "../../hooks/useProjectData";
 import AudioPlayer from "./AudioPlayer";
-import sampleAudio from "../../assets/test.mp3";
 import SelectRoleModel from "./SelectRoleModel";
 
 function ProjectPage() {
