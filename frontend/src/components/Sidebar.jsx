@@ -22,6 +22,8 @@ function Sidebar() {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isAdding, setIsAdding] = useState(false);
+  const [newProjectName, setNewProjectName] = useState("");
 
   useEffect(() => {
     const fetchProjects = async () => {
@@ -43,6 +45,36 @@ function Sidebar() {
 
   const handleProjectClick = (projectId) => {
     navigate(`/project/${projectId}`);
+  };
+
+  const handleAddClick = () => {
+    setIsAdding(true); // 입력창 표시
+  };
+
+  const handleAddInputChange = (e) => {
+    setNewProjectName(e.target.value);
+  };
+
+  const handleAddKeyDown = async (e) => {
+    if (e.key === "Escape") {
+      setIsAdding(false);
+      setNewProjectName("");
+    } else if (e.key === "Enter" && newProjectName.trim() !== "") {
+      try {
+        // TODO
+        // Post 보내고 결과 확인하고 해당 프로젝트로 이동
+        // 사이드 바에 해당 프로젝트 선택되어 있도록
+        setIsAdding(false);
+        setNewProjectName("");
+      } catch (err) {
+        console.error("Error adding project:", err);
+      }
+    }
+  };
+
+  const handleAddBlur = async () => {
+    setIsAdding(false);
+    setNewProjectName("");
   };
 
   return (
@@ -105,10 +137,35 @@ function Sidebar() {
           />
           전체 프로젝트
           <div className="icon-box">
-            <img src={addIcon} alt="Add Icon" className="sub-icon" />
+            <img
+              src={addIcon}
+              alt="Add Icon"
+              className="sub-icon"
+              onClick={handleAddClick}
+            />
             <img src={closeIcon} alt="Close Icon" className="sub-icon" />
           </div>
         </div>
+        {isAdding && (
+          <div className="project-item">
+            <img
+              src={folderIcon}
+              alt="Folder Icon"
+              style={{ width: "15px" }}
+              className="menu-icon"
+            />
+            <input
+              type="text"
+              value={newProjectName}
+              onChange={handleAddInputChange}
+              onKeyDown={handleAddKeyDown}
+              onBlur={handleAddBlur}
+              placeholder="프로젝트 이름"
+              autoFocus
+              className="project-input"
+            />
+          </div>
+        )}
         <div className="project-list">
           {loading ? (
             <p>Loading...</p>
