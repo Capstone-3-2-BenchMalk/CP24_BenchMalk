@@ -70,10 +70,6 @@ function AudioPlayer({ audioUrl, modelName }) {
     updateProgress(newTime);
   };
 
-  // if (!audioUrl) {
-  //   return <div className="empty-menu-message">롤모델을 설정하세요</div>;
-  // }
-
   return (
     <div className="audio-player">
       <div className="model-info">
