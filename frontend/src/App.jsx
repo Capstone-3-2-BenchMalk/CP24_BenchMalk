@@ -44,6 +44,7 @@ function AppContent() {
           <Route path="/createdraft" element={<CreateDraft />} />
           <Route path="/project/:projectId" element={<ProjectPage />} />
           <Route path="/createproject" element={<CreateProject />} />
+          <Route path="/createproject/:projectId" element={<CreateProject />} />
         </Routes>
       </div>
     </div>
