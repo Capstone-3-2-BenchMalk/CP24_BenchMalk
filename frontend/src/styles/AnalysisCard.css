@@ -1,0 +1,35 @@
+.analysis-card {
+  padding: 20px;
+  border-radius: 8px;
+  background-color: white;
+}
+
+.analysis-card-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.analysis-content {
+  display: flex;
+  gap: 40px;
+}
+
+.analysis-section,
+.achievement-section {
+  flex: 1;
+}
+
+.analysis-section h3,
+.achievement-section h3 {
+  font-size: 16px;
+  margin-bottom: 15px;
+  color: #666;
+}
+
+.analysis-section div,
+.achievement-section div {
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: #333;
+}

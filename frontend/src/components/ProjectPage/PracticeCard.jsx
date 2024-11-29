@@ -2,7 +2,7 @@ import React from "react";
 import trashIcon from "../../assets/icons/trash-icon.png";
 import recordIcon from "../../assets/icons/record-icon.png";
 
-export function PracticeCard({ data, onDelete }) {
+export function PracticeCard({ data, onDelete, onClick, isSelected }) {
   const handleDelete = async (e) => {
     e.stopPropagation(); // 카드 클릭 이벤트와 분리
     try {
@@ -20,7 +20,10 @@ export function PracticeCard({ data, onDelete }) {
     }
   };
   return (
-    <div className="pp-practice-card">
+    <div
+      className={`pp-practice-card ${isSelected ? "selected" : ""}`}
+      onClick={onClick}
+    >
       <div className="practice-card-icon">
         <img src={recordIcon} alt="record" style={{ width: "12px" }} />
       </div>

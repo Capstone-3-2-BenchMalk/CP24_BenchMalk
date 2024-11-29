@@ -25,6 +25,16 @@ export const projectPageApi = {
     return response.json();
   },
 
+  async fetchAnalysis(practiceId) {
+    const response = await fetch(`/api/v1/practices/${practiceId}`, {
+      method: "GET",
+    });
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    return response.json();
+  },
+
   // async getRoleModel(modelId) {
   //   console.log("롤모델가보자");
   //   const response = await fetch(`/api/v1/models/files/${modelId}`, {

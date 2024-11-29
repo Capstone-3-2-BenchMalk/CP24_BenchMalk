@@ -120,6 +120,10 @@
   border-bottom: none;
 }
 
+.pp-practice-card.selected {
+  background-color: #f0f0f0;
+}
+
 .practice-card-icon {
   display: flex;
   align-items: center;
