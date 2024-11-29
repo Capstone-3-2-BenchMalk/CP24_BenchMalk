@@ -75,7 +75,6 @@ function Sidebar() {
   };
 
   const handleAddKeyDown = async (e) => {
-    console.log("Key Down:", e.key);
     if (e.key === "Escape") {
       e.preventDefault();
       setIsAdding(false);
@@ -99,7 +98,10 @@ function Sidebar() {
           const data = await response.json();
 
           if (response.ok) {
-            console.log("Post Project Successful", data);
+            console.log(
+              "Sidebar - handleAddKeyDown - Post Project Successful",
+              data
+            );
             setIsPosting(false);
             setProjects((prevProjects) => [data, ...prevProjects]);
             navigate(`/project/${data.id}`);
@@ -114,7 +116,7 @@ function Sidebar() {
           console.error("Error adding project:", err);
         }
       } else {
-        console.log("중복 호출 이겠지?");
+        console.log("handleAddKeyDown API POST 중복 호출");
       }
     }
   };

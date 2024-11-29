@@ -35,8 +35,10 @@ function SelectRoleModel({}) {
         }));
 
         setRoleModelList(mappedData); // 상태 업데이트
-        console.log(data);
-        console.log(mappedData);
+        console.log(
+          "Select Role Model - fetch Practice Response mappeddata ",
+          mappedData
+        );
       } catch (err) {
         console.error(err);
       } finally {
@@ -65,12 +67,12 @@ function SelectRoleModel({}) {
 
       const data = await response.json();
 
-      console.log("API Response:", data);
+      console.log("Select Role Model - API Response:", data);
       // 강제 새로고침
       // CreateProject에서 isSelected 관련 State 추가하기
       window.location.reload();
     } catch (error) {
-      console.error("Error sending API request:", error);
+      console.error("Select Role Model - Error sending API request:", error);
       alert("Failed to select role model.");
     }
   };
@@ -114,7 +116,7 @@ function SelectRoleModel({}) {
         );
       }
 
-      console.log("POST successful:", postData);
+      console.log("Select Role Model - RoleModel POST successful:", postData);
 
       // 2. Response - rolemodel id 받아오기
       const { id: modelId } = postData;
@@ -137,7 +139,7 @@ function SelectRoleModel({}) {
       }
 
       const patchData = await patchResponse.json();
-      console.log("PATCH successful:", patchData);
+      console.log("Selec Role Model - PATCH Project successful:", patchData);
 
       // 강제 새로고침
       // CreateProject에서 isSelected 관련 State 추가하기
