@@ -11,23 +11,32 @@ function AnalysisCard({ practiceId, modelId }) {
     error: modelError,
   } = useModelData(modelId);
 
-  if (loading || modelLoading) return <div>로딩중...</div>;
-  if (error || modelError) return <div>{error || modelError}</div>;
-  if (!analysisData || !achievement)
-    return <div>분석 데이터가 진짜 없습니다.</div>;
+  if (loading) return <div>연습 데이터 로딩중...</div>;
+  if (error) return <div>{error}</div>;
+  if (!analysisData || !achievement) return <div>분석 데이터가 없습니다.</div>;
 
   return (
     <div className="analysis-card">
       <div className="analysis-card-title">분석 결과</div>
       <div className="analysis-content">
-        <div className="analysis-section">
-          <h3>롤모델 분석 데이터</h3>
-          <div>말하기 속도: {modelData?.wpm || 0}</div>
-          <div>음성 높낮이: {modelData?.pitch || 0}</div>
-          <div>쉼: {modelData?.rest || 0}</div>
-          <div>에너지: {modelData?.energy || 0}</div>
-          <div>자신감: {modelData?.confidence || 0}</div>
-        </div>
+        {modelId && (
+          <div className="analysis-section">
+            <h3>롤모델 분석 데이터</h3>
+            {modelLoading ? (
+              <div>롤모델 데이터 로딩중...</div>
+            ) : modelError ? (
+              <div>{modelError}</div>
+            ) : (
+              <>
+                <div>말하기 속도: {modelData?.wpm || 0}</div>
+                <div>음성 높낮이: {modelData?.pitch || 0}</div>
+                <div>쉼: {modelData?.rest || 0}</div>
+                <div>에너지: {modelData?.energy || 0}</div>
+                <div>자신감: {modelData?.confidence || 0}</div>
+              </>
+            )}
+          </div>
+        )}
         <div className="analysis-section">
           <h3>내 연습 분석 데이터</h3>
           <div>말하기 속도: {analysisData?.wpm || 0}</div>

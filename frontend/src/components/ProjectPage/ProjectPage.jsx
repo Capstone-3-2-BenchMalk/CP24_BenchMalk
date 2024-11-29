@@ -96,11 +96,15 @@ function ProjectPage() {
       </div>
       <div className="pp-menu-container">
         <div className="pp-menu-title">분석 결과</div>
-        {selectedPracticeId && (
+        {selectedPracticeId && projectData.modelId ? (
           <AnalysisCard
             practiceId={selectedPracticeId}
             modelId={projectData.modelId}
           />
+        ) : selectedPracticeId && !projectData.modelId ? (
+          <div className="empty-menu-message">롤모델을 먼저 설정해주세요</div>
+        ) : (
+          <div className="empty-menu-message">연습을 선택해주세요</div>
         )}
       </div>
     </div>
