@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import "../../styles/ProjectPage.css";
 import plusPurple from "../../assets/icons/plus-purple-icon.png";
 import { PracticeCard } from "./PracticeCard";
-import { useProjectData } from "../../hooks/useProjectData";
+import { useProjectData, useModelData } from "../../hooks/useProjectData";
 import AudioPlayer from "./AudioPlayer";
 import SelectRoleModel from "./SelectRoleModel";
 import AnalysisCard from "./AnalysisCard";
@@ -14,6 +14,11 @@ function ProjectPage() {
   const { projectData, practices, roleModel, setPractices, loading, error } =
     useProjectData(projectId);
   const [selectedPracticeId, setSelectedPracticeId] = useState(null);
+  const {
+    modelData,
+    loading: modelLoading,
+    error: modelError,
+  } = useModelData(projectData.modelId);
 
   useEffect(() => {
     if (practices.length > 0) {
@@ -91,7 +96,12 @@ function ProjectPage() {
       </div>
       <div className="pp-menu-container">
         <div className="pp-menu-title">분석 결과</div>
-        {selectedPracticeId && <AnalysisCard practiceId={selectedPracticeId} />}
+        {selectedPracticeId && (
+          <AnalysisCard
+            practiceId={selectedPracticeId}
+            modelId={projectData.modelId}
+          />
+        )}
       </div>
     </div>
   );

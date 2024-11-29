@@ -26,6 +26,7 @@ export function useProjectData(projectId) {
           projectName: projectData.name,
           targetTimeMin: projectData.min_time,
           targetTimeMax: projectData.max_time,
+          modelId: projectData.model.id,
         });
 
         if (projectData.model) {
@@ -125,4 +126,45 @@ export function usePracticeData(practiceId) {
   }, [practiceId]);
 
   return { analysisData, achievement, loading, error };
+}
+
+export function useModelData(modelId) {
+  const [modelData, setModelData] = useState({
+    wpm: 0,
+    pitch: 0,
+    rest: 0,
+    energy: 0,
+    confidence: 0,
+  });
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    async function fetchModelData() {
+      try {
+        const data = await projectPageApi.fetchRoleModel(modelId);
+
+        if (data?.analysis) {
+          setModelData({
+            wpm: data.analysis.wpm || 0,
+            pitch: data.analysis.pitch || 0,
+            rest: data.analysis.rest || 0,
+            energy: data.analysis.energy || 0,
+            confidence: data.analysis.confidence || 0,
+          });
+        }
+      } catch (error) {
+        setError("모델 데이터 불러오기 실패");
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    if (modelId) {
+      fetchModelData();
+    }
+  }, [modelId]);
+
+  return { modelData, loading, error };
 }
