@@ -26,7 +26,7 @@ export function useProjectData(projectId) {
           projectName: projectData.name,
           targetTimeMin: projectData.min_time,
           targetTimeMax: projectData.max_time,
-          modelId: projectData.model.id,
+          modelId: projectData.model?.id || null,
         });
 
         if (projectData.model) {
