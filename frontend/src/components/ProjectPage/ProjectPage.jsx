@@ -6,12 +6,20 @@ import { PracticeCard } from "./PracticeCard";
 import { useProjectData } from "../../hooks/useProjectData";
 import AudioPlayer from "./AudioPlayer";
 import SelectRoleModel from "./SelectRoleModel";
+import AnalysisCard from "./AnalysisCard";
 
 function ProjectPage() {
   const navigate = useNavigate();
   const { projectId } = useParams();
   const { projectData, practices, roleModel, setPractices, loading, error } =
     useProjectData(projectId);
+  const [selectedPracticeId, setSelectedPracticeId] = useState(null);
+
+  useEffect(() => {
+    if (practices.length > 0) {
+      setSelectedPracticeId(practices[0].practiceId);
+    }
+  }, [practices]);
 
   const handleAddPractice = () => {
     navigate(
@@ -20,12 +28,18 @@ function ProjectPage() {
       )}&projectName=${encodeURIComponent(projectData.projectName)}`
     );
   };
+
   const handleDeletePractice = (practiceId) => {
-    // 연습 삭제 후 상태 업데이트
     setPractices(
       practices.filter((practice) => practice.practiceId !== practiceId)
     );
   };
+
+  const handlePracticeSelect = (practiceId) => {
+    setSelectedPracticeId(practiceId);
+    console.log(practiceId);
+  };
+
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
 
@@ -57,7 +71,6 @@ function ProjectPage() {
       ) : (
         <SelectRoleModel />
       )}
-
       <div className="pp-menu-container">
         <div className="pp-menu-title">연습 목록</div>
         {practices.length === 0 ? (
@@ -69,10 +82,16 @@ function ProjectPage() {
                 key={practice.practiceId}
                 data={practice}
                 onDelete={handleDeletePractice}
+                onClick={() => handlePracticeSelect(practice.practiceId)}
+                isSelected={practice.practiceId === selectedPracticeId}
               />
             ))}
           </div>
         )}
+      </div>
+      <div className="pp-menu-container">
+        <div className="pp-menu-title">분석 결과</div>
+        {selectedPracticeId && <AnalysisCard practiceId={selectedPracticeId} />}
       </div>
     </div>
   );
