@@ -159,10 +159,17 @@ function SelectRoleModel({}) {
     );
   }
 
-  function RoleModelCard({ index, title, onClick }) {
+  function RoleModelCard({ key, title, type, duration, analysis, onClick }) {
     return (
-      <div key={index} className="cp-rolemodel-card" onClick={onClick}>
+      <div key={key} className="cp-rolemodel-card" onClick={onClick}>
         <div>{title}</div>
+        <div>{"Type:        " + type}</div>
+        <div>{"Duration:    " + duration}</div>
+        <div>{"WPM:         " + analysis.wpm}</div>
+        <div>{"Pitch:       " + analysis.pitch}</div>
+        <div>{"Rest:        " + analysis.rest}</div>
+        <div>{"Energy:      " + analysis.energy}</div>
+        <div>{"Confidence:  " + analysis.confidence}</div>
       </div>
     );
   }
@@ -186,7 +193,6 @@ function SelectRoleModel({}) {
             <RoleModelCard
               className=".cp-rolemodel-card"
               key={rolemodel.id}
-              index={rolemodel.id}
               title={rolemodel.name}
               type={rolemodel.type}
               userid={rolemodel.userid}
