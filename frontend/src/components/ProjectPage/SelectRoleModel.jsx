@@ -4,11 +4,10 @@ import "../../styles/CreateProject.css";
 import DraftDropBox from "../CreateDraft/DraftDropBox";
 
 function SelectRoleModel({}) {
-  const navigate = useNavigate();
   const [file, setFile] = useState(null);
   const [rolemodelList, setRoleModelList] = useState([]);
-  const [isOpen, setIsOpen] = useState(false);
   const { projectId } = useParams();
+  const [isLoading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchPractices = async () => {
@@ -46,13 +45,6 @@ function SelectRoleModel({}) {
     fetchPractices();
   }, []);
 
-  const hModalOpen = () => {
-    setIsOpen(true);
-  };
-  const hCloseModal = () => {
-    setIsOpen(false);
-  };
-
   const hCardClick = async (roleModelId) => {
     try {
       const response = await fetch(`/api/v1/projects`, {
@@ -83,6 +75,81 @@ function SelectRoleModel({}) {
     }
   };
 
+  const hSelectRoleModelButton = async (e) => {
+    // 1. Role Model Post 요청
+    // 2. Response - rolemodel id 받아오기
+    // 3. Patch Project 요청
+    e.preventDefault();
+
+    // 1. Role Model Post 요청
+    if (!file) {
+      alert("Please select a file to upload.");
+      return;
+    }
+
+    setLoading(true);
+
+    const formData = new FormData();
+    formData.append(
+      "json",
+      JSON.stringify({
+        name: file.name,
+        type: "PROVIDED",
+        description: "기본 설명",
+      })
+    );
+    formData.append("file", file);
+
+    try {
+      const postResponse = await fetch("/api/v1/models", {
+        method: "POST",
+        body: formData,
+      });
+
+      const postData = await postResponse.json();
+
+      if (!postResponse.ok) {
+        throw new Error(
+          `POST request failed with status ${postResponse.status}`
+        );
+      }
+
+      console.log("POST successful:", postData);
+
+      // 2. Response - rolemodel id 받아오기
+      const { id: modelId } = postData;
+      const patchResponse = await fetch(`/api/v1/projects`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          projectid: projectId,
+          name: "", // 필요한 경우 설정
+          modeilid: modelId, // POST 응답에서 추출한 ID
+        }),
+      });
+
+      if (!patchResponse.ok) {
+        throw new Error(
+          `PATCH request failed with status ${patchResponse.status}`
+        );
+      }
+
+      const patchData = await patchResponse.json();
+      console.log("PATCH successful:", patchData);
+
+      // 강제 새로고침
+      // CreateProject에서 isSelected 관련 State 추가하기
+      window.location.reload();
+    } catch (error) {
+      console.error("Error during API requests:", error);
+      alert("Failed to process request. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   function CreateRoleModel({ file, setFile }) {
     return (
       <div className="cp-createRoleModel">
@@ -103,10 +170,10 @@ function SelectRoleModel({}) {
     return (
       <button
         className="cp-button"
-        onClick={() => {}}
-        disabled={false || !file}
+        onClick={hSelectRoleModelButton}
+        disabled={isLoading || !file}
       >
-        {false ? "업로드 중..." : "생성 하기"}
+        {isLoading ? "업로드 중..." : "생성 하기"}
       </button>
     );
   }
