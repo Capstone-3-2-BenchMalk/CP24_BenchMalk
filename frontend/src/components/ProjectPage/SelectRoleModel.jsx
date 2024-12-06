@@ -57,7 +57,7 @@ function SelectRoleModel({}) {
         body: JSON.stringify({
           projectid: projectId,
           name: "",
-          modeilid: roleModelId,
+          modelid: roleModelId,
         }),
       });
 
@@ -128,7 +128,7 @@ function SelectRoleModel({}) {
         body: JSON.stringify({
           projectid: projectId,
           name: "", // 필요한 경우 설정
-          modeilid: modelId, // POST 응답에서 추출한 ID
+          modelid: modelId, // POST 응답에서 추출한 ID
         }),
       });
 
