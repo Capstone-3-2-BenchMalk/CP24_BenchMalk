@@ -50,11 +50,9 @@ export function useProjectData(projectId) {
               createdTime: formatCreatedTime(item.created_date),
               duration: formatDuration(item.duration) || "N/A",
               createdDate: item.created_date,
-              // analysis: item.analysis.wpm,
             }))
             .sort((a, b) => new Date(b.createdDate) - new Date(a.createdDate))
         );
-        // console.log(practicesData.analysis);
       } catch (error) {
         setError("데이터 불러오기 실패");
         console.error(error);

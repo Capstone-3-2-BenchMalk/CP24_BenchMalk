@@ -95,9 +95,13 @@ function ProjectPage() {
         )}
       </div>
       <div className="pp-menu-container">
-        <div className="pp-menu-title">분석 결과</div>
+        <div className="pp-menu-title">분석결과</div>
         {selectedPracticeId && projectData.modelId ? (
           <AnalysisCard
+            practiceName={
+              practices.find((p) => p.practiceId === selectedPracticeId)
+                ?.practiceName
+            }
             practiceId={selectedPracticeId}
             modelId={projectData.modelId}
           />
