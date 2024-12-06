@@ -69,24 +69,18 @@ export function useProjectData(projectId) {
 }
 
 export function usePracticeData(practiceId) {
-  const [analysisData, setAnalysisData] = useState({
-    wpm: 0,
-    pitch: 0,
-    rest: 0,
-    energy: 0,
-    confidence: 0,
-  });
-  const [achievement, setAchievement] = useState({
-    wpm: 0,
-    pitch: 0,
-    rest: 0,
-    energy: 0,
-    confidence: 0,
-  });
-  const [loading, setLoading] = useState(true);
+  const [analysisData, setAnalysisData] = useState(null);
+  const [achievement, setAchievement] = useState(null);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    if (!practiceId) {
+      setAnalysisData(null);
+      setAchievement(null);
+      return;
+    }
+
     async function fetchPracticeData() {
       try {
         const data = await projectPageApi.fetchAnalysis(practiceId);
@@ -98,8 +92,10 @@ export function usePracticeData(practiceId) {
             rest: data.analysis.rest || 0,
             energy: data.analysis.energy || 0,
             confidence: data.analysis.confidence || 0,
+            restPerMinute: data.analysis.restPerMinute || 0,
           });
         }
+        console.log(data.analysis);
 
         if (data?.achievements) {
           setAchievement({
@@ -127,13 +123,7 @@ export function usePracticeData(practiceId) {
 }
 
 export function useModelData(modelId) {
-  const [modelData, setModelData] = useState({
-    wpm: 0,
-    pitch: 0,
-    rest: 0,
-    energy: 0,
-    confidence: 0,
-  });
+  const [modelData, setModelData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -149,8 +139,10 @@ export function useModelData(modelId) {
             rest: data.analysis.rest || 0,
             energy: data.analysis.energy || 0,
             confidence: data.analysis.confidence || 0,
+            restPerMinute: data.analysis.restPerMinute || 0,
           });
         }
+        console.log(data.analysis);
       } catch (error) {
         setError("모델 데이터 불러오기 실패");
         console.error(error);
