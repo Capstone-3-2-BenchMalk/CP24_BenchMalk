@@ -120,6 +120,7 @@ function SelectRoleModel({}) {
 
       // 2. Response - rolemodel id 받아오기
       const { id: modelId } = postData;
+      console.log("여기요" + modelId);
       const patchResponse = await fetch(`/api/v1/projects`, {
         method: "PATCH",
         headers: {
@@ -127,7 +128,6 @@ function SelectRoleModel({}) {
         },
         body: JSON.stringify({
           projectid: projectId,
-          name: "", // 필요한 경우 설정
           modelid: modelId, // POST 응답에서 추출한 ID
         }),
       });
