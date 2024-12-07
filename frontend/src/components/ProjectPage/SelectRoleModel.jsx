@@ -179,7 +179,7 @@ function SelectRoleModel({}) {
       setRoleModelList(rolemodelList.filter((model) => model.id !== modelid));
       console.error("롤모델 삭제 완료 - ", modelid);
     } catch (error) {
-      console.error("Error deleting project:", error);
+      console.error("Error deleting model:", error);
       alert("롤모델 삭제에 실패했습니다. 다시 시도해주세요.");
     }
   };
@@ -233,14 +233,12 @@ function SelectRoleModel({}) {
         <div className="cp-rolemodel-card-header">
           <span className="cp-rolemodel-card-title">{rolemodel.name}</span>
 
-          {rolemodel.type === "CREATED" && (
+          {true && (
             <img
               src={trashIcon}
               alt="delete"
               className="cp-rolemodel-delete-button"
-              onClick={(e) =>
-                handleDelete(e, rolemodel.rolemodelid, rolemodel.name)
-              }
+              onClick={(e) => handleDelete(e, rolemodel.id, rolemodel.name)}
             />
           )}
         </div>
