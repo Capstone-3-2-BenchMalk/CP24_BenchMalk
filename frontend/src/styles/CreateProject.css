@@ -98,13 +98,15 @@
   white-space: nowrap;
   gap: 47px;
   scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: #e1e1e1 transparent;
   width: 100%;
   justify-content: start;
 }
 
-.cp-selectRoleModel-scroll-container::-webkit-scrollbar {
+/* .cp-selectRoleModel-scroll-container::-webkit-scrollbar {
   display: none;
-}
+} */
 
 .cp-rolemodel-card {
   width: 334px;

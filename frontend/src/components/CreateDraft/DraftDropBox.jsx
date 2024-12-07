@@ -30,7 +30,7 @@ function DraftDropBox({ isRecordable, file, setFile }) {
       <div className="cd-draftDropBox-button-container">
         {!file ? (
           <>
-            {isRecordable ? <RecordButton /> : <></>}
+            {isRecordable ? <RecordButton setFile={setFile} /> : <></>}
             <FileUploadButton onFileSelect={setFile} />
           </>
         ) : (

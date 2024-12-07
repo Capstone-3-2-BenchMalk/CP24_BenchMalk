@@ -20,6 +20,9 @@
   scrollbar-width: thin;
   scrollbar-color: #e1e1e1 transparent;
 }
+/* .table-container::-webkit-scrollbar {
+  display: none;
+} */
 
 .reusable-table {
   width: 100%;

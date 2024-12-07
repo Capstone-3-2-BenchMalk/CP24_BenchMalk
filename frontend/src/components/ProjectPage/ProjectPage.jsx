@@ -58,10 +58,10 @@ function ProjectPage() {
       <div className="pp-header">
         <div className="project-info">
           <div className="pp-title">{projectData.projectName}</div>
-          <div className="pp-time-container">
+          {/* <div className="pp-time-container">
             목표 발표 시간 : {projectData.targetTimeMin}분 ~{" "}
             {projectData.targetTimeMax}분
-          </div>
+          </div> */}
         </div>
         <button className="add-draft-btn" onClick={handleAddPractice}>
           <div className="add-draft-btn-content">
