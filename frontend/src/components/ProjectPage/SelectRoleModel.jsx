@@ -161,8 +161,15 @@ function SelectRoleModel({}) {
   }
 
   function RoleModelCard({ title, type, duration, analysis, onClick }) {
+    const cardClass =
+      type === "CREATED"
+        ? "cp-rolemodel-card created"
+        : type === "PROVIDED"
+        ? "cp-rolemodel-card provided"
+        : "cp-rolemodel-card";
+
     return (
-      <div className="cp-rolemodel-card" onClick={onClick}>
+      <div className={cardClass} onClick={onClick}>
         <div>{title}</div>
         <div>{"Type:        " + type}</div>
         <div>{"Duration:    " + duration}</div>
