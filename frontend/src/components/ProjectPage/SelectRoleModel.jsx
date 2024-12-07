@@ -32,6 +32,9 @@ function SelectRoleModel({}) {
             rest: item.analysis?.rest || 0,
             energy: item.analysis?.energy || 0,
             confidence: item.analysis?.confidence || 0,
+            pitchSD: item.analysis?.pitchSD || 0,
+            volumeSD: item.analysis?.volumeSD || 0,
+            restPerMinute: Math.round(item.analysis?.restPerMinute) || 0,
           },
         }));
 
@@ -198,6 +201,29 @@ function SelectRoleModel({}) {
         ? "cp-rolemodel-card provided"
         : "cp-rolemodel-card";
 
+    const pitchText =
+      rolemodel.analysis.pitch >= 80
+        ? `높은 목소리 - ${rolemodel.analysis.pitch}`
+        : rolemodel.analysis.pitch <= 60
+        ? `낮은 목소리 - ${rolemodel.analysis.pitch}`
+        : `중간 목소리 - ${rolemodel.analysis.pitch}`;
+
+    const wpmText =
+      rolemodel.analysis.wpm >= 120
+        ? `빠른 말하기 속도 - ${rolemodel.analysis.wpm}wpm`
+        : rolemodel.analysis.wpm <= 95
+        ? `낮은 말하기 속도 - ${rolemodel.analysis.wpm}wpm`
+        : `중간 말하기 속도 - ${rolemodel.analysis.wpm}wpm`;
+
+    const restText =
+      rolemodel.analysis.restPerMinute >= 40
+        ? `끊어 읽는 스타일 - 분당 ${rolemodel.analysis.restPerMinute}회`
+        : rolemodel.analysis.restPerMinute < 40
+        ? `부드럽게 읽는 스타일 - 분당 ${rolemodel.analysis.restPerMinute}회`
+        : `부드럽게 읽는 스타일 - 분당 ${rolemodel.analysis.restPerMinute}회`;
+
+    const vpText = "(모노톤/다양한 톤)";
+
     return (
       <div
         className={cardClass}
@@ -221,9 +247,10 @@ function SelectRoleModel({}) {
 
         {/* 중간 영역 */}
         <div className="cp-rolemodel-card-analysis">
-          <div># 높은 목소리: {rolemodel.analysis.pitch}</div>
-          <div># 빠른 말하기: {rolemodel.analysis.wpm} wpm</div>
-          <div># 휴식 시간: {rolemodel.analysis.rest}</div>
+          <div># {pitchText}</div>
+          <div># {wpmText}</div>
+          <div># {restText}</div>
+          <div># {vpText}</div>
         </div>
 
         {/* 하단 영역 */}
