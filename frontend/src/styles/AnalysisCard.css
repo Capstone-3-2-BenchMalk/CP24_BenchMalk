@@ -43,9 +43,9 @@
   /* flex: 1; */
   flex-direction: column;
   align-items: center;
-  gap: 17px;
+  gap: 15px;
   background-color: white;
-  padding: 23px;
+  padding: 20px;
   border-radius: 20px;
   border: 5px solid #bbc0fc;
   width: 277px;
@@ -69,4 +69,10 @@
   color: white;
   font-weight: bold;
   font-size: 23px;
+}
+
+.tem-section {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
 }

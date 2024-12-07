@@ -42,8 +42,13 @@ function ProjectPage() {
 
   const handlePracticeSelect = (practiceId) => {
     setSelectedPracticeId(practiceId);
-    console.log(practiceId);
+    console.log(`연습 아이디 : ${practiceId}`);
   };
+
+  useEffect(() => {
+    setSelectedPracticeId(null);
+    console.log(`프로젝트 아이디 : ${projectId}`);
+  }, [projectId]);
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
@@ -53,10 +58,10 @@ function ProjectPage() {
       <div className="pp-header">
         <div className="project-info">
           <div className="pp-title">{projectData.projectName}</div>
-          <div className="pp-time-container">
+          {/* <div className="pp-time-container">
             목표 발표 시간 : {projectData.targetTimeMin}분 ~{" "}
             {projectData.targetTimeMax}분
-          </div>
+          </div> */}
         </div>
         <button className="add-draft-btn" onClick={handleAddPractice}>
           <div className="add-draft-btn-content">
@@ -96,19 +101,18 @@ function ProjectPage() {
       </div>
       <div className="pp-menu-container">
         <div className="pp-menu-title">분석결과</div>
-        {selectedPracticeId && projectData.modelId ? (
+        {projectData.modelId ? (
           <AnalysisCard
+            key={`${projectId}-${selectedPracticeId}`}
+            practiceId={selectedPracticeId}
+            modelId={projectData.modelId}
             practiceName={
               practices.find((p) => p.practiceId === selectedPracticeId)
                 ?.practiceName
             }
-            practiceId={selectedPracticeId}
-            modelId={projectData.modelId}
           />
-        ) : selectedPracticeId && !projectData.modelId ? (
-          <div className="empty-menu-message">롤모델을 먼저 설정해주세요</div>
         ) : (
-          <div className="empty-menu-message">연습을 선택해주세요</div>
+          <div className="empty-menu-message">롤모델을 먼저 설정해주세요</div>
         )}
       </div>
     </div>
