@@ -56,7 +56,6 @@ function SelectRoleModel({}) {
         },
         body: JSON.stringify({
           projectid: projectId,
-          name: "",
           modelid: roleModelId,
         }),
       });
@@ -96,7 +95,7 @@ function SelectRoleModel({}) {
       "json",
       JSON.stringify({
         name: file.name,
-        type: "PROVIDED",
+        type: "CREATED",
         description: "기본 설명",
       })
     );
