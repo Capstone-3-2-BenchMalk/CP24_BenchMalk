@@ -62,22 +62,17 @@ function ProjectTable({ data, onDelete }) {
     {
       header: "프로젝트명",
       accessor: "projectName",
-      style: { width: "35%" },
+      style: { width: "30%" },
     },
     {
       header: "롤모델",
       accessor: "roleModel",
-      style: { width: "20%" },
-    },
-    {
-      header: "발표시간",
-      accessor: "speechTime",
-      style: { width: "20%" },
+      style: { width: "30%" },
     },
     {
       header: "생성날짜",
       accessor: "createdDate",
-      style: { width: "15%" },
+      style: { width: "30%" },
     },
     {
       header: "",
@@ -167,7 +162,7 @@ function Dashboard() {
             icon1: folderIcon,
             projectName: item.name,
             roleModel: item.model?.name || "미지정",
-            speechTime: `${item.min_time} ~ ${item.max_time} 분`,
+            // speechTime: `${item.min_time} ~ ${item.max_time} 분`,
             createdDate: formatCreatedDate(item.created_date),
             icon2: trashIcon,
             sortDate: item.created_date,
