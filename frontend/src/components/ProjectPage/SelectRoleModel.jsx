@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import "../../styles/CreateProject.css";
 import DraftDropBox from "../CreateDraft/DraftDropBox";
+import trashIcon from "../../assets/icons/trash-icon.png";
 
 function SelectRoleModel({}) {
   const [file, setFile] = useState(null);
@@ -47,7 +48,13 @@ function SelectRoleModel({}) {
     fetchPractices();
   }, []);
 
-  const hCardClick = async (roleModelId) => {
+  const hCardClick = async (roleModelId, name) => {
+    const confirmDelete = window.confirm(
+      `${name} 을 롤모델로 선택하시겠습니까?`
+    );
+    if (!confirmDelete) {
+      return;
+    }
     try {
       const response = await fetch(`/api/v1/projects`, {
         method: "PATCH",
@@ -151,6 +158,29 @@ function SelectRoleModel({}) {
     }
   };
 
+  const handleDelete = async (e, modelid, name) => {
+    e.stopPropagation();
+    const confirmDelete = window.confirm(`${name} 롤모델을 삭제하시겠습니까?`);
+    if (!confirmDelete) {
+      return;
+    }
+    try {
+      //삭제 API 요청
+      const response = await fetch(`/api/v1/models/${modelid}`, {
+        method: "DELETE",
+      });
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      // 삭제 되면 ui 반영
+      setRoleModelList(rolemodelList.filter((model) => model.id !== modelid));
+      console.error("롤모델 삭제 완료 - ", modelid);
+    } catch (error) {
+      console.error("Error deleting project:", error);
+      alert("롤모델 삭제에 실패했습니다. 다시 시도해주세요.");
+    }
+  };
+
   function CreateRoleModel({ file, setFile }) {
     return (
       <div className="cp-createRoleModel">
@@ -160,24 +190,44 @@ function SelectRoleModel({}) {
     );
   }
 
-  function RoleModelCard({ title, type, duration, analysis, onClick }) {
+  function RoleModelCard({ rolemodel }) {
     const cardClass =
-      type === "CREATED"
+      rolemodel.type === "CREATED"
         ? "cp-rolemodel-card created"
-        : type === "PROVIDED"
+        : rolemodel.type === "PROVIDED"
         ? "cp-rolemodel-card provided"
         : "cp-rolemodel-card";
 
     return (
-      <div className={cardClass} onClick={onClick}>
-        <div>{title}</div>
-        <div>{"Type:        " + type}</div>
-        <div>{"Duration:    " + duration}</div>
-        <div>{"WPM:         " + analysis.wpm}</div>
-        <div>{"Pitch:       " + analysis.pitch}</div>
-        <div>{"Rest:        " + analysis.rest}</div>
-        <div>{"Energy:      " + analysis.energy}</div>
-        <div>{"Confidence:  " + analysis.confidence}</div>
+      <div
+        className={cardClass}
+        onClick={() => hCardClick(rolemodel.id, rolemodel.name)}
+      >
+        {/* 상단 영역 */}
+        <div className="cp-rolemodel-card-header">
+          <span className="cp-rolemodel-card-title">{rolemodel.name}</span>
+
+          {rolemodel.type === "CREATED" && (
+            <img
+              src={trashIcon}
+              alt="delete"
+              className="cp-rolemodel-delete-button"
+              onClick={(e) =>
+                handleDelete(e, rolemodel.rolemodelid, rolemodel.name)
+              }
+            />
+          )}
+        </div>
+
+        {/* 중간 영역 */}
+        <div className="cp-rolemodel-card-analysis">
+          <div># 높은 목소리: {rolemodel.analysis.pitch}</div>
+          <div># 빠른 말하기: {rolemodel.analysis.wpm} wpm</div>
+          <div># 휴식 시간: {rolemodel.analysis.rest}</div>
+        </div>
+
+        {/* 하단 영역 */}
+        <div className="cp-rolemodel-card-footer">{rolemodel.type}</div>
       </div>
     );
   }
@@ -201,13 +251,7 @@ function SelectRoleModel({}) {
             <RoleModelCard
               key={rolemodel.id}
               className=".cp-rolemodel-card"
-              rolemodelid={rolemodel.id}
-              title={rolemodel.name}
-              type={rolemodel.type}
-              userid={rolemodel.userid}
-              duration={rolemodel.duration}
-              analysis={rolemodel.analysis}
-              onClick={() => hCardClick(rolemodel.id)}
+              rolemodel={rolemodel}
             />
           ))}
         </div>
