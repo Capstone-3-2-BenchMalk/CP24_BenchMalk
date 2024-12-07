@@ -160,9 +160,9 @@ function SelectRoleModel({}) {
     );
   }
 
-  function RoleModelCard({ key, title, type, duration, analysis, onClick }) {
+  function RoleModelCard({ title, type, duration, analysis, onClick }) {
     return (
-      <div key={key} className="cp-rolemodel-card" onClick={onClick}>
+      <div className="cp-rolemodel-card" onClick={onClick}>
         <div>{title}</div>
         <div>{"Type:        " + type}</div>
         <div>{"Duration:    " + duration}</div>
@@ -192,8 +192,9 @@ function SelectRoleModel({}) {
         <div className="cp-selectRoleModel-scroll-container">
           {rolemodelList.map((rolemodel) => (
             <RoleModelCard
-              className=".cp-rolemodel-card"
               key={rolemodel.id}
+              className=".cp-rolemodel-card"
+              rolemodelid={rolemodel.id}
               title={rolemodel.name}
               type={rolemodel.type}
               userid={rolemodel.userid}
@@ -206,7 +207,6 @@ function SelectRoleModel({}) {
       </div>
     );
   }
-
   return (
     <div className="cp-rolemodel-container">
       <div className="cp-rolemodel-title">롤모델</div>
