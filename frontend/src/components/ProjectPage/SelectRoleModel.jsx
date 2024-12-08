@@ -38,7 +38,8 @@ function SelectRoleModel({}) {
           },
         }));
 
-        setRoleModelList(mappedData); // 상태 업데이트
+        const reversedData = [...mappedData].reverse();
+        setRoleModelList(reversedData); // 상태 업데이트
         console.log(
           "Select Role Model - fetch Practice Response mappeddata ",
           mappedData
