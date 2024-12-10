@@ -31,7 +31,10 @@ function Sidebar() {
       try {
         const response = await fetch("/api/v1/projects");
         if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
+          const errorBody = await response.text();
+          throw new Error(
+            `HTTP error! status: ${response.status}, response body: ${errorBody}`
+          );
         }
         const data = await response.json();
         setProjects(data);
@@ -54,7 +57,10 @@ function Sidebar() {
         method: "DELETE",
       });
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        const errorBody = await response.text();
+        throw new Error(
+          `HTTP error! status: ${response.status}, response body: ${errorBody}`
+        );
       }
       setProjects((prevProjects) =>
         prevProjects.filter((project) => project.id !== projectId)
@@ -108,8 +114,9 @@ function Sidebar() {
             setIsAdding(false);
             setNewProjectName("");
           } else {
+            const errorBody = await response.text();
             throw new Error(
-              `Failed to add project: ${response.status} ${response.statusText}`
+              `Failed to add project: ${response.status}, response body: ${errorBody}`
             );
           }
         } catch (err) {

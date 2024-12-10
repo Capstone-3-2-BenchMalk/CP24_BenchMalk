@@ -15,7 +15,10 @@ function SelectRoleModel({}) {
       try {
         const response = await fetch("/api/v1/models");
         if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
+          const errorBody = await response.text();
+          throw new Error(
+            `HTTP error! status: ${response.status}, response body: ${errorBody}`
+          );
         }
         const data = await response.json();
 
@@ -66,13 +69,16 @@ function SelectRoleModel({}) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          projectid: projectId,
+          projectid: 0,
           modelid: roleModelId,
         }),
       });
 
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        const errorBody = await response.text();
+        throw new Error(
+          `HTTP error! status: ${response.status}, response body: ${errorBody}`
+        );
       }
 
       const data = await response.json();
@@ -121,8 +127,9 @@ function SelectRoleModel({}) {
       const postData = await postResponse.json();
 
       if (!postResponse.ok) {
+        const errorBody = await postResponse.text();
         throw new Error(
-          `POST request failed with status ${postResponse.status}`
+          `POST request failed with status ${postResponse.status}, , response body: ${errorBody}`
         );
       }
 
@@ -143,8 +150,9 @@ function SelectRoleModel({}) {
       });
 
       if (!patchResponse.ok) {
+        const errorBody = await patchResponse.text();
         throw new Error(
-          `PATCH request failed with status ${patchResponse.status}`
+          `PATCH request failed with status status: ${patchResponse.status}, response body: ${errorBody}`
         );
       }
 
@@ -174,7 +182,10 @@ function SelectRoleModel({}) {
         method: "DELETE",
       });
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        const errorBody = await response.text();
+        throw new Error(
+          `HTTP error! status: ${response.status}, response body: ${errorBody}`
+        );
       }
       // 삭제 되면 ui 반영
       setRoleModelList(rolemodelList.filter((model) => model.id !== modelid));
