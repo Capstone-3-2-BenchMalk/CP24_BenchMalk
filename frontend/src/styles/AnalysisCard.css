@@ -28,6 +28,7 @@
   flex: 1;
   gap: 15px;
   padding-inline: 20px;
+  margin-top: 10px;
 }
 
 .analysis-section h3,

@@ -63,9 +63,24 @@ function Graph({
   const data = {
     datasets: [
       {
-        label: "롤모델 분산도",
-        data: filteredModelData,
-        backgroundColor: "rgba(75, 192, 192, 0.5)",
+        label: "동일한 부분",
+        data:
+          filteredMyData && filteredModelData
+            ? Array.from(
+                new Set(
+                  filteredMyData
+                    .filter((myPoint) =>
+                      filteredModelData.some(
+                        (modelPoint) =>
+                          Math.abs(myPoint.x - modelPoint.x) < 5 &&
+                          Math.abs(myPoint.y - modelPoint.y) < 5
+                      )
+                    )
+                    .map((point) => JSON.stringify(point)) // 객체를 문자열로 변환
+                )
+              ).map((str) => JSON.parse(str))
+            : [],
+        backgroundColor: "rgba(165, 171, 251, 0.2)",
         borderColor: "transparent",
         pointRadius: 4,
       },
@@ -73,6 +88,13 @@ function Graph({
         label: "나의 분산도",
         data: filteredMyData,
         backgroundColor: "rgba(255, 99, 132, 0.5)",
+        borderColor: "transparent",
+        pointRadius: 4,
+      },
+      {
+        label: "롤모델 분산도",
+        data: filteredModelData,
+        backgroundColor: "rgba(75, 192, 192, 0.5)",
         borderColor: "transparent",
         pointRadius: 4,
       },
@@ -113,6 +135,22 @@ function Graph({
       title: {
         display: true,
         text: "분산도 분석",
+      },
+      tooltip: {
+        callbacks: {
+          label: function (context) {
+            const label = context.dataset.label || "";
+            if (label === "동일한 부분") {
+              return "나의 분산도와 롤모델 분산도가 일치";
+            }
+            return label;
+          },
+        },
+      },
+    },
+    elements: {
+      point: {
+        hoverBackgroundColor: "rgba(153, 102, 255, 0.8)", // 호버 시 색상
       },
     },
   };

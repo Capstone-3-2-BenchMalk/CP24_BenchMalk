@@ -120,8 +120,18 @@ function Dashboard() {
       try {
         const response = await fetch("/api/v1/practices");
         if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
+          const errorData = await response.json();
+          console.error(
+            "서버 에러 메시지:",
+            errorData.message || "알 수 없는 에러"
+          );
+          setError(
+            errorData.message ||
+              `연습 데이터를 불러오는데 실패했습니다. (에러코드: ${response.status})`
+          );
+          return;
         }
+
         const data = await response.json();
 
         // API 데이터 매핑
@@ -140,8 +150,8 @@ function Dashboard() {
 
         setPractices(mappedData); // 상태 업데이트
       } catch (err) {
-        setError("Failed to fetch practices. Please try again later.");
-        console.error(err);
+        console.error("연습 데이터 불러오기 실패:", err);
+        setError("연습 데이터 fetch 불가");
       } finally {
         setLoading(false);
       }
@@ -151,7 +161,16 @@ function Dashboard() {
       try {
         const response = await fetch("/api/v1/projects");
         if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
+          const errorData = await response.json();
+          console.error(
+            "서버 에러 메시지:",
+            errorData.message || "알 수 없는 에러"
+          );
+          setError(
+            errorData.message ||
+              `프로젝트 데이터를 불러오는데 실패했습니다. (에러코드: ${response.status})`
+          );
+          return;
         }
         const data = await response.json();
 
@@ -172,7 +191,7 @@ function Dashboard() {
         console.log(mappedData);
         setProjects(mappedData); // 상태 업데이트
       } catch (err) {
-        setError("Failed to fetch practices. Please try again later.");
+        setError("프로젝트 fetch 불가");
         console.error(err);
       } finally {
         setLoading(false);
