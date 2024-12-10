@@ -123,7 +123,6 @@ function Dashboard() {
       try {
         const response = await fetch("/api/v1/practices");
         if (!response.ok) {
-<<<<<<< HEAD
           const errorData = await response.json();
           console.error(
             "서버 에러 메시지:",
@@ -134,12 +133,6 @@ function Dashboard() {
               `연습 데이터를 불러오는데 실패했습니다. (에러코드: ${response.status})`
           );
           return;
-=======
-          const errorBody = await response.text();
-          throw new Error(
-            `HTTP error! status: ${response.status}, response body: ${errorBody}`
-          );
->>>>>>> aa4d9b0 (feat: 에러 본문 출력)
         }
 
         const data = await response.json();
@@ -171,7 +164,6 @@ function Dashboard() {
       try {
         const response = await fetch("/api/v1/projects");
         if (!response.ok) {
-<<<<<<< HEAD
           const errorData = await response.json();
           console.error(
             "서버 에러 메시지:",
@@ -182,12 +174,6 @@ function Dashboard() {
               `프로젝트 데이터를 불러오는데 실패했습니다. (에러코드: ${response.status})`
           );
           return;
-=======
-          const errorBody = await response.text();
-          throw new Error(
-            `HTTP error! status: ${response.status}, response body: ${errorBody}`
-          );
->>>>>>> aa4d9b0 (feat: 에러 본문 출력)
         }
         const data = await response.json();
 
