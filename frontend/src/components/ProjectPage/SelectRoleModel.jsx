@@ -4,7 +4,7 @@ import "../../styles/CreateProject.css";
 import DraftDropBox from "../CreateDraft/DraftDropBox";
 import trashIcon from "../../assets/icons/trash-icon.png";
 
-function SelectRoleModel({}) {
+function SelectRoleModel({ canAdd = true }) {
   const [file, setFile] = useState(null);
   const [rolemodelList, setRoleModelList] = useState([]);
   const { projectId } = useParams();
@@ -299,14 +299,20 @@ function SelectRoleModel({}) {
     <div className="cp-rolemodel-container">
       <div className="cp-rolemodel-title">롤모델</div>
       <div className="cp-rolemodel-content">
-        <h3>롤모델을 추가하여 프로젝트를 활성화해주세요</h3>
-        <CreateRoleModel file={file} setFile={setFile} />
-        {!file ? (
-          <SelectRoleModel />
+        {canAdd ? (
+          <>
+            <h3>롤모델을 추가하여 프로젝트를 활성화해주세요</h3>
+            <CreateRoleModel file={file} setFile={setFile} />
+            {!file ? (
+              <SelectRoleModel />
+            ) : (
+              <div className="cp-button-container">
+                <SelectRoleModelButton />
+              </div>
+            )}
+          </>
         ) : (
-          <div className="cp-button-container">
-            <SelectRoleModelButton />
-          </div>
+          <SelectRoleModel />
         )}
       </div>
     </div>
