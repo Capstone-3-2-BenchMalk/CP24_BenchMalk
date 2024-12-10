@@ -71,6 +71,64 @@ const getEnergyStatus = (modelPitchSd, analysisPitchSd) => {
   else return 0;
 };
 
+const getSpeedMessage = (speedStatus, restStatus, energyStatus) => {
+  let feedback = "";
+
+  const speedFeedbacks = {
+    1: "말의 속도가 느립니다. 청중의 집중도를 유지하기 위해 속도를 조금 더 높여 보세요.\n",
+    2: "말의 속도가 느립니다. 청중의 집중도를 유지하기 위해 속도를 조금 더 높여 보세요.\n",
+    3: "속도가 적절합니다. 현재 리듬을 잘 유지하세요!\n",
+    4: "말의 속도가 빠릅니다. 청중이 이해하기 어려울 수 있으니 속도를 조절해 보세요.\n",
+    5: "말의 속도가 빠릅니다. 청중이 이해하기 어려울 수 있으니 속도를 조절해 보세요.\n",
+  };
+
+  const restFeedbacks = {
+    1: "전체적인 분량을 줄이고, 어절별로 천천히 말해 보세요.\n",
+    2: "전체적인 분량을 줄이고, 어절별로 천천히 말해 보세요.\n",
+    3: "말을 어절별로 조금 더 천천히 이어가 보세요.\n",
+    4: "말을 어절별로 조금 더 천천히 이어가 보세요.\n",
+    5: "말을 어절별로 조금 더 천천히 이어가 보세요.\n",
+  };
+
+  const energyFeedbacks = {
+    1: "다만 목소리 톤이 낮은 편이라 롤모델보다 약간 빠르게 말하는 것이 효과적일 수 있습니다.",
+    2: "다만 목소리 톤이 낮은 편이라 롤모델보다 약간 빠르게 말하는 것이 효과적일 수 있습니다.",
+    3: "",
+    4: "목소리 톤이 높아 같은 속도에서도 더 빠르게 느껴질 수 있습니다. 조금 더 여유롭게 말해 보세요.",
+    5: "목소리 톤이 높아 같은 속도에서도 더 빠르게 느껴질 수 있습니다. 조금 더 여유롭게 말해 보세요.",
+  };
+
+  if (speedFeedbacks[speedStatus]) feedback += speedFeedbacks[speedStatus];
+  if (restFeedbacks[restStatus]) feedback += restFeedbacks[restStatus];
+  if (energyFeedbacks[energyStatus]) feedback += energyFeedbacks[energyStatus];
+
+  return feedback || "분석 불가";
+};
+
+const getRestMessage = (restStatus) => {
+  const restFeedbacks = {
+    1: "어절을 지나치게 이어 말하고 있습니다. 중간중간 끊어 읽으며 호흡을 정리해 보세요.",
+    2: "어절을 지나치게 이어 말하고 있습니다. 중간중간 끊어 읽으며 호흡을 정리해 보세요.",
+    3: "끊어 읽기의 빈도가 적절합니다. 청중이 이해하기 쉽게 전달하고 있습니다.",
+    4: "끊어 읽기가 너무 잦아 흐름이 끊깁니다. 더 부드럽게 연결하여 말해 보세요.",
+    5: "끊어 읽기가 너무 잦아 흐름이 끊깁니다. 더 부드럽게 연결하여 말해 보세요.",
+  };
+
+  return restFeedbacks[restStatus] || "분석 불가";
+};
+
+const getEnergyMessage = (energyStatus) => {
+  const energyFeedbacks = {
+    1: "목소리 톤이 단조로워 지루하게 느껴질 수 있습니다. 단락 전환 시 톤에 변화를 주어 감정을 표현해 보세요.",
+    2: "목소리 톤이 단조로워 지루하게 느껴질 수 있습니다. 단락 전환 시 톤에 변화를 주어 감정을 표현해 보세요.",
+    3: "목소리 크기와 톤 변화 모두 적절합니다. 훌륭한 전달력을 보여주고 있습니다.",
+    4: "목소리 톤 변화가 정도가 과도합니다. 톤을 조금 더 안정적으로 유지해 보세요.",
+    5: "목소리 톤 변화가 정도가 과도합니다. 톤을 조금 더 안정적으로 유지해 보세요.",
+  };
+
+  return energyFeedbacks[energyStatus] || "분석 불가";
+};
+
 function AnalysisCard({
   practiceName,
   practiceId,
@@ -145,9 +203,11 @@ function AnalysisCard({
                 lineHeight: "1.5",
               }}
             >
-              {`현재 ${
-                analysisData?.wpm || 0
-              } wpm 으로, 너무 느려요. \n좀 더 빠르게 말해보세요. 분량을 더 추가하거나 더 자세하게 설명해도 좋아요.`}
+              {`현재 ${analysisData?.wpm || 0} wpm 으로, \n${getSpeedMessage(
+                getSpeedStatus(achievement?.wpm),
+                getRestStatus(achievement?.rest),
+                getEnergyStatus(modelData?.pitchSD, analysisData?.pitchSD)
+              )}`}
             </div>
             <div
               onClick={() => onAudioTimeChange(90)}
@@ -189,7 +249,7 @@ function AnalysisCard({
             >
               {`현재 분당 쉼이 ${
                 analysisData?.restPerMinute || 0
-              } 회로, 좀 많아요. \n한 문장을 조금 더 이어서 말해보세요. 쉼의 빈도를 줄이면 더 자연스러운 흐름으로 청중에게 메시지를 전달할 수 있습니다.`}
+              } 회로, \n${getRestMessage(getRestStatus(achievement?.rest))}`}
             </div>
             <div
               onClick={() => onAudioTimeChange(90)}
@@ -229,7 +289,13 @@ function AnalysisCard({
                 lineHeight: "1.5",
               }}
             >
-              {`롤모델보다 비교적 모노톤으로 말하고 있어요. 모노톤은 발표가 지루해질 수 있어요. 볼륨과 피치를 더 다양하게 사용해보세요.`}
+              {`${getEnergyMessage(
+                getEnergyStatus(modelData?.pitchSD, analysisData?.pitchSD)
+              )}`}
+              {modelData?.accent - analysisData?.accent > 0 &&
+                `\n분당 ${
+                  modelData?.accent - analysisData?.accent
+                }번 정도 더 강조 효과를 주세요. 속도, 크기, 톤 변화를 활용하면 전달력을 더욱 높일 수 있습니다.`}
             </div>
 
             <div className="graph-container">
