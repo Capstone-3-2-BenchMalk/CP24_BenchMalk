@@ -16,6 +16,7 @@ import Dashboard from "./components/dashboard/Dashboard";
 import CreateDraft from "./components/CreateDraft/CreateDraft";
 import ProjectPage from "./components/ProjectPage/ProjectPage";
 import CreateProject from "./components/CreateProject/CreateProject";
+import RoleModels from "./components/RoleModels/RoleModels";
 
 function App() {
   return (
@@ -45,6 +46,7 @@ function AppContent() {
           <Route path="/project/:projectId" element={<ProjectPage />} />
           <Route path="/createproject" element={<CreateProject />} />
           <Route path="/createproject/:projectId" element={<CreateProject />} />
+          <Route path="/rolemodels" element={<RoleModels />}></Route>
         </Routes>
       </div>
     </div>

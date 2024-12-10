@@ -163,7 +163,10 @@ function Sidebar() {
           />
           파일 업로드하기
         </div>
-        <div className="menu-item">
+        <Link
+          to="/rolemodels"
+          className={`menu-item ${isActive("/createdraft")}`}
+        >
           <img
             src={modelIcon}
             alt="Model Icon"
@@ -171,7 +174,7 @@ function Sidebar() {
             className="menu-icon"
           />
           롤모델 둘러보기
-        </div>
+        </Link>
       </div>
       <hr className="divider" />
       <div className="menu-section menu-cen">
