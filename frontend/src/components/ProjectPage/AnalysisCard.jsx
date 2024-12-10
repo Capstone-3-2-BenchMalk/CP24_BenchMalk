@@ -176,7 +176,9 @@ function AnalysisCard({
           <AnalysisContentCard
             title="쉼"
             achievementLevel={getRestStatus(achievement?.rest)}
-            targetValue={`목표 분당 쉼 : ${modelData?.restPerMinute} 회`}
+            targetValue={`목표 분당 쉼 :${(
+              modelData?.restPerMinute || 0
+            ).toFixed(1)} 회`}
             className={selectedSection === "rest" ? "selected" : ""}
           />
         </div>
