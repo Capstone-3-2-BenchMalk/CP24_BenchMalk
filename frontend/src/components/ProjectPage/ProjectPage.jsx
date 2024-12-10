@@ -19,6 +19,7 @@ function ProjectPage() {
     loading: modelLoading,
     error: modelError,
   } = useModelData(projectData.modelId);
+  const [audioStartTime, setAudioStartTime] = useState(0);
 
   useEffect(() => {
     if (practices.length > 0) {
@@ -50,6 +51,10 @@ function ProjectPage() {
     console.log(`프로젝트 아이디 : ${projectId}`);
   }, [projectId]);
 
+  const handleAudioTimeChange = (time) => {
+    setAudioStartTime(time);
+  };
+
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
 
@@ -76,6 +81,7 @@ function ProjectPage() {
           <AudioPlayer
             audioUrl={roleModel.audioUrl}
             modelName={roleModel.modelName || "N/A"}
+            startTime={audioStartTime}
           />
         </div>
       ) : (
@@ -110,6 +116,7 @@ function ProjectPage() {
               practices.find((p) => p.practiceId === selectedPracticeId)
                 ?.practiceName
             }
+            onAudioTimeChange={handleAudioTimeChange}
           />
         ) : (
           <div className="empty-menu-message">롤모델을 먼저 설정해주세요</div>

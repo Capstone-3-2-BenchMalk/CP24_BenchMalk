@@ -1,7 +1,8 @@
 .analysis-card {
   display: flex;
   flex-direction: column;
-  padding: 20px 30px;
+  padding-inline: 40px;
+  padding-block: 20px;
   border-radius: 8px;
   background-color: white;
   gap: 20px;
@@ -17,25 +18,31 @@
   /* gap: 110px; */
   padding-inline: 80px;
   justify-content: space-between;
+  margin-bottom: 10px;
 }
 
 .analysis-section,
 .achievement-section {
+  display: flex;
+  flex-direction: column;
   flex: 1;
+  gap: 15px;
+  padding-inline: 20px;
 }
 
 .analysis-section h3,
 .achievement-section h3 {
   font-size: 16px;
-  margin-bottom: 15px;
-  color: #666;
+  /* margin-bottom: 15px; */
+  font-weight: 500;
+  color: #646875;
 }
 
 .analysis-section div,
 .achievement-section div {
-  margin-bottom: 10px;
-  font-size: 14px;
-  color: #333;
+  margin-bottom: 15px;
+  font-size: 17px;
+  color: black;
 }
 
 .analysis-content-card {
@@ -43,18 +50,21 @@
   /* flex: 1; */
   flex-direction: column;
   align-items: center;
-  gap: 15px;
+  gap: 10px;
   background-color: white;
   padding: 20px;
   border-radius: 20px;
-  border: 5px solid #bbc0fc;
+  /* border: 5px solid #bbc0fc; */
+  box-shadow: 0px 0px 17px 0px rgba(0, 0, 0, 0.2);
   width: 277px;
   cursor: pointer;
   /* font-size: 25px; */
 }
-.analysis-content-card:hover,
+.analysis-content-card:hover {
+  background-color: #eeeff3;
+}
 .analysis-content-card.selected {
-  background-color: #bbc0fc;
+  box-shadow: 0px 0px 20px 0px #5f6bee;
 }
 .analysis-content-card h3 {
   font-size: 23px;
@@ -68,11 +78,25 @@
   justify-content: center;
   color: white;
   font-weight: bold;
-  font-size: 23px;
+  font-size: 22px;
 }
 
 .tem-section {
   display: flex;
   flex-direction: row;
   gap: 10px;
+}
+
+.energy-section {
+  /* padding-inline: 20px; */
+}
+
+.graph-container {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+  background-color: white;
+  align-items: center;
+  /* justify-content: center; */
+  /* border-radius: 8px; */
 }

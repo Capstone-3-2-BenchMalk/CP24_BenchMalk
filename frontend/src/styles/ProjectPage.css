@@ -52,7 +52,7 @@
   letter-spacing: 1px;
 }
 
-.pp-time-container {
+/* .pp-time-container {
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -61,7 +61,7 @@
   font-weight: 400;
   letter-spacing: 1px;
   padding-top: 10px;
-}
+} */
 
 .plus-purple-icon {
   width: 20px;
