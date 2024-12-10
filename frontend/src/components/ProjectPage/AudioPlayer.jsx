@@ -5,7 +5,7 @@ import before5 from "../../assets/icons/before5.png";
 import play from "../../assets/icons/play.png";
 import pause from "../../assets/icons/pause.png";
 
-function AudioPlayer({ audioUrl, modelName }) {
+function AudioPlayer({ audioUrl, modelName, startTime = 0 }) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
@@ -69,6 +69,18 @@ function AudioPlayer({ audioUrl, modelName }) {
     setCurrentTime(newTime);
     updateProgress(newTime);
   };
+
+  // startTime이 변경될 때마다 해당 시간으로 이동
+  React.useEffect(() => {
+    if (audioRef.current && startTime > 0) {
+      audioRef.current.currentTime = startTime;
+      setCurrentTime(startTime);
+      updateProgress(startTime);
+      // 자동 재생 시작
+      audioRef.current.play();
+      setIsPlaying(true);
+    }
+  }, [startTime]);
 
   return (
     <div className="audio-player">

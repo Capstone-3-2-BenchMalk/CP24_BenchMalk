@@ -86,26 +86,24 @@ export function usePracticeData(practiceId) {
         const data = await projectPageApi.fetchAnalysis(practiceId);
 
         if (data?.analysis) {
-          setAnalysisData({
-            wpm: data.analysis.wpm || 0,
-            pitch: data.analysis.pitch || 0,
-            rest: data.analysis.rest || 0,
-            energy: data.analysis.energy || 0,
-            confidence: data.analysis.confidence || 0,
-            restPerMinute: data.analysis.restPerMinute || 0,
-          });
+          const { analysis } = data;
+          setAnalysisData(analysis);
+          // setAnalysisData({
+          //   wpm: data.analysis.wpm || 0,
+          //   pitch: data.analysis.pitch || 0,
+          //   rest: data.analysis.rest || 0,
+          //   energy: data.analysis.energy || 0,
+          //   confidence: data.analysis.confidence || 0,
+          //   restPerMinute: data.analysis.restPerMinute || 0,
+          // });
         }
         console.log(data.analysis);
 
         if (data?.achievements) {
-          setAchievement({
-            wpm: data.achievements.wpm || 0,
-            pitch: data.achievements.pitch || 0,
-            rest: data.achievements.rest || 0,
-            energy: data.achievements.energy || 0,
-            confidence: data.achievements.confidence || 0,
-          });
+          const { achievements } = data;
+          setAchievement(achievements);
         }
+        console.log(data.achievements);
       } catch (error) {
         setError("분석 데이터 불러오기 실패");
         console.error(error);
@@ -133,14 +131,17 @@ export function useModelData(modelId) {
         const data = await projectPageApi.fetchRoleModel(modelId);
 
         if (data?.analysis) {
-          setModelData({
-            wpm: data.analysis.wpm || 0,
-            pitch: data.analysis.pitch || 0,
-            rest: data.analysis.rest || 0,
-            energy: data.analysis.energy || 0,
-            confidence: data.analysis.confidence || 0,
-            restPerMinute: data.analysis.restPerMinute || 0,
-          });
+          const { analysis } = data;
+          setModelData(analysis);
+          // setModelData({
+          //   wpm: data.analysis.wpm || 0,
+          //   pitch: data.analysis.pitch || 0,
+          //   rest: data.analysis.rest || 0,
+          //   energy: data.analysis.energy || 0,
+          //   confidence: data.analysis.confidence || 0,
+          //   restPerMinute: data.analysis.restPerMinute || 0,
+
+          // });
         }
         console.log(data.analysis);
       } catch (error) {
