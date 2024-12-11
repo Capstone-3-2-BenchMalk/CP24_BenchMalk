@@ -31,7 +31,10 @@ function Sidebar() {
       try {
         const response = await fetch("/api/v1/projects");
         if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
+          const errorBody = await response.text();
+          throw new Error(
+            `HTTP error! status: ${response.status}, response body: ${errorBody}`
+          );
         }
         const data = await response.json();
         setProjects(data);
@@ -54,7 +57,10 @@ function Sidebar() {
         method: "DELETE",
       });
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        const errorBody = await response.text();
+        throw new Error(
+          `HTTP error! status: ${response.status}, response body: ${errorBody}`
+        );
       }
       setProjects((prevProjects) =>
         prevProjects.filter((project) => project.id !== projectId)
@@ -108,8 +114,9 @@ function Sidebar() {
             setIsAdding(false);
             setNewProjectName("");
           } else {
+            const errorBody = await response.text();
             throw new Error(
-              `Failed to add project: ${response.status} ${response.statusText}`
+              `Failed to add project: ${response.status}, response body: ${errorBody}`
             );
           }
         } catch (err) {
@@ -156,7 +163,10 @@ function Sidebar() {
           />
           파일 업로드하기
         </div>
-        <div className="menu-item">
+        <Link
+          to="/rolemodels"
+          className={`menu-item ${isActive("/createdraft")}`}
+        >
           <img
             src={modelIcon}
             alt="Model Icon"
@@ -164,7 +174,7 @@ function Sidebar() {
             className="menu-icon"
           />
           롤모델 둘러보기
-        </div>
+        </Link>
       </div>
       <hr className="divider" />
       <div className="menu-section menu-cen">

@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import "../../styles/CreateProject.css";
-import DraftDropBox from "../CreateDraft/DraftDropBox";
 import trashIcon from "../../assets/icons/trash-icon.png";
+import "../../styles/CreateProject.css";
 
-function SelectRoleModel({ canAdd = true }) {
+function RoleModels() {
   const [file, setFile] = useState(null);
   const [rolemodelList, setRoleModelList] = useState([]);
-  const { projectId } = useParams();
   const [isLoading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -55,120 +52,6 @@ function SelectRoleModel({ canAdd = true }) {
     fetchPractices();
   }, []);
 
-  const hCardClick = async (roleModelId, name) => {
-    const confirmDelete = window.confirm(
-      `${name} 을 롤모델로 선택하시겠습니까?`
-    );
-    if (!confirmDelete) {
-      return;
-    }
-    try {
-      const response = await fetch(`/api/v1/projects`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          projectid: projectId,
-          modelid: roleModelId,
-        }),
-      });
-
-      if (!response.ok) {
-        const errorBody = await response.text();
-        throw new Error(
-          `HTTP error! status: ${response.status}, response body: ${errorBody}`
-        );
-      }
-
-      const data = await response.json();
-
-      console.log("Select Role Model - API Response:", data);
-      // 강제 새로고침
-      // CreateProject에서 isSelected 관련 State 추가하기
-      window.location.reload();
-    } catch (error) {
-      console.error("Select Role Model - Error sending API request:", error);
-      alert("Failed to select role model.");
-    }
-  };
-
-  const hSelectRoleModelButton = async (e) => {
-    // 1. Role Model Post 요청
-    // 2. Response - rolemodel id 받아오기
-    // 3. Patch Project 요청
-    e.preventDefault();
-
-    // 1. Role Model Post 요청
-    if (!file) {
-      alert("Please select a file to upload.");
-      return;
-    }
-
-    setLoading(true);
-
-    const formData = new FormData();
-    formData.append(
-      "json",
-      JSON.stringify({
-        name: file.name,
-        type: "CREATED",
-        description: "기본 설명",
-      })
-    );
-    formData.append("file", file);
-
-    try {
-      const postResponse = await fetch("/api/v1/models", {
-        method: "POST",
-        body: formData,
-      });
-
-      const postData = await postResponse.json();
-
-      if (!postResponse.ok) {
-        const errorBody = await postResponse.text();
-        throw new Error(
-          `POST request failed with status ${postResponse.status}, , response body: ${errorBody}`
-        );
-      }
-
-      console.log("Select Role Model - RoleModel POST successful:", postData);
-
-      // 2. Response - rolemodel id 받아오기
-      const { id: modelId } = postData;
-      const patchResponse = await fetch(`/api/v1/projects`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          projectid: projectId,
-          modelid: modelId, // POST 응답에서 추출한 ID
-        }),
-      });
-
-      if (!patchResponse.ok) {
-        const errorBody = await patchResponse.text();
-        throw new Error(
-          `PATCH request failed with status status: ${patchResponse.status}, response body: ${errorBody}`
-        );
-      }
-
-      const patchData = await patchResponse.json();
-      console.log("Selec Role Model - PATCH Project successful:", patchData);
-
-      // 강제 새로고침
-      // CreateProject에서 isSelected 관련 State 추가하기
-      window.location.reload();
-    } catch (error) {
-      console.error("Error during API requests:", error);
-      alert("Failed to process request. Please try again.");
-    } finally {
-      setLoading(false);
-    }
-  };
-
   const handleDelete = async (e, modelid, name) => {
     e.stopPropagation();
     const confirmDelete = window.confirm(`${name} 롤모델을 삭제하시겠습니까?`);
@@ -195,22 +78,13 @@ function SelectRoleModel({ canAdd = true }) {
     }
   };
 
-  function CreateRoleModel({ file, setFile }) {
-    return (
-      <div className="cp-createRoleModel">
-        <h4>롤모델 생성하기</h4>
-        <DraftDropBox isRecordable={false} file={file} setFile={setFile} />
-      </div>
-    );
-  }
-
   function RoleModelCard({ rolemodel }) {
     const cardClass =
       rolemodel.type === "CREATED"
-        ? "cp-rolemodel-card created"
+        ? "cp-rolemodel-grid-card created"
         : rolemodel.type === "PROVIDED"
-        ? "cp-rolemodel-card provided"
-        : "cp-rolemodel-card";
+        ? "cp-rolemodel-grid-card provided"
+        : "cp-rolemodel-grid-card";
 
     const pitchText =
       rolemodel.analysis.pitch >= 80
@@ -241,10 +115,7 @@ function SelectRoleModel({ canAdd = true }) {
         : "정적인 스타일";
 
     return (
-      <div
-        className={cardClass}
-        onClick={() => hCardClick(rolemodel.id, rolemodel.name)}
-      >
+      <div className={cardClass}>
         {/* 상단 영역 */}
         <div className="cp-rolemodel-card-header">
           <span className="cp-rolemodel-card-title">{rolemodel.name}</span>
@@ -272,28 +143,13 @@ function SelectRoleModel({ canAdd = true }) {
       </div>
     );
   }
-  function SelectRoleModelButton() {
-    return (
-      <button
-        className="cp-button"
-        onClick={hSelectRoleModelButton}
-        disabled={isLoading || !file}
-      >
-        {isLoading ? "업로드 중..." : "생성 하기"}
-      </button>
-    );
-  }
   function SelectRoleModel() {
     return (
       <div className="cp-selectRoleModel">
         <h4>롤모델 둘러보기</h4>
-        <div className="cp-selectRoleModel-scroll-container">
+        <div className="cp-selectRoleModel-grid-container">
           {rolemodelList.map((rolemodel) => (
-            <RoleModelCard
-              key={rolemodel.id}
-              className=".cp-rolemodel-card"
-              rolemodel={rolemodel}
-            />
+            <RoleModelCard key={rolemodel.id} rolemodel={rolemodel} />
           ))}
         </div>
       </div>
@@ -303,24 +159,10 @@ function SelectRoleModel({ canAdd = true }) {
     <div className="cp-rolemodel-container">
       <div className="cp-rolemodel-title">롤모델</div>
       <div className="cp-rolemodel-content">
-        {canAdd ? (
-          <>
-            <h3>롤모델을 추가하여 프로젝트를 활성화해주세요</h3>
-            <CreateRoleModel file={file} setFile={setFile} />
-            {!file ? (
-              <SelectRoleModel />
-            ) : (
-              <div className="cp-button-container">
-                <SelectRoleModelButton />
-              </div>
-            )}
-          </>
-        ) : (
-          <SelectRoleModel />
-        )}
+        <SelectRoleModel canAdd={false} />
       </div>
     </div>
   );
 }
 
-export default SelectRoleModel;
+export default RoleModels;

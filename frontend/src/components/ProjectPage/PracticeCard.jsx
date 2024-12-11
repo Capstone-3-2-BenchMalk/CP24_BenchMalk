@@ -16,7 +16,10 @@ export function PracticeCard({ data, onDelete, onClick, isSelected }) {
         method: "DELETE",
       });
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        const errorBody = await response.text();
+        throw new Error(
+          `HTTP error! status: ${response.status}, response body: ${errorBody}`
+        );
       }
 
       onDelete(data.practiceId);

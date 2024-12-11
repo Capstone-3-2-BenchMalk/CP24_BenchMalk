@@ -47,6 +47,10 @@ function CreateDraft() {
         console.log(" Successful", data);
         navigate(`/project/${projectId}`);
       } else {
+        const errorBody = await response.text();
+        throw new Error(
+          `HTTP error! status: ${response.status}, response body: ${errorBody}`
+        );
       }
     } catch (error) {
       console.error("Error:", error);

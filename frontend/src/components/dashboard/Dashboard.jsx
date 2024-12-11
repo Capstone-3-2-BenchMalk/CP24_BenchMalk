@@ -95,7 +95,10 @@ function ProjectTable({ data, onDelete }) {
         method: "DELETE",
       });
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        const errorBody = await response.text();
+        throw new Error(
+          `HTTP error! status: ${response.status}, response body: ${errorBody}`
+        );
       }
       onDelete(projectId);
     } catch (error) {
