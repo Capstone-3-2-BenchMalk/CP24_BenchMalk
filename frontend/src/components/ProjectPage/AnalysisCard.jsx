@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import { usePracticeData, useModelData } from "../../hooks/useProjectData";
 import "../../styles/AnalysisCard.css";
-import Graph from "./Graph";
+import { SpeedGraph, RestGraph, EnergyGraph } from "./Graph";
 import play from "../../assets/icons/play.png";
-import AudioPlayer from "./AudioPlayer";
 
 const AnalysisContentCard = ({
   title,
@@ -17,13 +16,19 @@ const AnalysisContentCard = ({
     else if (achievementLevel === 4) return "약간 초과";
     else if (achievementLevel === 1) return "미달";
     else if (achievementLevel === 2) return "약간 미달";
+    else if (achievementLevel === 6) return "미달성";
     else return "분석불가";
   };
   const getColor = () => {
-    if (achievementLevel === 3) return "#4350e6";
-    else if (achievementLevel === 4 || achievementLevel === 2) return "#FF9B4B";
-    else if (achievementLevel === 1 || achievementLevel === 5) return "#e64345";
-    else return "#e6e6e6";
+    if (achievementLevel === 3) return "#3A7EFC";
+    else if (achievementLevel === 4 || achievementLevel === 2) return "#FFA03B";
+    else if (
+      achievementLevel === 1 ||
+      achievementLevel === 5 ||
+      achievementLevel === 6
+    )
+      return "#FF595C";
+    else return "rgba(230, 230, 230, 0.8)";
   };
   return (
     <div className={`analysis-content-card ${className || ""}`}>
@@ -40,35 +45,56 @@ const AnalysisContentCard = ({
 };
 
 const getSpeedStatus = (achievement) => {
+  if (!achievement) return 0;
+
   if (achievement > 110) return 5;
-  else if (achievement > 105 && achievement <= 110) return 4;
-  else if (achievement <= 105 && achievement >= 95) return 3;
-  else if (achievement < 95 && achievement >= 90) return 2;
-  else if (achievement < 90) return 1;
-  else return 0;
+  else if (achievement > 105) return 4;
+  else if (achievement >= 95) return 3;
+  else if (achievement >= 90) return 2;
+  else return 1;
 };
 
 const getRestStatus = (achievement) => {
+  if (!achievement) return 0;
+
   if (achievement > 140) return 5;
-  else if (achievement > 120 && achievement <= 140) return 4;
-  else if (achievement <= 120 && achievement >= 80) return 3;
-  else if (achievement < 80 && achievement >= 60) return 2;
-  else if (achievement < 60) return 1;
-  else return 0;
+  else if (achievement > 120) return 4;
+  else if (achievement >= 80) return 3;
+  else if (achievement >= 60) return 2;
+  else return 1;
 };
 
-const getEnergyStatus = (modelPitchSd, analysisPitchSd) => {
-  if (!modelPitchSd || !analysisPitchSd) return 0;
+const getEnergyStatus = (pitch, volume) => {
+  const achievement = pitch * volume;
+  const statusMap = {
+    16: 5,
+    12: 4,
+    9: 3,
+    8: 6,
+    6: 2,
+    4: 1,
+  };
+  return statusMap[achievement] || 0;
+};
 
-  const achievement = (analysisPitchSd / modelPitchSd) * 100;
-  console.log("강조 달성도", achievement);
+const getPitchStatus = (pitchSd) => {
+  if (pitchSd > 110) {
+    return 4;
+  } else if (pitchSd >= 90) {
+    return 3;
+  } else {
+    return 2;
+  }
+};
 
-  if (achievement > 120) return 5;
-  else if (achievement > 110 && achievement <= 120) return 4;
-  else if (achievement <= 110 && achievement >= 90) return 3;
-  else if (achievement < 90 && achievement >= 80) return 2;
-  else if (achievement < 80) return 1;
-  else return 0;
+const getVolumeStatus = (volumeSd) => {
+  if (volumeSd > 120) {
+    return 4;
+  } else if (volumeSd >= 80) {
+    return 3;
+  } else {
+    return 2;
+  }
 };
 
 const getSpeedMessage = (speedStatus, restStatus, energyStatus) => {
@@ -129,6 +155,10 @@ const getEnergyMessage = (energyStatus) => {
   return energyFeedbacks[energyStatus] || "분석 불가";
 };
 
+const toRound = (value) => {
+  return (Math.round(value * 10) / 10).toFixed(1);
+};
+
 function AnalysisCard({
   practiceName,
   practiceId,
@@ -174,22 +204,22 @@ function AnalysisCard({
         </div>
         <div onClick={() => handleCardClick("rest")}>
           <AnalysisContentCard
-            title="쉼"
+            title="끊어읽기"
             achievementLevel={getRestStatus(achievement?.rest)}
-            targetValue={`목표 분당 쉼 :${(
-              modelData?.restPerMinute || 0
-            ).toFixed(1)} 회`}
+            targetValue={`목표 끊어읽기 : ${toRound(
+              modelData?.restPerMinute
+            )} 회`}
             className={selectedSection === "rest" ? "selected" : ""}
           />
         </div>
         <div onClick={() => handleCardClick("energy")}>
           <AnalysisContentCard
-            title="강조"
+            title="에너지"
             achievementLevel={getEnergyStatus(
-              modelData?.pitchSD,
-              analysisData?.pitchSD
+              getPitchStatus(achievement?.pitchSD),
+              getVolumeStatus(achievement?.volumeSD)
             )}
-            targetValue={`목표 강조 : 다양하게`}
+            targetValue={`목표 에너지 : 다이나믹`}
             className={selectedSection === "energy" ? "selected" : ""}
           />
         </div>
@@ -210,6 +240,13 @@ function AnalysisCard({
                 getRestStatus(achievement?.rest),
                 getEnergyStatus(modelData?.pitchSD, analysisData?.pitchSD)
               )}`}
+            </div>
+            <div className="graph-container">
+              {/* <h3>빠르기 차이</h3> */}
+              <SpeedGraph
+                modelSpeed={modelData?.wpm}
+                mySpeed={analysisData?.wpm}
+              />
             </div>
             <div
               onClick={() => onAudioTimeChange(90)}
@@ -235,7 +272,7 @@ function AnalysisCard({
                 fontSize: "16px",
               }}
             >
-              {`WPM(Words Per Minute)이란? \n분당 발화한 단어 수를 뜻합니다. 벤치말크에서 제공하는 WPM은 기존 방식과 달리 문장 사이의 긴 쉼 간격을 제거하여 보다 정확한 발화 속도를 분석합니다. 이 방법은 불필요한 멈춤으로 인한 왜곡을 최소화하여 효과적인 피드백을 제공합니다.`}
+              {`WPM(Words Per Minute)이란? \n분당 발화한 단어 수를 뜻합니다. 벤치말크에서 제공하는 WPM은 기존 방식과 달리 문장 사이의 긴 쉼 간격을 제거하여 보다 정확한 발화 속도를 분석합니다. \n이 방법은 불필요한 멈춤으로 인한 왜곡을 최소화하여 효과적인 피드백을 제공합니다.`}
             </div>
           </>
         )}
@@ -250,9 +287,16 @@ function AnalysisCard({
               }}
             >
               {`현재 분당 쉼이 ${
-                analysisData?.restPerMinute || 0
+                toRound(analysisData?.restPerMinute) || 0
               } 회로, \n${getRestMessage(getRestStatus(achievement?.rest))}`}
             </div>
+            <div className="graph-container">
+              <RestGraph
+                modelRest={toRound(modelData?.restPerMinute)}
+                myRest={toRound(analysisData?.restPerMinute)}
+              />
+            </div>
+
             <div
               onClick={() => onAudioTimeChange(90)}
               className="play-model-audio"
@@ -282,7 +326,7 @@ function AnalysisCard({
           </>
         )}
         {selectedSection === "energy" && (
-          <div className="energy-section">
+          <>
             <div
               style={{
                 fontSize: 19,
@@ -295,14 +339,14 @@ function AnalysisCard({
                 getEnergyStatus(modelData?.pitchSD, analysisData?.pitchSD)
               )}`}
               {modelData?.accent - analysisData?.accent > 0 &&
-                `\n분당 ${
+                `\n분당 ${toRound(
                   modelData?.accent - analysisData?.accent
-                }번 정도 더 강조 효과를 주세요. 속도, 크기, 톤 변화를 활용하면 전달력을 더욱 높일 수 있습니다.`}
+                )}번 정도 더 강조 효과를 주세요. 속도, 크기, 톤 변화를 활용하면 전달력을 더욱 높일 수 있습니다.`}
             </div>
 
             <div className="graph-container">
-              <h3>강조 분산도</h3>
-              <Graph
+              <h3>에너지 분산도</h3>
+              <EnergyGraph
                 modelPitches={modelData?.pitches}
                 modelVolumes={modelData?.volumes}
                 myPitches={analysisData?.pitches}
@@ -323,7 +367,7 @@ function AnalysisCard({
               }}
             >
               <img src={play} alt="play" style={{ width: "30px" }} />
-              강조 문장 들어보기
+              에너지 들어보기
             </div>
             <div
               style={{
@@ -333,9 +377,9 @@ function AnalysisCard({
                 fontSize: "16px",
               }}
             >
-              {`강조 분산도란? \n목소리 톤의 분포를 나타낸 그래프입니다. 그래프에서 점들의 분산이 넓을수록 강조가 더 다양하다는 것을 의미합니다. \n가로축은 피치(음높이)를, 세로축은 데시벨(음량)을 나타내며, 점이 가로로 넓게 퍼져 있을수록 피치 변화가 다양하고, 세로로 넓게 퍼져 있을수록 볼륨 변화가 다양함을 의미합니다. 이를 통해 발화의 톤과 강세 사용 패턴을 분석할 수 있습니다.`}
+              {`에너지 분산도란? \n목소리 에너지의 분포를 나타낸 그래프입니다. 그래프에서 점들의 분산이 넓을수록 에너지가 더 다이나믹하다는 것을 의미합니다. \n가로축은 피치(음높이)를, 세로축은 데시벨(음량)을 나타내, 점이 가로로 넓게 퍼져 있을수록 피치 변화가 다양하고, 세로로 넓게 퍼져 있을수록 볼륨 변화가 다양함을 의미합니다. 이를 통해 발화의 톤과 강세 사용 패턴을 분석할 수 있습니다.`}
             </div>
-          </div>
+          </>
         )}
       </div>
       {/* <div className="tem-section">

@@ -2,6 +2,12 @@ import React from "react";
 import trashIcon from "../../assets/icons/trash-icon.png";
 import recordIcon from "../../assets/icons/record-icon.png";
 
+const statusConfig = {
+  ANALYZED: { text: "분석완료", color: "green" },
+  CREATED: { text: "분석 중", color: "blue" },
+  FAILED: { text: "분석 실패", color: "red" },
+};
+
 export function PracticeCard({ data, onDelete, onClick, isSelected }) {
   const handleDelete = async (e) => {
     e.stopPropagation(); // 카드 클릭 이벤트와 분리
@@ -34,8 +40,8 @@ export function PracticeCard({ data, onDelete, onClick, isSelected }) {
       <div className="practice-date">{data.createdTime}</div>
       <div className="practice-time">{data.duration}</div>
       <div className="status">
-        <span style={{ color: data.status === "ANALYZED" ? "green" : "red" }}>
-          {data.status}
+        <span style={{ color: statusConfig[data.status]?.color || "red" }}>
+          {statusConfig[data.status]?.text || "분석 실패"}
         </span>
       </div>
       <div className="practice-card-icon" onClick={handleDelete}>

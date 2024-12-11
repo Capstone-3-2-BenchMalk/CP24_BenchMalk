@@ -1,17 +1,29 @@
 import React from "react";
 import {
   Chart as ChartJS,
+  CategoryScale,
   LinearScale,
+  BarElement,
   PointElement,
   LineElement,
   Tooltip,
   Legend,
 } from "chart.js";
-import { Scatter } from "react-chartjs-2";
+import { Scatter, Bar } from "react-chartjs-2";
+import ChartDataLabels from "chartjs-plugin-datalabels";
 
-ChartJS.register(LinearScale, PointElement, LineElement, Tooltip, Legend);
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  PointElement,
+  LineElement,
+  Tooltip,
+  Legend,
+  ChartDataLabels
+);
 
-function Graph({
+export function EnergyGraph({
   modelPitches = [],
   modelVolumes = [],
   myPitches = [],
@@ -87,14 +99,14 @@ function Graph({
       {
         label: "나의 분산도",
         data: filteredMyData,
-        backgroundColor: "rgba(255, 99, 132, 0.5)",
+        backgroundColor: "rgba(255, 99, 132, 0.3)",
         borderColor: "transparent",
         pointRadius: 4,
       },
       {
         label: "롤모델 분산도",
         data: filteredModelData,
-        backgroundColor: "rgba(75, 192, 192, 0.5)",
+        backgroundColor: "rgba(75, 192, 192, 0.3)",
         borderColor: "transparent",
         pointRadius: 4,
       },
@@ -110,6 +122,10 @@ function Graph({
         title: {
           display: true,
           text: "데시벨(dB)",
+          font: {
+            size: 15,
+          },
+          color: "black",
         },
         ticks: {
           stepSize: 10, // 눈금 간격 50
@@ -122,6 +138,10 @@ function Graph({
         title: {
           display: true,
           text: "피치(Hz)",
+          font: {
+            size: 15,
+          },
+          color: "black",
         },
         ticks: {
           stepSize: 50, // 눈금 간격 50
@@ -131,6 +151,12 @@ function Graph({
     plugins: {
       legend: {
         position: "top",
+        labels: {
+          font: {
+            size: 15,
+          },
+          color: "black",
+        },
       },
       title: {
         display: true,
@@ -147,6 +173,9 @@ function Graph({
           },
         },
       },
+      datalabels: {
+        display: false,
+      },
     },
     elements: {
       point: {
@@ -156,10 +185,122 @@ function Graph({
   };
 
   return (
-    <div style={{ width: "70%", height: "auto" }}>
+    <div style={{ width: "100%", height: "auto" }}>
       <Scatter data={data} options={options} />
     </div>
   );
 }
 
-export default Graph;
+export function SpeedGraph({ modelSpeed, mySpeed }) {
+  const data = {
+    labels: ["나", "롤모델"],
+    datasets: [
+      {
+        // label: "속도 비교",
+        data: [mySpeed, modelSpeed],
+        backgroundColor: ["rgba(255, 99, 132, 0.5)", "rgba(75, 192, 192, 0.5)"],
+        borderColor: ["rgba(255, 99, 132, 1)", "rgba(75, 192, 192, 1)"],
+        borderWidth: 1,
+        barThickness: 20,
+      },
+    ],
+  };
+
+  const options = {
+    indexAxis: "y",
+    scales: {
+      x: {
+        beginAtZero: true,
+      },
+      y: {
+        ticks: {
+          font: {
+            size: 15,
+          },
+          color: "black",
+        },
+      },
+    },
+    plugins: {
+      legend: {
+        display: false,
+      },
+      datalabels: {
+        anchor: "end",
+        align: "end",
+        formatter: (value) => `${value}`,
+        color: "black",
+        font: {
+          size: 15,
+          // weight: "bold",
+        },
+      },
+    },
+    maintainAspectRatio: false,
+    categoryPercentage: 0.4,
+    barPercentage: 0.8,
+  };
+
+  return (
+    <div style={{ width: "80%", height: "150px" }}>
+      <Bar data={data} options={options} />
+    </div>
+  );
+}
+
+export function RestGraph({ modelRest, myRest }) {
+  const data = {
+    labels: ["나", "롤모델"],
+    datasets: [
+      {
+        // label: "속도 비교",
+        data: [myRest, modelRest],
+        backgroundColor: ["rgba(255, 99, 132, 0.5)", "rgba(75, 192, 192, 0.5)"],
+        borderColor: ["rgba(255, 99, 132, 1)", "rgba(75, 192, 192, 1)"],
+        borderWidth: 1,
+        barThickness: 20,
+      },
+    ],
+  };
+
+  const options = {
+    indexAxis: "y",
+    scales: {
+      x: {
+        beginAtZero: true,
+      },
+      y: {
+        ticks: {
+          font: {
+            size: 15,
+          },
+          color: "black",
+        },
+      },
+    },
+    plugins: {
+      legend: {
+        display: false,
+      },
+      datalabels: {
+        anchor: "end",
+        align: "end",
+        formatter: (value) => `${value}`,
+        color: "black",
+        font: {
+          size: 15,
+          // weight: "bold",
+        },
+      },
+    },
+    maintainAspectRatio: false,
+    categoryPercentage: 0.4,
+    barPercentage: 0.8,
+  };
+
+  return (
+    <div style={{ width: "80%", height: "150px" }}>
+      <Bar data={data} options={options} />
+    </div>
+  );
+}
