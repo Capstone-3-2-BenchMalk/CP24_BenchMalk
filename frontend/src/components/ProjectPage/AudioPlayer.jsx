@@ -12,6 +12,20 @@ function AudioPlayer({ audioUrl, modelName, startTime = 0 }) {
   const [progress, setProgress] = useState(0);
   const audioRef = useRef(null);
   const sliderRef = useRef(null);
+  React.useEffect(() => {
+    if (audioRef.current && startTime > 0) {
+      audioRef.current.currentTime = startTime;
+      setCurrentTime(startTime);
+      updateProgress(startTime);
+      // 자동 재생 시작
+      audioRef.current.play();
+      setIsPlaying(true);
+    }
+  }, [startTime]);
+
+  if (!audioUrl || !modelName) {
+    return <div>롤모델을 선택해 들어보세요</div>;
+  }
 
   const updateProgress = (time) => {
     const progressValue = (time / duration) * 100;
@@ -71,16 +85,6 @@ function AudioPlayer({ audioUrl, modelName, startTime = 0 }) {
   };
 
   // startTime이 변경될 때마다 해당 시간으로 이동
-  React.useEffect(() => {
-    if (audioRef.current && startTime > 0) {
-      audioRef.current.currentTime = startTime;
-      setCurrentTime(startTime);
-      updateProgress(startTime);
-      // 자동 재생 시작
-      audioRef.current.play();
-      setIsPlaying(true);
-    }
-  }, [startTime]);
 
   return (
     <div className="audio-player">

@@ -96,27 +96,32 @@
   grid-auto-flow: column;
   overflow: scroll;
   white-space: nowrap;
-  gap: 47px;
+  gap: 20px;
   scroll-behavior: smooth;
-  scrollbar-width: thin;
+  /* scrollbar-width: thin; */
   scrollbar-color: #e1e1e1 transparent;
   width: 100%;
   justify-content: start;
 }
 
 .cp-selectRoleModel-grid-container {
-  display: grid;
-  grid-template-columns: repeat(
+  /* display: grid; */
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  /* grid-template-columns: repeat(
     auto-fill,
-    minmax(350px, 1fr)
-  ); /* 1행에 3~4개 아이템 */
+    minmax(300px, 1fr)
+  ); 1행에 3~4개 아이템 */
   gap: 40px; /* 카드 간의 간격 */
   width: 100%;
-  overflow-y: auto; /* 아래 스크롤 가능 */
-  max-height: 80vh; /* 스크롤 영역의 최대 높이 */
-  padding: 10px;
-  scrollbar-width: thin; /* 스크롤바 너비 */
-  scrollbar-color: #e1e1e1 transparent; /* 스크롤바 색상 */
+  /* overflow-y: auto; 아래 스크롤 가능 */
+  /* max-height: 80vh; */
+  /* 스크롤 영역의 최대 높이 */
+  /* padding: 10px; */
+  /* scrollbar-width: thin; 스크롤바 너비 */
+  /* scrollbar-color: #e1e1e1 transparent; 스크롤바 색상 */
+  /* background-color: white; */
 }
 
 /* .cp-selectRoleModel-scroll-container::-webkit-scrollbar {
@@ -124,8 +129,9 @@
 } */
 
 .cp-rolemodel-grid-card {
-  width: 334px;
-  height: 334px;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+  width: 300px;
+  height: 300px;
   padding: 20px;
   border-radius: 10px;
   display: flex;
@@ -135,8 +141,8 @@
 }
 
 .cp-rolemodel-card {
-  width: 334px;
-  height: 437px;
+  width: 300px;
+  height: 300px;
   padding: 20px;
   border-radius: 10px;
   display: flex;

@@ -23,7 +23,7 @@ function PracticeTable({ data }) {
     },
     { header: "연습명", accessor: "practiceName", style: { width: "20%" } },
     { header: "프로젝트명", accessor: "projectName", style: { width: "15%" } },
-    { header: "롤모델", accessor: "roleModel", style: { width: "15%" } },
+    { header: "롤모델", accessor: "roleModel", style: { width: "25%" } },
     {
       header: "진행상태",
       accessor: "status",
@@ -32,7 +32,7 @@ function PracticeTable({ data }) {
           {value}
         </span>
       ),
-      style: { width: "20%" },
+      style: { width: "10%" },
     },
     { header: "연습 시각", accessor: "createdTime", style: { width: "16%" } },
     {

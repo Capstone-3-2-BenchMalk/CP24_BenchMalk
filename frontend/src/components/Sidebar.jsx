@@ -51,26 +51,26 @@ function Sidebar() {
     navigate(`/project/${projectId}`);
   };
 
-  const handleSubIconClick = async (projectId) => {
-    try {
-      const response = await fetch(`/api/v1/projects/${projectId}`, {
-        method: "DELETE",
-      });
-      if (!response.ok) {
-        const errorBody = await response.text();
-        throw new Error(
-          `HTTP error! status: ${response.status}, response body: ${errorBody}`
-        );
-      }
-      setProjects((prevProjects) =>
-        prevProjects.filter((project) => project.id !== projectId)
-      );
-      navigate(`/dashboard`);
-    } catch (error) {
-      console.error("Error deleting project:", error);
-      alert("프로젝트 삭제에 실패했습니다. 다시 시도해주세요.");
-    }
-  };
+  // const handleSubIconClick = async (projectId) => {
+  //   try {
+  //     const response = await fetch(`/api/v1/projects/${projectId}`, {
+  //       method: "DELETE",
+  //     });
+  //     if (!response.ok) {
+  //       const errorBody = await response.text();
+  //       throw new Error(
+  //         `HTTP error! status: ${response.status}, response body: ${errorBody}`
+  //       );
+  //     }
+  //     setProjects((prevProjects) =>
+  //       prevProjects.filter((project) => project.id !== projectId)
+  //     );
+  //     navigate(`/dashboard`);
+  //   } catch (error) {
+  //     console.error("Error deleting project:", error);
+  //     alert("프로젝트 삭제에 실패했습니다. 다시 시도해주세요.");
+  //   }
+  // };
 
   const handleAddClick = () => {
     setIsAdding(true); // 입력창 표시
@@ -165,7 +165,7 @@ function Sidebar() {
         </div>
         <Link
           to="/rolemodels"
-          className={`menu-item ${isActive("/createdraft")}`}
+          className={`menu-item ${isActive("/rolemodels")}`}
         >
           <img
             src={modelIcon}

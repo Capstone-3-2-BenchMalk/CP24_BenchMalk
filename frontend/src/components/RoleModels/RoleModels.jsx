@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from "react";
 import trashIcon from "../../assets/icons/trash-icon.png";
 import "../../styles/CreateProject.css";
+import "../../styles/Dashboard.css";
+import "../../styles/ProjectPage.css";
+import AudioPlayer from "../ProjectPage/AudioPlayer";
 
 function RoleModels() {
   const [file, setFile] = useState(null);
   const [rolemodelList, setRoleModelList] = useState([]);
   const [isLoading, setLoading] = useState(false);
+  const [selectedModel, setSelectedModel] = useState(null);
 
   useEffect(() => {
     const fetchPractices = async () => {
@@ -51,6 +55,14 @@ function RoleModels() {
     };
     fetchPractices();
   }, []);
+
+  // 카드 클릭 핸들러
+  const handleCardClick = async (rolemodel) => {
+    setSelectedModel({
+      name: rolemodel.name,
+      audioUrl: `/api/v1/models/files/${rolemodel.id}`,
+    });
+  };
 
   const handleDelete = async (e, modelid, name) => {
     e.stopPropagation();
@@ -115,7 +127,7 @@ function RoleModels() {
         : "정적인 스타일";
 
     return (
-      <div className={cardClass}>
+      <div className={cardClass} onClick={() => handleCardClick(rolemodel)}>
         {/* 상단 영역 */}
         <div className="cp-rolemodel-card-header">
           <span className="cp-rolemodel-card-title">{rolemodel.name}</span>
@@ -145,23 +157,33 @@ function RoleModels() {
   }
   function SelectRoleModel() {
     return (
-      <div className="cp-selectRoleModel">
-        <h4>롤모델 둘러보기</h4>
+      <>
         <div className="cp-selectRoleModel-grid-container">
           {rolemodelList.map((rolemodel) => (
             <RoleModelCard key={rolemodel.id} rolemodel={rolemodel} />
           ))}
         </div>
-      </div>
+      </>
     );
   }
   return (
-    <div className="cp-rolemodel-container">
-      <div className="cp-rolemodel-title">롤모델</div>
-      <div className="cp-rolemodel-content">
-        <SelectRoleModel canAdd={false} />
+    // <div className="cp-rolemodel-container">
+    /* <div className="cp-rolemodel-title">롤모델</div> */
+    /* <div className="cp-rolemodel-content"> */
+    <>
+      <h2 className="section-title">롤모델 둘러보기</h2>
+      <div className="player-container">
+        <AudioPlayer
+          audioUrl={selectedModel?.audioUrl || null}
+          modelName={selectedModel?.name || null}
+        />
       </div>
-    </div>
+
+      <SelectRoleModel canAdd={false} />
+    </>
+
+    /* </div> */
+    // </div>
   );
 }
 
