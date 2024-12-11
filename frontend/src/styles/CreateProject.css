@@ -104,6 +104,21 @@
   justify-content: start;
 }
 
+.cp-selectRoleModel-grid-container {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(350px, 1fr)
+  ); /* 1행에 3~4개 아이템 */
+  gap: 40px; /* 카드 간의 간격 */
+  width: 100%;
+  overflow-y: auto; /* 아래 스크롤 가능 */
+  max-height: 80vh; /* 스크롤 영역의 최대 높이 */
+  padding: 10px;
+  scrollbar-width: thin; /* 스크롤바 너비 */
+  scrollbar-color: #e1e1e1 transparent; /* 스크롤바 색상 */
+}
+
 /* .cp-selectRoleModel-scroll-container::-webkit-scrollbar {
   display: none;
 } */

@@ -142,7 +142,7 @@ function RoleModels() {
     return (
       <div className="cp-selectRoleModel">
         <h4>롤모델 둘러보기</h4>
-        <div className="cp-selectRoleModel-scroll-container">
+        <div className="cp-selectRoleModel-grid-container">
           {rolemodelList.map((rolemodel) => (
             <RoleModelCard
               key={rolemodel.id}
