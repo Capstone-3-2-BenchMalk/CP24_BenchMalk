@@ -137,7 +137,6 @@ function SelectRoleModel({ canAdd = true }) {
 
       // 2. Response - rolemodel id 받아오기
       const { id: modelId } = postData;
-      console.log("여기요" + modelId);
       const patchResponse = await fetch(`/api/v1/projects`, {
         method: "PATCH",
         headers: {
@@ -234,7 +233,12 @@ function SelectRoleModel({ canAdd = true }) {
         ? `부드럽게 읽는 스타일 - 분당 ${rolemodel.analysis.restPerMinute}회`
         : `부드럽게 읽는 스타일 - 분당 ${rolemodel.analysis.restPerMinute}회`;
 
-    const vpText = "(모노톤/다양한 톤)";
+    const vpText =
+      rolemodel.analysis.pitchSD > 60 && rolemodel.analysis.volumeSD > 10
+        ? "굉장히 역동적인 스타일"
+        : rolemodel.analysis.pitchSD > 60 || rolemodel.analysis.volumeSD > 10
+        ? "역동적인 스타일"
+        : "정적인 스타일";
 
     return (
       <div

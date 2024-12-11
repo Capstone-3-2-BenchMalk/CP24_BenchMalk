@@ -81,10 +81,10 @@ function RoleModels() {
   function RoleModelCard({ rolemodel }) {
     const cardClass =
       rolemodel.type === "CREATED"
-        ? "cp-rolemodel-card created"
+        ? "cp-rolemodel-grid-card created"
         : rolemodel.type === "PROVIDED"
-        ? "cp-rolemodel-card provided"
-        : "cp-rolemodel-card";
+        ? "cp-rolemodel-grid-card provided"
+        : "cp-rolemodel-grid-card";
 
     const pitchText =
       rolemodel.analysis.pitch >= 80
@@ -107,7 +107,12 @@ function RoleModels() {
         ? `부드럽게 읽는 스타일 - 분당 ${rolemodel.analysis.restPerMinute}회`
         : `부드럽게 읽는 스타일 - 분당 ${rolemodel.analysis.restPerMinute}회`;
 
-    const vpText = "(모노톤/다양한 톤)";
+    const vpText =
+      rolemodel.analysis.pitchSD > 60 && rolemodel.analysis.volumeSD > 10
+        ? "굉장히 역동적인 스타일"
+        : rolemodel.analysis.pitchSD > 60 || rolemodel.analysis.volumeSD > 10
+        ? "역동적인 스타일"
+        : "정적인 스타일";
 
     return (
       <div className={cardClass}>
@@ -144,11 +149,7 @@ function RoleModels() {
         <h4>롤모델 둘러보기</h4>
         <div className="cp-selectRoleModel-grid-container">
           {rolemodelList.map((rolemodel) => (
-            <RoleModelCard
-              key={rolemodel.id}
-              className=".cp-rolemodel-card"
-              rolemodel={rolemodel}
-            />
+            <RoleModelCard key={rolemodel.id} rolemodel={rolemodel} />
           ))}
         </div>
       </div>
