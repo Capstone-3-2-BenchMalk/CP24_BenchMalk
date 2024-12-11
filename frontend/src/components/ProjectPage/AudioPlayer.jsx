@@ -84,38 +84,41 @@ function AudioPlayer({ audioUrl, modelName, startTime = 0 }) {
 
   return (
     <div className="audio-player">
-      <div className="model-info">
-        <span className="model-name">{modelName}</span>
-      </div>
-      <div className="player-controls">
-        <div className="time-display">{formatTime(currentTime)}</div>
-        <input
-          ref={sliderRef}
-          type="range"
-          min="0"
-          max={duration}
-          value={currentTime}
-          onChange={handleSeek}
-          className="time-slider"
-          style={{ "--progress": `${progress}%` }}
-        />
-        <div className="time-display">{formatTime(duration)}</div>
+      <div className="audio-section">
+        <div className="model-info">
+          <span className="model-name">{modelName}</span>
+        </div>
+        <div className="player-controls">
+          <div className="time-display">{formatTime(currentTime)}</div>
+          <input
+            ref={sliderRef}
+            type="range"
+            min="0"
+            max={duration}
+            value={currentTime}
+            onChange={handleSeek}
+            className="time-slider"
+            style={{ "--progress": `${progress}%` }}
+          />
+          <div className="time-display">{formatTime(duration)}</div>
+        </div>
       </div>
       <div className="player-buttons">
         <button onClick={handleBackward} className="control-button">
-          <img src={before5} alt="before5" style={{ width: "20px" }} />
+          <img src={before5} alt="before5" style={{ width: "25px" }} />
         </button>
         <button onClick={handlePlayPause} className="play-button">
           <img
             src={isPlaying ? pause : play}
             alt={isPlaying ? "pause" : "play"}
-            style={{ width: "40px" }}
+            style={{ width: "50px" }}
           />
         </button>
         <button onClick={handleForward} className="control-button">
-          <img src={after5} alt="after5" style={{ width: "20px" }} />
+          <img src={after5} alt="after5" style={{ width: "25px" }} />
         </button>
       </div>
+
       <audio
         ref={audioRef}
         src={audioUrl}
