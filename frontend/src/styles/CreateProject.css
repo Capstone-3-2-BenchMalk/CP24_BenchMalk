@@ -123,6 +123,17 @@
   display: none;
 } */
 
+.cp-rolemodel-grid-card {
+  width: 334px;
+  height: 334px;
+  padding: 20px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* 위-중간-아래 간격 최대 */
+  cursor: pointer;
+}
+
 .cp-rolemodel-card {
   width: 334px;
   height: 437px;
@@ -132,6 +143,24 @@
   flex-direction: column;
   justify-content: space-between; /* 위-중간-아래 간격 최대 */
   cursor: pointer;
+}
+
+.cp-rolemodel-grid-card.created {
+  background: linear-gradient(
+      0deg,
+      rgba(238, 239, 243, 0.5) 0%,
+      rgba(238, 239, 243, 0.5) 100%
+    ),
+    linear-gradient(150deg, rgba(255, 255, 255, 0) 0%, #5df7a7 100%);
+}
+
+.cp-rolemodel-grid-card.provided {
+  background: linear-gradient(
+      0deg,
+      rgba(238, 239, 243, 0.5) 0%,
+      rgba(238, 239, 243, 0.5) 100%
+    ),
+    linear-gradient(150deg, #fff 0%, #5f5df7 251.07%);
 }
 
 .cp-rolemodel-card.created {
