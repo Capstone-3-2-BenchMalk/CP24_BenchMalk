@@ -69,7 +69,7 @@ function SelectRoleModel({ canAdd = true }) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          projectid: 0,
+          projectid: projectId,
           modelid: roleModelId,
         }),
       });
