@@ -245,7 +245,7 @@ function SelectRoleModel({ canAdd = true }) {
         <div className="cp-rolemodel-card-header">
           <span className="cp-rolemodel-card-title">{rolemodel.name}</span>
 
-          {true && (
+          {rolemodel.type === "CREATED" && (
             <img
               src={trashIcon}
               alt="delete"
