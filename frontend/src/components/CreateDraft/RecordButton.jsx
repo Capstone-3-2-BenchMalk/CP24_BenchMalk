@@ -1,15 +1,59 @@
 import React, { useState, useRef } from "react";
 import recordIcon from "../../assets/icons/record-icon.svg";
+const Mp3Encoder = require("lamejs").Mp3Encoder;
 
 function RecordButton({ setFile }) {
   const [isRecording, setIsRecording] = useState(false);
   const mediaRecorder = useRef(null);
   const chunks = useRef([]);
 
+  const convertToMp3 = async (audioData) => {
+    // AudioContext를 사용하여 webm을 디코딩
+    const audioContext = new AudioContext();
+    const audioBuffer = await audioContext.decodeAudioData(
+      await audioData.arrayBuffer()
+    );
+
+    // 오디오 데이터를 가져옴
+    const channelData = audioBuffer.getChannelData(0);
+
+    // Float32Array를 Int16Array로 변환
+    const samples = new Int16Array(channelData.length);
+    for (let i = 0; i < channelData.length; i++) {
+      samples[i] = channelData[i] * 32767;
+    }
+
+    // MP3 인코딩
+    const mp3enc = new Mp3Encoder(1, audioBuffer.sampleRate, 128);
+    const mp3Data = [];
+
+    const sampleBlockSize = 1152;
+    for (let i = 0; i < samples.length; i += sampleBlockSize) {
+      const sampleChunk = samples.subarray(
+        i,
+        Math.min(i + sampleBlockSize, samples.length)
+      );
+      const mp3buf = mp3enc.encodeBuffer(sampleChunk);
+      if (mp3buf.length > 0) {
+        mp3Data.push(mp3buf);
+      }
+    }
+
+    const mp3buf = mp3enc.flush();
+    if (mp3buf.length > 0) {
+      mp3Data.push(mp3buf);
+    }
+
+    const blob = new Blob(mp3Data, { type: "audio/mp3" });
+    return new File([blob], "recording.mp3", { type: "audio/mp3" });
+  };
+
   const startRecording = async () => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      mediaRecorder.current = new MediaRecorder(stream);
+      mediaRecorder.current = new MediaRecorder(stream, {
+        mimeType: "audio/webm",
+      });
 
       mediaRecorder.current.ondataavailable = (e) => {
         if (e.data.size > 0) {
@@ -17,12 +61,10 @@ function RecordButton({ setFile }) {
         }
       };
 
-      mediaRecorder.current.onstop = () => {
+      mediaRecorder.current.onstop = async () => {
         const blob = new Blob(chunks.current, { type: "audio/webm" });
-        const audioFile = new File([blob], "recording.webm", {
-          type: "audio/webm",
-        });
-        setFile(audioFile);
+        const mp3File = await convertToMp3(blob);
+        setFile(mp3File);
         chunks.current = [];
 
         // 스트림 트랙들을 정지
@@ -55,7 +97,7 @@ function RecordButton({ setFile }) {
       onClick={isRecording ? stopRecording : startRecording}
     >
       <img src={recordIcon} alt="Record Icon" />
-      <span>{isRecording ? "녹음중..." : "녹음"}</span>
+      <span>{isRecording ? "녹음중" : "녹음"}</span>
     </button>
   );
 }

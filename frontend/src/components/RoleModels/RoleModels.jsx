@@ -108,8 +108,8 @@ function RoleModels() {
     const wpmText =
       rolemodel.analysis.wpm >= 120
         ? `빠른 말하기 속도 - ${rolemodel.analysis.wpm}wpm`
-        : rolemodel.analysis.wpm <= 95
-        ? `낮은 말하기 속도 - ${rolemodel.analysis.wpm}wpm`
+        : rolemodel.analysis.wpm <= 105
+        ? `느린 말하기 속도 - ${rolemodel.analysis.wpm}wpm`
         : `중간 말하기 속도 - ${rolemodel.analysis.wpm}wpm`;
 
     const restText =

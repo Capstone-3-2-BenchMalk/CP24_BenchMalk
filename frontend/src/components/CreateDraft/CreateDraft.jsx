@@ -24,6 +24,12 @@ function CreateDraft() {
   const postPractice = async (e) => {
     e.preventDefault();
     setLoading(true);
+
+    // FormData 생성 전 데이터 확인
+    console.log("File to upload:", file);
+    console.log("Project ID:", projectId);
+    console.log("Title:", title.trim() || placeholder);
+
     const formData = new FormData();
     formData.append(
       "json",
@@ -37,23 +43,29 @@ function CreateDraft() {
     console.log(title);
     formData.append("file", file);
 
+    // FormData 내용 확인
+    for (let pair of formData.entries()) {
+      console.log(pair[0], pair[1]);
+    }
+
     try {
       const response = await fetch("/api/v1/practices", {
         method: "POST",
         body: formData,
       });
-      const data = await response.json();
-      if (response.ok) {
-        console.log(" Successful", data);
-        navigate(`/project/${projectId}`);
-      } else {
-        const errorBody = await response.text();
-        throw new Error(
-          `HTTP error! status: ${response.status}, response body: ${errorBody}`
-        );
+
+      const responseData = await response.json();
+
+      if (!response.ok) {
+        console.error("Server Error Response:", responseData);
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
+
+      console.log("Success Response:", responseData);
+      navigate(`/project/${projectId}`);
     } catch (error) {
       console.error("Error:", error);
+      alert("연습 생성에 실패했습니다. 다시 시도해주세요.");
     } finally {
       setLoading(false);
     }
