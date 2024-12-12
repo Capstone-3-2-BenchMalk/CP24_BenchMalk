@@ -98,12 +98,29 @@ function RoleModels() {
         ? "cp-rolemodel-grid-card provided"
         : "cp-rolemodel-grid-card";
 
-    const pitchText =
-      rolemodel.analysis.pitch >= 230
-        ? `높은 목소리 - ${rolemodel.analysis.pitch}`
-        : rolemodel.analysis.pitch <= 150
-        ? `낮은 목소리 - ${rolemodel.analysis.pitch}`
-        : `중간 목소리 - ${rolemodel.analysis.pitch}`;
+    const pitchText = rolemodel.name.includes("미미미누")
+      ? `남자 높은 목소리`
+      : rolemodel.name.includes("김학철")
+      ? `남자 낮은 목소리`
+      : rolemodel.name.includes("서동주")
+      ? `여자 높은 톤 목소리`
+      : rolemodel.name.includes("김병만")
+      ? `남자 낮은 톤 목소리`
+      : rolemodel.name.includes("나민애")
+      ? `여자 높은 톤 목소리`
+      : rolemodel.name.includes("김준형")
+      ? `남자 중간 톤 목소리`
+      : rolemodel.name.includes("안정록")
+      ? `남자 중간 톤 목소리`
+      : rolemodel.name.includes("윤석열")
+      ? `남자 낮은 톤 목소리`
+      : rolemodel.name.includes("대상혁")
+      ? `남자 중간 톤 목소리`
+      : rolemodel.analysis.pitch >= 230
+      ? `높은 목소리`
+      : rolemodel.analysis.pitch <= 150
+      ? `낮은 목소리`
+      : `중간 목소리`;
 
     const wpmText =
       rolemodel.analysis.wpm >= 120
