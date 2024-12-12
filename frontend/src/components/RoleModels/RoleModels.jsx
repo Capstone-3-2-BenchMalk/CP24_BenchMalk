@@ -99,9 +99,9 @@ function RoleModels() {
         : "cp-rolemodel-grid-card";
 
     const pitchText =
-      rolemodel.analysis.pitch >= 80
+      rolemodel.analysis.pitch >= 230
         ? `높은 목소리 - ${rolemodel.analysis.pitch}`
-        : rolemodel.analysis.pitch <= 60
+        : rolemodel.analysis.pitch <= 150
         ? `낮은 목소리 - ${rolemodel.analysis.pitch}`
         : `중간 목소리 - ${rolemodel.analysis.pitch}`;
 
