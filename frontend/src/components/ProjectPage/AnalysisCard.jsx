@@ -143,16 +143,25 @@ const getRestMessage = (restStatus) => {
   return restFeedbacks[restStatus] || "분석 불가";
 };
 
-const getEnergyMessage = (energyStatus) => {
-  const energyFeedbacks = {
-    1: "목소리 톤이 단조로워 지루하게 느껴질 수 있습니다. 단락 전환 시 톤에 변화를 주어 감정을 표현해 보세요.",
-    2: "목소리 톤이 단조로워 지루하게 느껴질 수 있습니다. 단락 전환 시 톤에 변화를 주어 감정을 표현해 보세요.",
-    3: "목소리 크기와 톤 변화 모두 적절합니다. 훌륭한 전달력을 보여주고 있습니다.",
-    4: "목소리 톤 변화가 정도가 과도합니다. 톤을 조금 더 안정적으로 유지해 보세요.",
-    5: "목소리 톤 변화가 정도가 과도합니다. 톤을 조금 더 안정적으로 유지해 보세요.",
-  };
+const getEnergyMessage = (pitchStatus, volumeStatus) => {
+  let feedback = "";
+  if (pitchStatus > 3)
+    feedback +=
+      "목소리 피치 변화 범위가 너무 큽니다. 피치를 조금 더 안정적으로 유지해 보세요.";
+  else if (pitchStatus < 3)
+    feedback +=
+      "목소리 피치 변화가 단조로워 지루하게 느껴질 수 있습니다. 단락 전환 시 피치에 변화를 주어 감정을 표현해 보세요.";
+  if (volumeStatus > 3)
+    feedback +=
+      "\n목소리 크기 변화 범위가 너무 큽니다. 조금 더 차분하게 말해 보세요.";
+  else if (volumeStatus < 3)
+    feedback +=
+      "\n목소리 크기가 지나치게 일정합니다. 강조하고 싶은 단어를 더 힘 있게 말해 청중의 주의를 끌어 보세요.";
+  if (pitchStatus === 3 && volumeStatus === 3)
+    feedback +=
+      "목소리 크기와 톤 변화 모두 적절합니다. 훌륭한 전달력을 보여주고 있습니다.";
 
-  return energyFeedbacks[energyStatus] || "분석 불가";
+  return feedback || "분석 불가";
 };
 
 const toRound = (value) => {
@@ -311,7 +320,7 @@ function AnalysisCard({
               }}
             >
               <img src={play} alt="play" style={{ width: "30px" }} />
-              분당 쉼 {modelData?.restPerMinute} 회 문장 들어보기
+              끊어읽기 {toRound(modelData?.restPerMinute)} 회 문장 들어보기
             </div>
             <div
               style={{
@@ -321,7 +330,7 @@ function AnalysisCard({
                 fontSize: "16px",
               }}
             >
-              {`분당 쉼이란? \n분당 쉼은 말하는 동안 1분 동안 일정 시간 이상 멈춘 횟수를 뜻합니다. 이는 말 속도와 호흡 조절의 일관성을 평가하는 데 사용됩니다. \n벤치말크에서는 180ms 이상의 멈춤을 하나의 쉼으로 인식하며, 이 기준은 일반적인 문장 구조에서의 자연스러운 호흡 간격을 반영합니다. 쉼이 너무 많거나 너무 적을 경우 각각 지나치게 느리거나 빠른 말하기 스타일로 해석될 수 있습니다. 이러한 분석을 통해 적절한 쉼의 빈도를 유지하도록 피드백을 제공합니다.`}
+              {`끊어읽기란? \n분당 일정 시간 이상 휴지를 둔 횟수를 뜻합니다. 이는 말 속도와 호흡 조절의 일관성을 평가하는 데 사용됩니다. \n벤치말크에서는 180ms 이상의 멈춤(쉼)을 하나의 휴지로 인식하며, 이 기준은 일반적인 문장 구조에서의 자연스러운 호흡 간격을 반영합니다. 끊어읽기가 너무 많거나 너무 적을 경우 각각 지나치게 느리거나 빠른 말하기 스타일로 해석될 수 있습니다. 이러한 분석을 통해 적절한 끊어읽기 빈도를 유지하도록 피드백을 제공합니다.`}
             </div>
           </>
         )}
@@ -336,7 +345,8 @@ function AnalysisCard({
               }}
             >
               {`${getEnergyMessage(
-                getEnergyStatus(modelData?.pitchSD, analysisData?.pitchSD)
+                getPitchStatus(achievement?.pitchSD),
+                getVolumeStatus(achievement?.volumeSD)
               )}`}
               {modelData?.accent - analysisData?.accent > 0 &&
                 `\n분당 ${toRound(
@@ -382,39 +392,6 @@ function AnalysisCard({
           </>
         )}
       </div>
-      {/* <div className="tem-section">
-        <div className="analysis-section">
-          <h3>롤모델 분석 데이터</h3>
-          {modelLoading ? (
-            <div>롤모델 데이터 로딩중...</div>
-          ) : modelError ? (
-            <div>{modelError}</div>
-          ) : (
-            <>
-              <div>롤모델 빠르기: {modelData?.wpm || 0} wpm</div>
-              <div>피치 표준편차: {modelData?.pitchSD || 0}</div>
-              <div>쉼: {modelData?.rest || 0}</div>
-              <div>분당 쉼: {modelData?.restPerMinute || 0}</div>
-            </>
-          )}
-        </div>
-        <div className="analysis-section">
-          <h3>내 연습 분석 데이터</h3>
-          <div>말하기 속도: {analysisData?.wpm || 0} wpm</div>
-          <div>피치 표준편차: {analysisData?.pitchSD || 0}</div>
-          <div>쉼: {analysisData?.rest || 0}</div>
-          <div>분당 쉼: {analysisData?.restPerMinute || 0}</div>
-        </div>
-        <div className="achievement-section">
-          <h3>달성도</h3>
-          <div>빠르기: {achievement?.wpm || 0}%</div>
-          <div>쉼: {achievement?.rest || 0}%</div>
-
-          <div>
-            피치 달성도: {analysisData?.pitchSD / modelData?.pitchSD || 0}%
-          </div>
-        </div>
-      </div> */}
     </div>
   );
 }

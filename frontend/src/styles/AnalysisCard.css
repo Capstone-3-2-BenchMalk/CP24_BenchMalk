@@ -95,7 +95,7 @@
 .graph-container {
   display: flex;
   flex-direction: column;
-  /* margin-top: 20px; */
+  margin-top: 10px;
   background-color: white;
   align-items: center;
   /* justify-content: center; */

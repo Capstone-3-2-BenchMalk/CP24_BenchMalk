@@ -97,14 +97,14 @@ export function EnergyGraph({
         pointRadius: 4,
       },
       {
-        label: "나의 분산도",
+        label: "나",
         data: filteredMyData,
         backgroundColor: "rgba(255, 99, 132, 0.3)",
         borderColor: "transparent",
         pointRadius: 4,
       },
       {
-        label: "롤모델 분산도",
+        label: "롤모델",
         data: filteredModelData,
         backgroundColor: "rgba(75, 192, 192, 0.3)",
         borderColor: "transparent",
@@ -185,7 +185,7 @@ export function EnergyGraph({
   };
 
   return (
-    <div style={{ width: "100%", height: "auto" }}>
+    <div style={{ width: "80%", height: "auto", marginTop: "7px" }}>
       <Scatter data={data} options={options} />
     </div>
   );
