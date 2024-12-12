@@ -97,66 +97,85 @@ const getVolumeStatus = (volumeSd) => {
   }
 };
 
-const getSpeedMessage = (speedStatus, restStatus, energyStatus) => {
+const getSpeedMessage = (
+  speedStatus,
+  restStatus,
+  modelPitch,
+  analysisPitch
+) => {
   let feedback = "";
 
-  const speedFeedbacks = {
-    1: "말의 속도가 느립니다. 청중의 집중도를 유지하기 위해 속도를 조금 더 높여 보세요.\n",
-    2: "말의 속도가 느립니다. 청중의 집중도를 유지하기 위해 속도를 조금 더 높여 보세요.\n",
-    3: "속도가 적절합니다. 현재 리듬을 잘 유지하세요!\n",
-    4: "말의 속도가 빠릅니다. 청중이 이해하기 어려울 수 있으니 속도를 조절해 보세요.\n",
-    5: "말의 속도가 빠릅니다. 청중이 이해하기 어려울 수 있으니 속도를 조절해 보세요.\n",
-  };
-
-  const restFeedbacks = {
-    1: "전체적인 분량을 줄이고, 어절별로 천천히 말해 보세요.\n",
-    2: "전체적인 분량을 줄이고, 어절별로 천천히 말해 보세요.\n",
-    3: "말을 어절별로 조금 더 천천히 이어가 보세요.\n",
-    4: "말을 어절별로 조금 더 천천히 이어가 보세요.\n",
-    5: "말을 어절별로 조금 더 천천히 이어가 보세요.\n",
-  };
-
-  const energyFeedbacks = {
-    1: "다만 목소리 톤이 낮은 편이라 롤모델보다 약간 빠르게 말하는 것이 효과적일 수 있습니다.",
-    2: "다만 목소리 톤이 낮은 편이라 롤모델보다 약간 빠르게 말하는 것이 효과적일 수 있습니다.",
-    3: "",
-    4: "목소리 톤이 높아 같은 속도에서도 더 빠르게 느껴질 수 있습니다. 조금 더 여유롭게 말해 보세요.",
-    5: "목소리 톤이 높아 같은 속도에서도 더 빠르게 느껴질 수 있습니다. 조금 더 여유롭게 말해 보세요.",
-  };
-
-  if (speedFeedbacks[speedStatus]) feedback += speedFeedbacks[speedStatus];
-  if (restFeedbacks[restStatus]) feedback += restFeedbacks[restStatus];
-  if (energyFeedbacks[energyStatus]) feedback += energyFeedbacks[energyStatus];
-
+  if (speedStatus > 3) {
+    feedback +=
+      "속도가 빠릅니다. 청중이 이해하기 어려울 수 있으니 속도를 조절해 보세요.";
+    if (restStatus >= 3)
+      feedback += "\n말을 어절별로 조금 더 천천히 이어가 보세요.";
+    else feedback += "\n전체적인 분량을 줄이고, 어절별로 천천히 말해 보세요.";
+    if (analysisPitch > modelPitch)
+      feedback +=
+        "\n목소리 피치가 높아 같은 속도에서도 더 빠르게 느껴질 수 있습니다. 조금 더 여유롭게 말해 보세요.";
+    else
+      feedback +=
+        "\n다만 목소리 톤이 낮은 편이라 롤모델보다 약간 빠르게 말하는 것이 효과적일 수 있습니다.";
+  } else if (speedStatus === 3)
+    feedback += "속도가 적절합니다. 현재 리듬을 잘 유지하세요!";
+  else if (speedStatus < 3) {
+    feedback +=
+      "속도가 느립니다. 청중의 집중도를 유지하기 위해 속도를 조금 더 높여 보세요.";
+    if (restStatus > 3)
+      feedback += "\n어절별로 조금 더 빠르게 이어서 말해 보세요.";
+    else if (restStatus < 3)
+      feedback +=
+        "\n추가적으로 설명하고 싶은 부분의 분량을 늘려 더 자세하게 빠르게 말해보세요.";
+    if (analysisPitch > modelPitch)
+      feedback +=
+        "\n다만 목소리 톤이 높아 롤모델보다 약간 느리게 말하는 것이 효과적일 수 있습니다.";
+    else
+      feedback +=
+        "\n목소리 톤이 낮은 편이라 롤모델보다 빠르게 말하는 것이 효과적일 수 있습니다.";
+  }
   return feedback || "분석 불가";
 };
 
 const getRestMessage = (restStatus) => {
-  const restFeedbacks = {
-    1: "어절을 지나치게 이어 말하고 있습니다. 중간중간 끊어 읽으며 호흡을 정리해 보세요.",
-    2: "어절을 지나치게 이어 말하고 있습니다. 중간중간 끊어 읽으며 호흡을 정리해 보세요.",
-    3: "끊어 읽기의 빈도가 적절합니다. 청중이 이해하기 쉽게 전달하고 있습니다.",
-    4: "끊어 읽기가 너무 잦아 흐름이 끊깁니다. 더 부드럽게 연결하여 말해 보세요.",
-    5: "끊어 읽기가 너무 잦아 흐름이 끊깁니다. 더 부드럽게 연결하여 말해 보세요.",
-  };
+  let feedback = "";
+  if (restStatus > 3)
+    feedback +=
+      "끊어 읽기가 너무 잦아 흐름이 끊깁니다. 더 부드럽게 연결하여 말해 보세요.";
+  if (restStatus < 3)
+    feedback +=
+      "어절을 지나치게 이어 말하고 있습니다. 중간중간 끊어 읽으며 호흡을 정리해 보세요.";
+  else
+    feedback +=
+      "끊어 읽기의 빈도가 적절합니다. 청중이 이해하기 쉽게 전달하고 있습니다.";
 
-  return restFeedbacks[restStatus] || "분석 불가";
+  return feedback || "분석 불가";
 };
 
-const getEnergyMessage = (pitchStatus, volumeStatus) => {
+const getEnergyMessage = (pitchStatus, volumeStatus, accentCount) => {
   let feedback = "";
-  if (pitchStatus > 3)
+  const lack = accentCount > 0;
+
+  if (pitchStatus > 3) {
     feedback +=
       "목소리 피치 변화 범위가 너무 큽니다. 피치를 조금 더 안정적으로 유지해 보세요.";
-  else if (pitchStatus < 3)
+    if (lack)
+      feedback +=
+        "\n추가적으로, 톤의의 범위를 줄이되, 톤의 변화를 더 자주 주는 방식으로 시도해 보세요.";
+  } else if (pitchStatus < 3)
     feedback +=
       "목소리 피치 변화가 단조로워 지루하게 느껴질 수 있습니다. 단락 전환 시 피치에 변화를 주어 감정을 표현해 보세요.";
-  if (volumeStatus > 3)
+
+  if (volumeStatus > 3) {
     feedback +=
       "\n목소리 크기 변화 범위가 너무 큽니다. 조금 더 차분하게 말해 보세요.";
-  else if (volumeStatus < 3)
+    if (lack)
+      feedback +=
+        "\n추가적으로, 목소리 크기의 범위를 줄이되, 목소리 크기의 변화를 더 자주 주는 방식으로 시도해 보세요.";
+  } else if (volumeStatus < 3)
     feedback +=
       "\n목소리 크기가 지나치게 일정합니다. 강조하고 싶은 단어를 더 힘 있게 말해 청중의 주의를 끌어 보세요.";
+
   if (pitchStatus === 3 && volumeStatus === 3)
     feedback +=
       "목소리 크기와 톤 변화 모두 적절합니다. 훌륭한 전달력을 보여주고 있습니다.";
@@ -247,11 +266,11 @@ function AnalysisCard({
               {`현재 ${analysisData?.wpm || 0} wpm 으로, \n${getSpeedMessage(
                 getSpeedStatus(achievement?.wpm),
                 getRestStatus(achievement?.rest),
-                getEnergyStatus(modelData?.pitchSD, analysisData?.pitchSD)
+                modelData?.pitch,
+                analysisData?.pitch
               )}`}
             </div>
             <div className="graph-container">
-              {/* <h3>빠르기 차이</h3> */}
               <SpeedGraph
                 modelSpeed={modelData?.wpm}
                 mySpeed={analysisData?.wpm}
@@ -330,7 +349,7 @@ function AnalysisCard({
                 fontSize: "16px",
               }}
             >
-              {`끊어읽기란? \n분당 일정 시간 이상 휴지를 둔 횟수를 뜻합니다. 이는 말 속도와 호흡 조절의 일관성을 평가하는 데 사용됩니다. \n벤치말크에서는 180ms 이상의 멈춤(쉼)을 하나의 휴지로 인식하며, 이 기준은 일반적인 문장 구조에서의 자연스러운 호흡 간격을 반영합니다. 끊어읽기가 너무 많거나 너무 적을 경우 각각 지나치게 느리거나 빠른 말하기 스타일로 해석될 수 있습니다. 이러한 분석을 통해 적절한 끊어읽기 빈도를 유지하도록 피드백을 제공합니다.`}
+              {`끊어읽기란? \n분당 일정 시간 이상 휴지를 둔 횟수를 뜻합니다. 이는 호흡과 리듬감을 평가하는 데 사용됩니다. \n벤치말크에서는 180ms 이상의 멈춤(쉼)을 하나의 휴지로 인식하며, 이 기준은 일반적인 문장 구조에서의 자연스러운 호흡 간격을 반영합니다. 끊어읽기가 너무 많거나 너무 적을 경우 각각 지나치게 느리거나 빠른 말하기 스타일로 해석될 수 있습니다. 이러한 분석을 통해 적절한 끊어읽기 빈도를 유지하도록 피드백을 제공합니다.`}
             </div>
           </>
         )}
@@ -346,7 +365,8 @@ function AnalysisCard({
             >
               {`${getEnergyMessage(
                 getPitchStatus(achievement?.pitchSD),
-                getVolumeStatus(achievement?.volumeSD)
+                getVolumeStatus(achievement?.volumeSD),
+                modelData?.accent - analysisData?.accent
               )}`}
               {modelData?.accent - analysisData?.accent > 0 &&
                 `\n분당 ${toRound(
