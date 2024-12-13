@@ -161,7 +161,7 @@ const getEnergyMessage = (pitchStatus, volumeStatus, accentCount) => {
       "목소리 피치 변화 범위가 너무 큽니다. 피치를 조금 더 안정적으로 유지해 보세요.";
     if (lack)
       feedback +=
-        "\n추가적으로, 톤의의 범위를 줄이되, 톤의 변화를 더 자주 주는 방식으로 시도해 보세요.";
+        "\n추가적으로, 톤의 범위를 줄이되, 톤의 변화를 더 자주 주는 방식으로 시도해 보세요.";
   } else if (pitchStatus < 3)
     feedback +=
       "목소리 피치 변화가 단조로워 지루하게 느껴질 수 있습니다. 단락 전환 시 피치에 변화를 주어 감정을 표현해 보세요.";
@@ -247,7 +247,13 @@ function AnalysisCard({
               getPitchStatus(achievement?.pitchSD),
               getVolumeStatus(achievement?.volumeSD)
             )}
-            targetValue={`목표 에너지 : 다이나믹`}
+            targetValue={
+              modelData?.pitchSD > 60 && modelData?.volumeSD > 10
+                ? "목표 에너지 : 굉장히 역동적"
+                : modelData?.pitchSD > 60 || modelData?.volumeSD > 10
+                ? "목표 에너지 : 역동적"
+                : "목표 에너지 : 정적"
+            }
             className={selectedSection === "energy" ? "selected" : ""}
           />
         </div>
@@ -326,7 +332,7 @@ function AnalysisCard({
             </div>
 
             <div
-              onClick={() => onAudioTimeChange(90)}
+              onClick={() => onAudioTimeChange(50)}
               className="play-model-audio"
               style={{
                 cursor: "pointer",
@@ -368,7 +374,7 @@ function AnalysisCard({
                 getVolumeStatus(achievement?.volumeSD),
                 modelData?.accent - analysisData?.accent
               )}`}
-              {modelData?.accent - analysisData?.accent > 0 &&
+              {modelData?.accent - analysisData?.accent > 2 &&
                 `\n분당 ${toRound(
                   modelData?.accent - analysisData?.accent
                 )}번 정도 더 강조 효과를 주세요. 속도, 크기, 톤 변화를 활용하면 전달력을 더욱 높일 수 있습니다.`}
@@ -384,7 +390,7 @@ function AnalysisCard({
               />
             </div>
             <div
-              onClick={() => onAudioTimeChange(90)}
+              onClick={() => onAudioTimeChange(62)}
               className="play-model-audio"
               style={{
                 cursor: "pointer",

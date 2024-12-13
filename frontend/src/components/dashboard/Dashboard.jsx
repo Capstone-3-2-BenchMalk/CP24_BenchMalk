@@ -11,6 +11,12 @@ import {
   formatCreatedDate,
 } from "../../utils/fomatters";
 
+const statusConfig = {
+  ANALYZED: { text: "분석완료", color: "green" },
+  CREATED: { text: "분석 중", color: "blue" },
+  FAILED: { text: "분석 실패", color: "red" },
+};
+
 function PracticeTable({ data }) {
   const columns = [
     {
@@ -28,8 +34,11 @@ function PracticeTable({ data }) {
       header: "진행상태",
       accessor: "status",
       render: (value) => (
-        <span style={{ color: value === "ANALYZED" ? "green" : "red" }}>
-          {value}
+        // <span style={{ color: value === "ANALYZED" ? "green" : "red" }}>
+        //   {value}
+        // </span>
+        <span style={{ color: statusConfig[value]?.color || "red" }}>
+          {statusConfig[value]?.text || "분석 실패"}
         </span>
       ),
       style: { width: "10%" },

@@ -211,6 +211,7 @@ export function SpeedGraph({ modelSpeed, mySpeed }) {
     scales: {
       x: {
         beginAtZero: true,
+        max: Math.ceil((Math.max(modelSpeed, mySpeed) + 1) / 20) * 20, // 100 이하면 120, 초과하면 160
       },
       y: {
         ticks: {
@@ -227,7 +228,8 @@ export function SpeedGraph({ modelSpeed, mySpeed }) {
       },
       datalabels: {
         anchor: "end",
-        align: "end",
+        align: "right",
+        // offset: 10,
         formatter: (value) => `${value}`,
         color: "black",
         font: {
