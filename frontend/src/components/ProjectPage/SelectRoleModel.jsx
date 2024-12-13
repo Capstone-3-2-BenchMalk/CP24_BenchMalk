@@ -227,9 +227,9 @@ function SelectRoleModel({ canAdd = true }) {
         : `중간 말하기 속도 - ${rolemodel.analysis.wpm}wpm`;
 
     const restText =
-      rolemodel.analysis.restPerMinute >= 40
+      rolemodel.analysis.restPerMinute >= 25
         ? `끊어 읽는 스타일 - 분당 ${rolemodel.analysis.restPerMinute}회`
-        : rolemodel.analysis.restPerMinute < 40
+        : rolemodel.analysis.restPerMinute < 25
         ? `부드럽게 읽는 스타일 - 분당 ${rolemodel.analysis.restPerMinute}회`
         : `부드럽게 읽는 스타일 - 분당 ${rolemodel.analysis.restPerMinute}회`;
 
