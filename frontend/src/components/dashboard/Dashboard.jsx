@@ -34,9 +34,6 @@ function PracticeTable({ data }) {
       header: "진행상태",
       accessor: "status",
       render: (value) => (
-        // <span style={{ color: value === "ANALYZED" ? "green" : "red" }}>
-        //   {value}
-        // </span>
         <span style={{ color: statusConfig[value]?.color || "red" }}>
           {statusConfig[value]?.text || "분석 실패"}
         </span>
