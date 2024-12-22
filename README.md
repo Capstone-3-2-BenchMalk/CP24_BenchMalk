@@ -16,7 +16,6 @@
 |                송정현                 |  안필온  |  이민섭   |
 | :-----------------------------------: | :------: | :-------: |
 |               Front-end               | Back-end | Front-end |
-|                 None                  |   None   |   None    |
 | [GitHub](https://github.com/katie424) | [GitHub] | [Github]  |
 
 <br/>
@@ -35,8 +34,8 @@
 
 - **롤모델을 활용한 피드백**:
   - 빠르기
-  - 호흡
-  - 발성
+  - 끊어읽기
+  - 에너지
     <br/>
 
 # 4. Tasks & Responsibilities
@@ -58,31 +57,58 @@ CP24_BenchMalk
    ├─ README.md
    ├─ package-lock.json
    ├─ package.json
-   ├─ public
-   │  ├─ favicon.ico
-   │  ├─ index.html
-   │  ├─ logo192.png
-   │  ├─ logo512.png
-   │  ├─ manifest.json
-   │  └─ robots.txt
+   ├─ public/
    └─ src
-      ├─ App.css
-      ├─ App.js
-      ├─ App.test.js
-      ├─ assets
-      │  └─ benchmalk.png
-      ├─ components
-      │  ├─ Home.js
-      │  ├─ Login.js
-      │  └─ Signup.js
-      ├─ index.css
       ├─ index.js
+      ├─ App.js
+      ├─ App.css
+      ├─ App.test.js
+      ├─ index.css
       ├─ logo.svg
       ├─ reportWebVitals.js
       ├─ setupTests.js
-      └─ styles
-         ├─ Home.css
-         └─ Login.css
+      ├─ assets/                     # 이미지, 아이콘 등 정적 자원
+      ├─ components
+      │  ├─ CreateDraft
+      │  │  ├─ CreateDraft.jsx       # 연습 생성 페이지
+      │  │  ├─ DraftDropBox.jsx      # 파일 업로드 컴포넌트
+      │  │  ├─ FilePreview.jsx       # 파일 미리보기 컴포넌트
+      │  │  ├─ FileUploadButton.jsx  # 파일 업로드 버튼 컴포넌트
+      │  │  └─ RecordButton.jsx      # 녹음 버튼 컴포넌트
+      │  ├─ CreateProject
+      │  │  └─ CreateProject.jsx     # 프로젝트 생성 컴포넌트
+      │  ├─ dashboard
+      │  │  ├─ Dashboard.jsx         # 대시보드 메인 페이지
+      │  │  └─ TableForm.jsx         # 테이블 컴포넌트
+      │  ├─ ProjectPage
+      │  │  ├─ AnalysisCard.jsx      # 분석 결과 카드 컴포넌트
+      │  │  ├─ AudioPlayer.jsx       # 오디오 재생 컴포넌트
+      │  │  ├─ Graph.jsx             # 분석 결과 시각화
+      │  │  ├─ PracticeCard.jsx      # 연습 카드 컴포넌트
+      │  │  ├─ ProjectPage.jsx       # 프로젝트 상세 페이지
+      │  │  ├─ projectPageApi.js     # API 호출 함수
+      │  │  └─ SelectRoleModel.jsx   # 롤모델 선택 컴포넌트
+      │  ├─ RoleModels
+      │  │  └─ RoleModels.jsx        # 롤모델 둘러보기 페이지
+      │  ├─ Home.jsx                 # 홈 페이지
+      │  ├─ Login.jsx                # 로그인 페이지
+      │  ├─ Sidebar.jsx              # 사이드바 컴포넌트
+      │  └─ Signup.jsx               # 회원가입 페이지
+      ├─ hooks
+      │  └─ useProjectData.js        # 프로젝트 데이터 관리 hook
+      ├─ styles
+      │  ├─ AnalysisCard.css
+      │  ├─ AudioPlayer.css
+      │  ├─ CreateDraft.css
+      │  ├─ CreateProject.css
+      │  ├─ Dashboard.css
+      │  ├─ Home.css
+      │  ├─ Login.css
+      │  ├─ ProjectPage.css
+      │  ├─ Sidebar.css
+      │  └─ TableForm.css
+      └─ utils/
+         └─ formatters.js          # 데이터 포맷팅 유틸리티
 
 ```
 
@@ -99,7 +125,7 @@ CP24_BenchMalk
   - 배포 가능한 상태의 코드를 유지합니다.
   - 모든 배포는 이 브랜치에서 이루어집니다.
 
-- {feature} Branch
+- {feature} Branch
   - 기능 각자의 개발 브랜치입니다.
   - 각 기능의 개발은 이 브랜치에서 이루어집니다.
     <br/>
