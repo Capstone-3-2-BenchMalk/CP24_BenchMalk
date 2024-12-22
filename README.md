@@ -38,19 +38,19 @@
   - 에너지
     <br/>
 
-# 4. Tasks & Responsibilities
+# 4. Demo
+
+https://github.com/user-attachments/assets/23eaf800-2424-4d0e-afaa-4ad06ecdd256
+
+<br/>
+
+# 5. Tasks & Responsibilities
 
 | **이름**    | **주요 역할**                    | **세부 책임**                                                                 |
 |-------------|---------------------------------|------------------------------------------------------------------------------|
 | **송정현** | Front-end 개발, UI 설계          | - UI 디자인 및 구현<br>- 화면 구성 및 UX 최적화<br>- 프론트엔드 기능 개발 및 성능 최적화<br>- 음성 분석 결과 구현 및 시각화 |
 | **안필온** | Back-end 개발, 음성 데이터 분석  | - 서버 아키텍처 설계 및 구현<br>- 음성 데이터 수집 및 분석 알고리즘 개발<br>- 데이터베이스 설계 및 관리<br>- Front-end와의 데이터 연동 지원 |
 | **이민섭** | Front-end 개발, 분석 알고리즘 설계 | - 프론트엔드 기능 개발 및 UI 구현<br>- 분석 알고리즘 설계 및 개선<br>- 분석 결과 기반 피드백 설계<br>- 다양한 데이터셋과 분석 알고리즘 통합 |
-
-<br/>
-
-# 5. Demo
-
-https://github.com/user-attachments/assets/23eaf800-2424-4d0e-afaa-4ad06ecdd256
 
 <br/>
 
@@ -115,7 +115,7 @@ CP24_BenchMalk
       │  ├─ ProjectPage.css
       │  ├─ Sidebar.css
       │  └─ TableForm.css
-      └─ utils/
+      └─ utils
          └─ formatters.js          # 데이터 포맷팅 유틸리티
 
 ```
@@ -202,45 +202,3 @@ chore : 빌드 업무 수정, 패키지 매니저 수정
 
 <br/>
 
-## 커밋 이모지
-
-```
-== 코드 관련
-📝	코드 작성
-🔥	코드 제거
-🔨	코드 리팩토링
-💄	UI / style 변경
-
-== 문서&파일
-📰	새 파일 생성
-🔥	파일 제거
-📚	문서 작성
-
-== 버그
-🐛	버그 리포트
-🚑	버그를 고칠 때
-
-== 기타
-🐎	성능 향상
-✨	새로운 기능 구현
-💡	새로운 아이디어
-🚀	배포
-```
-
-<br/>
-
-## 커밋 예시
-
-```
-== ex1
-✨Feat: "회원 가입 기능 구현"
-
-SMS, 이메일 중복확인 API 개발
-
-== ex2
-📚chore: styled-components 라이브러리 설치
-
-UI개발을 위한 라이브러리 styled-components 설치
-```
-
-<br/>
